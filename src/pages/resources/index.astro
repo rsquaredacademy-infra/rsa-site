@@ -1,0 +1,157 @@
+---
+// Free resources page.
+import Base from '../../layouts/Base.astro';
+import Badge from '../../components/Badge.astro';
+import Button from '../../components/Button.astro';
+import { links } from '../../data/site';
+import { ebooks } from '../../data/ebooks';
+---
+
+<Base
+  title="Free resources"
+  description="Free eBooks, open course material, tutorials and videos."
+>
+  <section class="sec sec-hero">
+    <div class="wrap flex flex-col gap-5">
+      <span class="eyebrow">Free resources</span>
+      <h1 class="t-h1 max-w-[760px]">Learn R for free, at your own pace</h1>
+      <p class="t-lead max-w-[680px]">Free eBooks, open course material, tutorials and videos. Read online, download a copy, or watch the code being written.</p>
+    </div>
+  </section>
+
+  <section class="sec sec-flush" aria-labelledby="books-h">
+    <div class="wrap flex flex-col gap-8">
+      <div class="flex flex-col gap-2 max-w-[680px]">
+        <h2 id="books-h" class="t-h2">eBooks</h2>
+        <p class="t-muted">Free to read online, or download a PDF or EPUB. Core 01 to 03 go with the free Foundations courses.</p>
+      </div>
+      <div class="lgrid">
+        {ebooks.map((b) => (
+          <article class="lc">
+            <div class="lside">
+              <img class="lcover" src={b.cover} alt="" width="112" height="149" loading="lazy" />
+            </div>
+            <div class="lbody">
+              <span class="ltrack">{b.track}</span>
+              <h3 class="ltitle"><a href={b.web}>{b.title}</a></h3>
+              <p class="lout">{b.out}</p>
+              <div class="lmeta">
+                {b.levels.map((lv) => <Badge tone="neutral">{lv}</Badge>)}
+                <span>{b.chapters} chapters</span>
+                {b.course && <Badge tone="free">{b.course}</Badge>}
+              </div>
+              <p class="lnote">{b.pre}</p>
+              <details class="ldet">
+                <summary>What's inside</summary>
+                <ul>
+                  {b.inside.map((it) => <li>{it}</li>)}
+                </ul>
+              </details>
+              <div class="lactions">
+                <a class="lbtn primary" href={b.web} aria-label={`Read ${b.title} online`}>Read online</a>
+                <a class="lbtn" href={b.pdf} aria-label={`${b.title} as PDF`}>PDF</a>
+                <a class="lbtn" href={b.epub} aria-label={`${b.title} as EPUB`}>EPUB</a>
+                <a class="lbtn" href={b.gh} aria-label={`${b.title} source on GitHub`}>GitHub</a>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec bg-surface" aria-labelledby="open-h">
+    <div class="wrap split">
+      <div class="flex flex-col gap-4 min-w-0">
+        <span class="eyebrow">Open courses</span>
+        <h2 id="open-h" class="t-h2">Free course material for learning R</h2>
+        <p class="t-muted max-w-[600px]">Read our open course material at your own pace. It's open source on GitHub.</p>
+        <div class="flex gap-3 flex-wrap">
+          <Button href={links.openCourses}>Read the open courses</Button>
+          <Button variant="secondary" href={links.openCoursesRepo}>Source on GitHub</Button>
+        </div>
+      </div>
+      <div class="flex flex-col gap-3 min-w-0 bg-bg border border-line rounded-lg p-8">
+        <h3 class="t-h3">Want to practise as you read?</h3>
+        <p class="t-muted">Our interactive courses let you write and run R in the browser and get instant feedback. The first three are free and open in December 2026.</p>
+        <div><Button variant="text" href="/courses/">See the courses</Button></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="more-h">
+    <div class="wrap flex flex-col gap-8">
+      <h2 id="more-h" class="t-h2">Tutorials and videos</h2>
+      <div class="two">
+        <a class="tile" href={links.blog}>
+          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="text-brand"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"></path></svg>
+          <span class="t-h3">Blog</span>
+          <span class="text-ink-muted">Tutorials and worked examples of data analysis in R.</span>
+          <span class="mt-2 font-semibold text-link">Read the blog</span>
+        </a>
+        <a class="tile" href={links.youtube}>
+          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="text-brand"><rect x="2" y="5" width="20" height="14" rx="3"></rect><polygon points="10 9 15 12 10 15 10 9"></polygon></svg>
+          <span class="t-h3">YouTube</span>
+          <span class="text-ink-muted">Short videos that walk through R code step by step.</span>
+          <span class="mt-2 font-semibold text-link">Watch on YouTube</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec-flush" aria-labelledby="pk-h">
+    <div class="wrap">
+      <div class="flex flex-wrap gap-6 items-center justify-between p-8 border border-line rounded-lg">
+        <div class="flex flex-col gap-2 grow basis-[420px] min-w-0">
+          <h2 id="pk-h" class="t-h2">Looking for our R packages?</h2>
+          <p class="t-muted">Regression, descriptive statistics, RFM analysis and more, all free on CRAN.</p>
+        </div>
+        <Button variant="secondary" href="/open-source/">See our open-source work</Button>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* Section padding overrides. */
+  .sec-hero { padding-top: 96px; padding-bottom: 64px; }
+  .sec-flush { padding-top: 0; }
+
+  .two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-6); }
+  .split { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--space-12); align-items: center; }
+  .lgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--space-6); row-gap: 0; }
+  .lc { display: grid; grid-template-columns: 112px minmax(0, 1fr); grid-row: span 7; grid-template-rows: subgrid; column-gap: 20px; row-gap: 10px; margin-bottom: var(--space-6); padding: 20px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg); min-width: 0; }
+  .lside { grid-column: 1; grid-row: 1 / -1; align-self: start; }
+  .lcover { display: block; width: 112px; height: auto; aspect-ratio: 3 / 4; border-radius: 4px; border: 1px solid var(--line); }
+  .lactions { display: flex; flex-wrap: wrap; gap: 8px; align-self: end; }
+  .lbtn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; box-sizing: border-box; padding: 6px 14px; border: 1px solid var(--line-strong); border-radius: var(--radius-sm); font: 600 15px/20px var(--font-body); color: var(--ink); background: var(--bg); text-decoration: none; text-align: center; }
+  .lbtn:hover { border-color: var(--ink); color: var(--ink); }
+  .lbtn:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+  .lbtn.primary { background: var(--brand); border-color: var(--brand); color: var(--on-brand); }
+  .lbtn.primary:hover { background: var(--brand-hover); border-color: var(--brand-hover); color: var(--on-brand); }
+  .lbody { display: contents; }
+  .lbody > * { grid-column: 2; min-width: 0; }
+  .lbody > .ldet { align-self: start; }
+  .ltrack { font-family: var(--font-mono); font-size: 12px; line-height: 16px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--brand); }
+  .ltitle { margin: 0; font-family: var(--font-display); font-size: 20px; line-height: 28px; font-weight: 700; }
+  .ltitle a { color: var(--ink); text-decoration: none; }
+  .ltitle a:hover { color: var(--brand); }
+  .lout { margin: 0; color: var(--ink-muted); font-size: 16px; line-height: 24px; }
+  .lmeta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 14px; line-height: 20px; color: var(--ink-muted); }
+  .lnote { margin: 0; font-size: 14px; line-height: 20px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 8px 10px; }
+  .ldet { font-size: 15px; line-height: 22px; border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 10px 12px; }
+  .ldet summary { cursor: pointer; font-weight: 600; }
+  .ldet summary:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+  .ldet ul { margin: 8px 0 2px 18px; padding: 0; max-height: 200px; overflow: auto; color: var(--ink-muted); }
+  .tile { display: flex; flex-direction: column; gap: 8px; padding: 24px; border: 1px solid var(--line); border-radius: var(--radius-lg); color: var(--ink); text-decoration: none; min-width: 0; }
+  .tile:hover { border-color: var(--line-strong); box-shadow: var(--shadow-card); color: var(--brand-hover); }
+  .tile:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+
+  @media (max-width: 980px) { .lgrid { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 860px) { .split { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 640px) { .two { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 420px) {
+    .lc { padding: 16px; grid-template-columns: 96px minmax(0, 1fr); column-gap: 14px; }
+    .lcover { width: 96px; }
+  }
+</style>
