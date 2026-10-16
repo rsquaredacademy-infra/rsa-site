@@ -8,6 +8,8 @@ const PAGES = [
   '/open-source/',
   '/educators/',
   '/about/',
+  '/privacy/',
+  '/terms/',
   '/thanks/',
 ];
 
@@ -123,9 +125,16 @@ for (const path of PAGES) {
             const issues: { selector: string; text: string; width: number; height: number }[] = [];
 
             for (const el of elements) {
-              // Exclude links inside <p> (inline text links)
-              if (el.tagName.toLowerCase() === 'a' && el.closest('p')) {
-                continue;
+              // Exclude inline text links (WCAG 2.5.8 inline exception): links inside <p>,
+              // or inline links that sit in a sentence with other text around them
+              if (el.tagName.toLowerCase() === 'a') {
+                if (el.closest('p')) continue;
+                const parent = el.parentElement;
+                const inSentence =
+                  window.getComputedStyle(el).display === 'inline' &&
+                  !!parent &&
+                  (parent.textContent || '').trim() !== (el.textContent || '').trim();
+                if (inSentence) continue;
               }
 
               // Must be visible
@@ -273,7 +282,8 @@ test.describe('Extra tests', () => {
     await emailInput.fill('not-an-email');
     await submitBtn.click();
 
-    const msg = page.locator('#signup-email-msg');
+    const msgId = await emailInput.getAttribute('aria-describedby');
+    const msg = page.locator(`#${msgId}`);
     await expect(msg).toHaveText('Enter an email address like name@example.com.');
     await expect(emailInput).toHaveAttribute('aria-invalid', 'true');
     expect(new URL(page.url()).pathname).toBe('/');

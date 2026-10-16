@@ -46,9 +46,9 @@ import { packageGroups, shinyApps, appCode } from '../../data/packages';
                     </ul>
                   </details>
                   <div class="lactions">
-                    <a class="lbtn primary" href={p.docs} aria-label={`${p.name} documentation`}>Docs</a>
-                    <a class="lbtn" href={p.cran} aria-label={`${p.name} on CRAN`}>CRAN</a>
-                    <a class="lbtn" href={p.gh} aria-label={`${p.name} on GitHub`}>GitHub</a>
+                    <a class="lbtn primary" href={p.docs} aria-label={`Docs: ${p.name}`}>Docs</a>
+                    <a class="lbtn" href={p.cran} aria-label={`CRAN: ${p.name}`}>CRAN</a>
+                    <a class="lbtn" href={p.gh} aria-label={`GitHub: ${p.name}`}>GitHub</a>
                   </div>
                 </div>
               </article>
@@ -66,7 +66,7 @@ import { packageGroups, shinyApps, appCode } from '../../data/packages';
           <h2 id="apps-h" class="t-h2">Shiny apps</h2>
           <p class="t-muted max-w-[600px]">Point-and-click apps for exploring data, built on our packages. They come with xplorerr and run on your own computer.</p>
         </div>
-        <div class="tbl-box">
+        <div class="tbl-box" role="region" aria-labelledby="apps-h" tabindex="0">
           <table class="tbl">
             <thead><tr><th scope="col">App</th><th scope="col">Run it</th></tr></thead>
             <tbody>
@@ -157,6 +157,7 @@ import { packageGroups, shinyApps, appCode } from '../../data/packages';
   .tile:hover { border-color: var(--line-strong); box-shadow: var(--shadow-card); color: var(--brand-hover); }
   .tile:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
   .tbl-box { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg); }
+  .tbl-box:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
   .tbl { width: 100%; border-collapse: collapse; font-size: 16px; line-height: 24px; min-width: 520px; }
   .tbl th { text-align: left; font-weight: 600; font-size: 13px; line-height: 16px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-muted); padding: 14px 20px; border-bottom: 1px solid var(--line); }
   .tbl td { padding: 14px 20px; border-bottom: 1px solid var(--line); vertical-align: top; }
