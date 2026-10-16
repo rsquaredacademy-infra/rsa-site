@@ -31,7 +31,7 @@
   h1, h2, h3 { text-wrap: balance; }
 }
 
-/* Page layout helpers shared by every page (from the mockups) */
+/* Page layout helpers shared by every page */
 .wrap { max-width: var(--content-max); margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
 .sec { padding-block: var(--space-20); }
 .eyebrow { font-size: 13px; line-height: 16px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-muted); }
