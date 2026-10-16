@@ -58,7 +58,7 @@ export const courses = [
   { id: 'dplyr', eyebrow: 'Course 2', title: 'Data Wrangling with dplyr',
     short: 'Filter, sort, summarise and join data with the dplyr verbs and the pipe.',
     long: 'Filter, sort, summarise and join data with the dplyr verbs and the pipe.' },
-  { id: 'ggplot2', eyebrow: 'Course 3', title: 'Data Visualization with ggplot2',
+  { id: 'ggplot2', eyebrow: 'Course 3', title: 'Data Viz with ggplot2',
     short: 'Build clear charts layer by layer with ggplot2.',
     long: 'Build clear charts layer by layer with ggplot2, from a first scatter plot to a finished figure.' },
 ];
