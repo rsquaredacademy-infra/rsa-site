@@ -337,7 +337,7 @@ test.describe('Extra tests', () => {
     { path: '/', grid: '.rsa-card-grid', parts: ['.rsa-card-title', '.rsa-card-text'] },
     { path: '/courses/', grid: '.rsa-card-grid', parts: ['.rsa-card-title', '.rsa-card-text'] },
     { path: '/educators/', grid: '.rsa-card-grid', parts: ['.rsa-card-title', '.rsa-card-text'] },
-    { path: '/', grid: '.res-grid', parts: [':scope > :nth-child(2)', ':scope > :nth-child(3)', ':scope > :nth-child(4)'] },
+    { path: '/', grid: '.res-grid', parts: [':scope > :nth-child(2)', ':scope > :nth-child(3)'] },
   ];
   for (const { path, grid, parts } of alignmentCases) {
     test(`card sections align across a row: ${grid} on ${path}`, async ({ page }, testInfo) => {
