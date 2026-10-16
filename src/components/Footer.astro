@@ -1,0 +1,24 @@
+---
+import Wordmark from './Wordmark.astro';
+import { footerColumns, contactEmail } from '../data/site';
+const year = new Date().getFullYear();
+---
+<footer class="rsa-footer">
+  <div class="rsa-footer-inner">
+    <div class="rsa-footer-about">
+      <Wordmark />
+      <p>Interactive R courses for data analysis, plus free eBooks and open-source R packages.</p>
+      <p>Contact: <a href={`mailto:${contactEmail}`}>{contactEmail}</a></p>
+    </div>
+    {footerColumns.map((c) => (
+      <div>
+        <h3>{c.title}</h3>
+        <ul>{c.links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+      </div>
+    ))}
+    <div class="rsa-footer-base">
+      <span>© {year} Rsquared Academy</span>
+      <span><a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a></span>
+    </div>
+  </div>
+</footer>

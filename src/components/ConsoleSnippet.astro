@@ -1,0 +1,9 @@
+---
+// Real, runnable R only, with its true output.
+type Line = { input: string } | { output: string };
+interface Props { lines: Line[]; label?: string }
+const { lines, label = 'R console' } = Astro.props;
+---
+<pre class="rsa-console" aria-label={label}><code>{lines.map((l, i) => (
+  <Fragment>{i > 0 && '\n'}{'input' in l ? <Fragment><span class="rsa-prompt" aria-hidden="true">&gt; </span>{l.input}</Fragment> : l.output}</Fragment>
+))}</code></pre>

@@ -1,0 +1,23 @@
+---
+import Badge from './Badge.astro';
+import type { BadgeTone } from '../data/site';
+interface Props {
+  title: string;
+  description: string;
+  eyebrow?: string;
+  badges?: { text: string; tone: BadgeTone }[];
+  footer?: string;
+  href?: string;
+}
+const { title, description, eyebrow, badges = [], footer, href } = Astro.props;
+const Tag = href ? 'a' : 'article';
+---
+<Tag class="rsa-card" href={href}>
+  <div class="rsa-card-badges">{badges.map((b) => <Badge tone={b.tone}>{b.text}</Badge>)}</div>
+  <div>
+    {eyebrow && <div class="rsa-card-eyebrow">{eyebrow}</div>}
+    <h3 class="rsa-card-title">{title}</h3>
+  </div>
+  <p class="rsa-card-text">{description}</p>
+  {footer && <div class="rsa-card-foot">{footer}</div>}
+</Tag>

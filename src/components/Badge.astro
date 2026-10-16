@@ -1,0 +1,6 @@
+---
+import type { BadgeTone } from '../data/site';
+interface Props { tone?: BadgeTone }
+const { tone = 'neutral' } = Astro.props;
+---
+<span class={`rsa-badge rsa-badge-${tone}`}><slot /></span>

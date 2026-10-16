@@ -1,0 +1,29 @@
+---
+import Wordmark from './Wordmark.astro';
+import Button from './Button.astro';
+import { nav, cta } from '../data/site';
+const current = Astro.url.pathname;
+---
+<header class="rsa-nav" data-open="false">
+  <nav class="rsa-nav-inner" aria-label="Main">
+    <Wordmark />
+    <button class="rsa-nav-toggle" type="button" aria-expanded="false" aria-controls="rsa-nav-links">Menu</button>
+    <ul class="rsa-nav-links" id="rsa-nav-links">
+      {nav.map((it) => (
+        <li><a href={it.href} aria-current={current.startsWith(it.href) ? 'page' : undefined}>{it.label}</a></li>
+      ))}
+    </ul>
+    <Button href={cta.href} size="sm" class="rsa-nav-cta">{cta.label}</Button>
+  </nav>
+</header>
+
+<script>
+  const header = document.querySelector<HTMLElement>('.rsa-nav');
+  const toggle = header?.querySelector<HTMLButtonElement>('.rsa-nav-toggle');
+  toggle?.addEventListener('click', () => {
+    const open = header!.dataset.open !== 'true';
+    header!.dataset.open = String(open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.textContent = open ? 'Close' : 'Menu';
+  });
+</script>
