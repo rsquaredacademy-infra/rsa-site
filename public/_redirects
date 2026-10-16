@@ -1,0 +1,17 @@
+# Old site URLs (pre-2026 rebuild) -> new pages
+/index.html                              /             301
+/about.html                              /about/       301
+/contact.html                            /about/       301
+/privacy-policy.html                     /privacy/     301
+/privacy-policy                          /privacy/     301
+/terms-and-conditions.html               /terms/       301
+/terms-and-conditions                    /terms/       301
+/data-science-with-r.html                /courses/     301
+/data-science-with-R.html                /courses/     301
+/data-science-with-r                     /courses/     301
+/data-science-university-training.html   /educators/   301
+/data-science-university-training        /educators/   301
+/university-training.html                /educators/   301
+/data-science-corporate-training.html    /             301
+/data-science-corporate-training         /             301
+/corporate-training.html                 /             301

@@ -1,0 +1,73 @@
+---
+import Base from '../../layouts/Base.astro';
+import { contactEmail } from '../../data/site';
+---
+
+<Base
+  title="Privacy"
+  description="How Rsquared Academy collects, uses and keeps your data, and the choices you have."
+>
+  <section class="sec" aria-labelledby="legal-h">
+    <div class="wrap">
+      <article class="legal">
+        <span class="eyebrow">Legal</span>
+        <h1 id="legal-h" class="t-h1">Privacy</h1>
+        <p class="t-small t-muted">Last updated: 16 October 2026</p>
+
+        <h2 class="t-h3">Who we are</h2>
+        <p>Rsquared Academy runs www.rsquaredacademy.com. Contact: <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.</p>
+
+        <h2 class="t-h3">What we collect and why</h2>
+        <ul>
+          <li><strong>Email sign-up ("Get updates")</strong>: your email address, to send you news about our courses, about once a month. Every email has an unsubscribe link.</li>
+          <li><strong>For educators form</strong>: name, email, institution, role, number of students, course, start date and your message, so we can reply and help you use the courses with a class.</li>
+          <li><strong>Analytics</strong>: We use Google Analytics 4 to understand how people use this site (pages visited, referring sites, device type and approximate location) so we can improve our free learning material. Google Analytics uses cookies and a pseudonymous identifier; we don't use it for advertising and we never send Google names or email addresses. Visitors in the European Economic Area, the United Kingdom and Switzerland are asked for consent first, and if they decline, no analytics cookies are stored. Anyone can switch analytics off at any time: <button type="button" data-rsa-analytics-optout class="rsa-btn rsa-btn-text">Turn off analytics</button>.</li>
+        </ul>
+
+        <h2 class="t-h3">Who processes your data for us</h2>
+        <p>Netlify (hosts the site and receives the two forms), Google Analytics (analytics, as above), Google Fonts (the site's fonts load from Google's servers, which see your IP address). We don't sell or rent your data, and we don't share it with anyone else except where the law requires it.</p>
+
+        <h2 class="t-h3">How long we keep it</h2>
+        <ul>
+          <li>Sign-up emails: until you unsubscribe or ask us to delete them.</li>
+          <li>Educator form messages: as long as we need them to reply and follow up.</li>
+          <li>Analytics data: Google Analytics' retention settings, at most 14 months.</li>
+        </ul>
+
+        <h2 class="t-h3">Your choices</h2>
+        <ul>
+          <li>Unsubscribe from any email.</li>
+          <li>Turn off analytics (the button above).</li>
+          <li>Email <a href={`mailto:${contactEmail}`}>{contactEmail}</a> to see, correct or delete the data we hold about you; we reply within 30 days.</li>
+        </ul>
+
+        <h2 class="t-h3">Children</h2>
+        <p>The site is not directed at children under 13, and we don't knowingly collect their data.</p>
+
+        <h2 class="t-h3">Changes</h2>
+        <p>If we change this page, we update the date at the top. If a change is significant, we tell people on the email list.</p>
+      </article>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .legal {
+    max-width: var(--text-max);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .legal p,
+  .legal li {
+    margin: 0;
+  }
+  .legal ul {
+    margin: 0;
+    padding-left: 24px;
+    list-style: disc;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+</style>
