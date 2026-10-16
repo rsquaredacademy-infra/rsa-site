@@ -15,8 +15,8 @@ export const contactEmail = 'support@rsquaredacademy.com';
 
 export const links = {
   github: 'https://github.com/rsquaredacademy',
-  youtube: '#',
-  linkedin: '#',
+  youtube: 'https://www.youtube.com/user/rsquaredin',
+  linkedin: 'https://in.linkedin.com/company/rsquared-academy',
   x: 'https://x.com/rsquaredacademy',
   ebooks: 'https://ebooks.rsquaredacademy.com',
   openCourses: 'https://courses.rsquaredacademy.com/',
