@@ -25,3 +25,8 @@ pnpm-debug.log*
 
 # design sources live in the private repo rsquaredacademy-infra/rsa-site-design
 design/
+
+# playwright test artifacts
+test-results/
+playwright-report/
+blob-report/
