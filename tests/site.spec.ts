@@ -331,4 +331,37 @@ test.describe('Extra tests', () => {
     await expect.poll(() => requestBody).not.toBeNull();
     expect(requestBody).toContain('form-name=educators');
   });
+
+  // Cards in the same row must line up section by section (badges, title, description, link)
+  const alignmentCases = [
+    { path: '/', grid: '.rsa-card-grid', parts: ['.rsa-card-title', '.rsa-card-text'] },
+    { path: '/courses/', grid: '.rsa-card-grid', parts: ['.rsa-card-title', '.rsa-card-text'] },
+    { path: '/educators/', grid: '.rsa-card-grid', parts: ['.rsa-card-title', '.rsa-card-text'] },
+    { path: '/', grid: '.res-grid', parts: [':scope > :nth-child(2)', ':scope > :nth-child(3)', ':scope > :nth-child(4)'] },
+  ];
+  for (const { path, grid, parts } of alignmentCases) {
+    test(`card sections align across a row: ${grid} on ${path}`, async ({ page }, testInfo) => {
+      test.skip(testInfo.project.name === 'phone', 'Cards stack in one column on phones');
+      await page.goto(path);
+      const misaligned = await page.evaluate(({ grid, parts }) => {
+        const cards = Array.from(document.querySelector(grid)!.children) as HTMLElement[];
+        // group cards by row (same top edge)
+        const rows = new Map<number, HTMLElement[]>();
+        for (const c of cards) {
+          const top = Math.round(c.getBoundingClientRect().top);
+          rows.set(top, [...(rows.get(top) || []), c]);
+        }
+        const issues: string[] = [];
+        for (const row of rows.values()) {
+          if (row.length < 2) continue;
+          for (const part of parts) {
+            const tops = row.map((c) => Math.round(c.querySelector(part)!.getBoundingClientRect().top));
+            if (Math.max(...tops) - Math.min(...tops) > 1) issues.push(`${part}: tops ${tops.join(', ')}`);
+          }
+        }
+        return issues;
+      }, { grid, parts });
+      expect(misaligned, `Misaligned card sections in ${grid} on ${path}`).toEqual([]);
+    });
+  }
 });

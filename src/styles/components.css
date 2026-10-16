@@ -30,6 +30,9 @@ a.rsa-card:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px;
 .rsa-card-title { font-family: var(--font-display); font-size: 20px; line-height: 28px; font-weight: 700; margin: 0; }
 .rsa-card-text { font-size: 17px; line-height: 27px; color: var(--ink-muted); margin: 0; }
 .rsa-card-foot { margin-top: auto; font-weight: 600; color: var(--link); }
+/* In a .rsa-card-grid, badges, title and description (and footer) rows line up across cards */
+.rsa-card-grid > .rsa-card { display: grid; grid-template-rows: subgrid; grid-row: span 3; row-gap: var(--space-4); align-content: start; }
+.rsa-card-grid > .rsa-card:has(> .rsa-card-foot) { grid-row: span 4; }
 
 /* Navbar */
 .rsa-nav { background: var(--bg); border-bottom: 1px solid var(--line); }

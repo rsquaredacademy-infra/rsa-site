@@ -32,7 +32,7 @@ import { courses, foundationsBadges, links } from '../../data/site';
           <p class="t-muted">Three short courses that take you from your first line of R to clean data and clear charts. Take them in order, or start where you need to.</p>
         </div>
       </div>
-      <div class="three">
+      <div class="three rsa-card-grid">
         {courses.map((course) => (
           <CourseCard eyebrow={course.eyebrow} title={course.title} description={course.long} badges={foundationsBadges} />
         ))}
