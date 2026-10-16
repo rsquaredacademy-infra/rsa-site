@@ -1,0 +1,136 @@
+---
+import Base from '../../layouts/Base.astro';
+import Button from '../../components/Button.astro';
+import SignupBand from '../../components/SignupBand.astro';
+import { contactEmail, links } from '../../data/site';
+---
+
+<Base
+  title="About"
+  description="Rsquared Academy makes free eBooks, open-source R packages and interactive courses for people who want to analyse data with R."
+>
+  <section class="sec hero-sec">
+    <div class="wrap" style="display: flex; flex-direction: column; gap: 20px;">
+      <span class="eyebrow">About</span>
+      <h1 class="page-title t-h1" style="max-width: 760px;">We help people learn R for data analysis</h1>
+      <p class="t-lead" style="max-width: 680px;">Rsquared Academy makes free eBooks, open-source R packages and interactive courses for people who want to analyse data with R.</p>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top: 0;" aria-labelledby="story-h">
+    <div class="wrap story">
+      <h2 id="story-h" class="t-h2">Our story</h2>
+      <div class="prose">
+        <p>For years we've published free material for learning R: online eBooks, blog tutorials and videos that start from your first line of code and go on to wrangling and plotting data.</p>
+        <p>Along the way we built open-source R packages for everyday analysis work, including olsrr for regression models, descriptr for descriptive statistics and rfm for customer segmentation.</p>
+        <p>We've also learned that free material isn't enough for many learners. Reading about R is one thing; writing code, running it and finding out straight away what to fix is how it sticks.</p>
+        <p>So we're rebuilding our courses and learning platform from scratch, so you can learn R in your browser with instant feedback. The first three free courses open in December 2026. Our current courses stay open on Thinkific while we move each one to the new platform.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" style="background: var(--surface);" aria-labelledby="how-h">
+    <div class="wrap" style="display: flex; flex-direction: column; gap: 32px;">
+      <h2 id="how-h" class="t-h2">How we work</h2>
+      <ul class="three" style="list-style: none; margin: 0; padding: 0;">
+        <li style="display: flex; flex-direction: column; gap: 8px;">
+          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="color: var(--brand);"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+          <h3 class="t-h3">Real R, real data</h3>
+          <p class="t-muted">You learn by writing R on small, realistic datasets, the way analysts use it at work.</p>
+        </li>
+        <li style="display: flex; flex-direction: column; gap: 8px;">
+          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="color: var(--brand);"><path d="M2 4h6a4 4 0 0 1 4 4v12a3 3 0 0 0-3-3H2z"></path><path d="M22 4h-6a4 4 0 0 0-4 4v12a3 3 0 0 1 3-3h7z"></path></svg>
+          <h3 class="t-h3">Free to start</h3>
+          <p class="t-muted">Our eBooks are free to read, and the Foundations courses are free to take.</p>
+        </li>
+        <li style="display: flex; flex-direction: column; gap: 8px;">
+          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="color: var(--brand);"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-.9-2.6c3.1-.3 6.4-1.5 6.4-7a5.4 5.4 0 0 0-1.5-3.8 5 5 0 0 0-.1-3.8s-1.2-.3-3.9 1.5a13.4 13.4 0 0 0-7 0C6.3 1.6 5.1 2 5.1 2a5 5 0 0 0-.1 3.8A5.4 5.4 0 0 0 3.5 9.6c0 5.4 3.3 6.6 6.4 7a3.4 3.4 0 0 0-.9 2.6V23"></path></svg>
+          <h3 class="t-h3">Open on GitHub</h3>
+          <p class="t-muted">Our <a href={links.github}>R packages</a> and <a href={links.openCoursesRepo}>course material</a> are open source on GitHub. Read the material at <a href={links.openCourses}>courses.rsquaredacademy.com</a>.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="trust-h">
+    <div class="wrap trust-grid">
+      <div style="display: flex; flex-direction: column; gap: 16px; min-width: 0;">
+        <h2 id="trust-h" class="t-h2">The team behind the R packages olsrr, descriptr and rfm</h2>
+        <p class="t-muted" style="max-width: 560px;">Our packages are on CRAN, and their code is open on GitHub.</p>
+        <div style="display: flex; gap: 24px; flex-wrap: wrap;">
+          <Button variant="text" href="/open-source/">See our open-source work</Button>
+          <Button variant="text" href={links.ebooks}>Read the eBooks</Button>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 32px; min-width: 0;">
+        <p style="margin: 0; font-family: var(--font-display); font-size: 30px; line-height: 38px; font-weight: 700; letter-spacing: -0.01em; text-wrap: balance;">Our open-source R packages have been downloaded more than 2.8 million times.</p>
+        <p class="t-small t-muted">Source: CRAN download logs, October 2026.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top: 0;" aria-labelledby="contact-h">
+    <div class="wrap">
+      <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: center; justify-content: space-between; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg);">
+        <div style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 420px; min-width: 0;">
+          <h2 id="contact-h" class="t-h2">Get in touch</h2>
+          <p class="t-muted">Questions about the courses, the eBooks or our packages? Email us at <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.</p>
+        </div>
+        <Button variant="secondary" href="/educators/">Teaching a class? See For educators</Button>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top: 0;">
+    <div class="wrap">
+      <SignupBand id="about-email" />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero-sec {
+    padding-top: 96px;
+    padding-bottom: 64px;
+  }
+  .three {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-6);
+  }
+  .story {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    gap: var(--space-12);
+    align-items: start;
+  }
+  .trust-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-12);
+    align-items: start;
+  }
+  .prose {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 680px;
+  }
+  .prose p {
+    margin: 0;
+  }
+  @media (max-width: 860px) {
+    .hero-sec {
+      padding-block: var(--space-12);
+    }
+    .three,
+    .story,
+    .trust-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .page-title {
+      font-size: 38px !important;
+      line-height: 42px !important;
+    }
+  }
+</style>

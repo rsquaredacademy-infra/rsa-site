@@ -1,0 +1,338 @@
+---
+import Base from '../../layouts/Base.astro';
+import Button from '../../components/Button.astro';
+import Badge from '../../components/Badge.astro';
+import CourseCard from '../../components/CourseCard.astro';
+import { courses, foundationsBadges, links } from '../../data/site';
+---
+
+<Base
+  title="For educators"
+  description="Our Foundations courses are free to use with a class."
+>
+  <section class="sec hero-sec">
+    <div class="wrap" style="display: flex; flex-direction: column; gap: 20px;">
+      <span class="eyebrow">For educators</span>
+      <h1 class="page-title t-h1" style="max-width: 760px;">Teach R with free courses that run in the browser</h1>
+      <p class="t-lead" style="max-width: 680px;">Our Foundations courses are free to use with a class. Students write and run R in the lesson, so there is no software to install and no lab to set up.</p>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+        <Button href="#interest">Tell us about your class</Button>
+        <Badge tone="soon">Courses open Dec 2026</Badge>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" style="background: var(--surface);" aria-labelledby="why-h">
+    <div class="wrap" style="display: flex; flex-direction: column; gap: 32px;">
+      <h2 id="why-h" class="t-h2">Why use them with a class</h2>
+      <ul class="three" style="list-style: none; margin: 0; padding: 0;">
+        <li style="display: flex; flex-direction: column; gap: 8px;">
+          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="color: var(--brand);"><path d="M20 12v9H4v-9"></path><rect x="2" y="7" width="20" height="5" rx="1"></rect><path d="M12 21V7"></path><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path></svg>
+          <h3 class="t-h3">Free for your students</h3>
+          <p class="t-muted">The three Foundations courses are free for everyone, including whole classes.</p>
+        </li>
+        <li style="display: flex; flex-direction: column; gap: 8px;">
+          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="color: var(--brand);"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+          <h3 class="t-h3">Runs in the browser</h3>
+          <p class="t-muted">Students code from any laptop with a modern browser, in class or at home.</p>
+        </li>
+        <li style="display: flex; flex-direction: column; gap: 8px;">
+          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="color: var(--brand);"><rect x="3" y="4" width="18" height="12" rx="2"></rect><path d="M8 20h8"></path><path d="M12 16v4"></path><path d="M9 10l2 2 4-4"></path></svg>
+          <h3 class="t-h3">No lab setup</h3>
+          <p class="t-muted">No R or RStudio installs to manage, and no package versions to keep in step.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="which-h">
+    <div class="wrap" style="display: flex; flex-direction: column; gap: 32px;">
+      <div style="display: flex; flex-direction: column; gap: 8px; max-width: 640px;">
+        <h2 id="which-h" class="t-h2">The courses you can use</h2>
+        <p class="t-muted">Each course has a free eBook alongside it, which students can read before or after class.</p>
+      </div>
+      <div class="three">
+        {courses.map((course) => (
+          <CourseCard
+            eyebrow={course.eyebrow}
+            title={course.title}
+            description={course.short}
+            badges={foundationsBadges}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="interest" style="background: var(--surface);" aria-labelledby="form-h">
+    <div class="wrap form-grid">
+      <div style="display: flex; flex-direction: column; gap: 16px; min-width: 0;">
+        <h2 id="form-h" class="t-h2">Planning to use a course with a class?</h2>
+        <p class="t-muted">Tell us a little about your class or department. We'll reply by email and help you get started.</p>
+        <p class="t-muted">We don't offer instructor dashboards or class management yet. If your class needs something, say so in the form: it helps us decide what to build next.</p>
+      </div>
+
+      <div style="background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 32px; min-width: 0;">
+        <form name="educators" method="POST" action="/thanks/" data-netlify="true" netlify-honeypot="company" novalidate style="display: flex; flex-direction: column; gap: 24px;">
+          <input type="hidden" name="form-name" value="educators" />
+          <p hidden><label>Leave this empty <input name="company" tabindex="-1" autocomplete="off" /></label></p>
+          <p id="form-error-summary" role="alert" class="rsa-error" style="margin: 0; display: none;">Please fill in the fields marked below.</p>
+          <div class="fields">
+            <div class="fld">
+              <label for="ed-name">Name</label>
+              <input id="ed-name" name="name" class="rsa-input" type="text" autocomplete="name" required />
+              <span id="ed-name-err" class="rsa-error" style="display: none;">Enter your name.</span>
+            </div>
+            <div class="fld">
+              <label for="ed-email">Email</label>
+              <input id="ed-email" name="email" class="rsa-input" type="email" autocomplete="email" placeholder="name@university.edu" required />
+              <span id="ed-email-err" class="rsa-error" style="display: none;">Enter an email address like name@example.com.</span>
+            </div>
+            <div class="fld">
+              <label for="ed-inst">Institution</label>
+              <input id="ed-inst" name="institution" class="rsa-input" type="text" autocomplete="organization" required />
+              <span id="ed-inst-err" class="rsa-error" style="display: none;">Enter your school, college or university.</span>
+            </div>
+            <div class="fld">
+              <label for="ed-role">Role</label>
+              <select id="ed-role" name="role" class="rsa-input">
+                <option value="">Choose one</option>
+                <option value="lecturer">Lecturer or professor</option>
+                <option value="teacher">Teacher</option>
+                <option value="ta">Teaching assistant</option>
+                <option value="head">Head of department or programme</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="fld">
+              <label for="ed-students">Number of students</label>
+              <input id="ed-students" name="students" class="rsa-input" type="number" min="1" inputmode="numeric" />
+            </div>
+            <div class="fld">
+              <label for="ed-course">Course</label>
+              <select id="ed-course" name="course" class="rsa-input">
+                <option value="">Choose one</option>
+                <option value="intro">Introduction to R</option>
+                <option value="dplyr">Data Wrangling with dplyr</option>
+                <option value="ggplot2">Data Visualization with ggplot2</option>
+                <option value="all">All three</option>
+                <option value="unsure">Not sure yet</option>
+              </select>
+            </div>
+            <div class="fld full">
+              <label for="ed-when">When would you start?</label>
+              <select id="ed-when" name="timeline" class="rsa-input">
+                <option value="">Choose one</option>
+                <option value="term">This term</option>
+                <option value="next">Next term</option>
+                <option value="later">Later in 2027</option>
+                <option value="exploring">Just exploring</option>
+              </select>
+            </div>
+            <div class="fld full">
+              <label for="ed-msg">Anything else? <span class="opt">(optional)</span></label>
+              <textarea id="ed-msg" name="message" class="rsa-input" rows="4" style="resize: vertical;"></textarea>
+            </div>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center;">
+            <Button type="submit">Send</Button>
+            <span class="rsa-help">We only use these details to reply to you.</span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="faq-h">
+    <div class="wrap" style="display: flex; flex-direction: column; gap: 24px; max-width: 880px; margin-left: auto; margin-right: auto;">
+      <h2 id="faq-h" class="t-h2">Common questions</h2>
+      <div style="display: flex; flex-direction: column; gap: 0; border-top: 1px solid var(--line);">
+        <div style="display: flex; flex-direction: column; gap: 6px; padding-block: 20px; border-bottom: 1px solid var(--line);">
+          <h3 class="t-h3">Is it really free for a class?</h3>
+          <p class="t-muted">Yes. The Foundations courses are free for everyone, and that includes using them with a class.</p>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px; padding-block: 20px; border-bottom: 1px solid var(--line);">
+          <h3 class="t-h3">What do students need?</h3>
+          <p class="t-muted">A laptop or desktop with a modern browser and an internet connection. Nothing to install.</p>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px; padding-block: 20px; border-bottom: 1px solid var(--line);">
+          <h3 class="t-h3">Can I look at the material before December?</h3>
+          <p class="t-muted">Yes. The courses are built from our free eBooks, which are online now. <a href={links.ebooks}>Read the eBooks</a>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero-sec {
+    padding-top: 96px;
+    padding-bottom: 64px;
+  }
+  .three {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-6);
+  }
+  .form-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-12);
+    align-items: start;
+  }
+  .fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6);
+  }
+  .fld {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+  }
+  .fld label {
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 22px;
+  }
+  .fld .opt {
+    font-weight: 400;
+    color: var(--ink-muted);
+  }
+  .fld .rsa-input {
+    width: 100%;
+    box-sizing: border-box;
+    flex: none;
+    min-height: 46px;
+  }
+  .fld select.rsa-input {
+    appearance: auto;
+  }
+  .full {
+    grid-column: 1 / -1;
+  }
+  @media (max-width: 860px) {
+    .hero-sec {
+      padding-block: var(--space-12);
+    }
+    .three,
+    .form-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .page-title {
+      font-size: 38px !important;
+      line-height: 42px !important;
+    }
+  }
+  @media (max-width: 600px) {
+    .fields {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('form[name="educators"]');
+  if (form) {
+    const nameInput = form.querySelector<HTMLInputElement>('#ed-name')!;
+    const emailInput = form.querySelector<HTMLInputElement>('#ed-email')!;
+    const instInput = form.querySelector<HTMLInputElement>('#ed-inst')!;
+    const summary = form.querySelector<HTMLElement>('#form-error-summary')!;
+
+    const nameErr = document.getElementById('ed-name-err')!;
+    const emailErr = document.getElementById('ed-email-err')!;
+    const instErr = document.getElementById('ed-inst-err')!;
+
+    function checkName(): boolean {
+      const valid = Boolean(nameInput.value.trim());
+      if (!valid) {
+        nameInput.setAttribute('aria-invalid', 'true');
+        nameInput.setAttribute('aria-describedby', 'ed-name-err');
+        nameErr.style.display = 'block';
+      } else {
+        nameInput.removeAttribute('aria-invalid');
+        nameInput.removeAttribute('aria-describedby');
+        nameErr.style.display = 'none';
+      }
+      return valid;
+    }
+
+    function checkEmail(): boolean {
+      const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value.trim());
+      if (!valid) {
+        emailInput.setAttribute('aria-invalid', 'true');
+        emailInput.setAttribute('aria-describedby', 'ed-email-err');
+        emailErr.style.display = 'block';
+      } else {
+        emailInput.removeAttribute('aria-invalid');
+        emailInput.removeAttribute('aria-describedby');
+        emailErr.style.display = 'none';
+      }
+      return valid;
+    }
+
+    function checkInst(): boolean {
+      const valid = Boolean(instInput.value.trim());
+      if (!valid) {
+        instInput.setAttribute('aria-invalid', 'true');
+        instInput.setAttribute('aria-describedby', 'ed-inst-err');
+        instErr.style.display = 'block';
+      } else {
+        instInput.removeAttribute('aria-invalid');
+        instInput.removeAttribute('aria-describedby');
+        instErr.style.display = 'none';
+      }
+      return valid;
+    }
+
+    function updateSummary(): void {
+      const hasErrors =
+        nameInput.getAttribute('aria-invalid') === 'true' ||
+        emailInput.getAttribute('aria-invalid') === 'true' ||
+        instInput.getAttribute('aria-invalid') === 'true';
+      summary.style.display = hasErrors ? 'block' : 'none';
+    }
+
+    nameInput.addEventListener('input', () => {
+      if (nameInput.getAttribute('aria-invalid') === 'true') {
+        checkName();
+        updateSummary();
+      }
+    });
+
+    emailInput.addEventListener('input', () => {
+      if (emailInput.getAttribute('aria-invalid') === 'true') {
+        checkEmail();
+        updateSummary();
+      }
+    });
+
+    instInput.addEventListener('input', () => {
+      if (instInput.getAttribute('aria-invalid') === 'true') {
+        checkInst();
+        updateSummary();
+      }
+    });
+
+    form.addEventListener('submit', (e) => {
+      const nameValid = checkName();
+      const emailValid = checkEmail();
+      const instValid = checkInst();
+
+      if (!nameValid || !emailValid || !instValid) {
+        e.preventDefault();
+        summary.style.display = 'block';
+        if (!nameValid) {
+          nameInput.focus();
+        } else if (!emailValid) {
+          emailInput.focus();
+        } else {
+          instInput.focus();
+        }
+      } else {
+        summary.style.display = 'none';
+      }
+    });
+  }
+</script>
