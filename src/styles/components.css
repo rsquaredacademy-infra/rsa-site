@@ -78,3 +78,13 @@ a.rsa-card:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px;
 @media (max-width: 720px) { .rsa-footer-inner { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .rsa-footer-about { grid-column: 1 / -1; } }
 
 @media (prefers-reduced-motion: reduce) { .rsa-btn, .rsa-card { transition: none; } }
+
+/* Touch screens: tap targets at least 44px tall; the desktop layout is unchanged */
+@media (pointer: coarse) {
+  .rsa-nav-inner { padding-block: 6px; }
+  .rsa-wordmark { min-height: 44px; }
+  .rsa-nav-toggle, .rsa-nav-cta { min-height: 44px; align-items: center; }
+  .rsa-nav-links a { padding-block: 10px; }
+  .rsa-footer ul { gap: 0; }
+  .rsa-footer ul a, .rsa-footer-base a { display: inline-flex; align-items: center; min-height: 44px; }
+}
