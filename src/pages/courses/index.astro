@@ -1,0 +1,128 @@
+---
+// Courses page.
+import Base from '../../layouts/Base.astro';
+import Badge from '../../components/Badge.astro';
+import Button from '../../components/Button.astro';
+import CourseCard from '../../components/CourseCard.astro';
+import { courses, foundationsBadges, links } from '../../data/site';
+---
+
+<Base
+  title="Courses"
+  description="We're rebuilding our courses and learning platform from scratch, so you can learn R in your browser with instant feedback."
+>
+  <!-- Page header -->
+  <section class="sec page-sec">
+    <div class="wrap flex flex-col gap-5">
+      <span class="eyebrow">Courses</span>
+      <h1 class="t-h1 max-w-[760px]">Interactive R courses for data analysis</h1>
+      <p class="t-lead max-w-[680px]">We're rebuilding our courses and learning platform from scratch, so you can learn R in your browser with instant feedback. Start with three free Foundations courses, opening in December 2026.</p>
+    </div>
+  </section>
+
+  <!-- Foundations -->
+  <section class="sec flush" aria-labelledby="found-h">
+    <div class="wrap flex flex-col gap-8">
+      <div class="flex flex-wrap gap-4 items-end justify-between">
+        <div class="flex flex-col gap-2 max-w-[640px]">
+          <div class="flex gap-2 flex-wrap">
+            <Badge tone="free">Free</Badge>
+          </div>
+          <h2 id="found-h" class="t-h2">Foundations</h2>
+          <p class="t-muted">Three short courses that take you from your first line of R to clean data and clear charts. Take them in order, or start where you need to.</p>
+        </div>
+      </div>
+      <div class="three">
+        {courses.map((course) => (
+          <CourseCard eyebrow={course.eyebrow} title={course.title} description={course.long} badges={foundationsBadges} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Every course comes with -->
+  <section class="sec bg-surface" aria-labelledby="every-h">
+    <div class="wrap flex flex-col gap-8">
+      <h2 id="every-h" class="t-h2">Every course comes with</h2>
+      <ul class="four list-none m-0 p-0">
+        <li class="flex flex-col gap-2">
+          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="text-brand"><path d="M2 4h6a4 4 0 0 1 4 4v12a3 3 0 0 0-3-3H2z"></path><path d="M22 4h-6a4 4 0 0 0-4 4v12a3 3 0 0 1 3-3h7z"></path></svg>
+          <h3 class="t-h3">Short lessons</h3>
+          <p class="t-muted">One idea at a time, with small, real datasets.</p>
+        </li>
+        <li class="flex flex-col gap-2">
+          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="text-brand"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+          <h3 class="t-h3">R in your browser</h3>
+          <p class="t-muted">Write and run code in the lesson. Nothing to install.</p>
+        </li>
+        <li class="flex flex-col gap-2">
+          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="text-brand"><circle cx="12" cy="12" r="9"></circle><polyline points="8 12 11 15 16 9"></polyline></svg>
+          <h3 class="t-h3">Instant feedback</h3>
+          <p class="t-muted">See straight away whether your answer is right, and what to fix.</p>
+        </li>
+        <li class="flex flex-col gap-2">
+          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="text-brand"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"></path><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"></path></svg>
+          <h3 class="t-h3">A free eBook to go with it</h3>
+          <p class="t-muted">Read ahead or look back at any time.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- The Data Analyst track -->
+  <section class="sec" aria-labelledby="next-h">
+    <div class="wrap">
+      <div class="flex flex-wrap gap-6 items-center justify-between p-8 border border-line rounded-lg">
+        <div class="flex flex-col gap-2 flex-[1_1_480px] min-w-0">
+          <div><Badge tone="soon">Coming 2027</Badge></div>
+          <h2 id="next-h" class="t-h2">The Data Analyst track</h2>
+          <p class="t-muted max-w-[600px]">A longer path after the Foundations, built around one realistic business dataset, with SQL and customer analytics.</p>
+        </div>
+        <Button variant="secondary" href="/#signup">Hear when it opens</Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Current courses -->
+  <section class="sec flush" aria-labelledby="current-h">
+    <div class="wrap">
+      <div class="split bg-surface rounded-lg p-10">
+        <div class="flex flex-col gap-2 min-w-0">
+          <h2 id="current-h" class="t-h2">Looking for our current courses?</h2>
+          <p class="t-muted">Our current courses stay open on Thinkific while we move each one to the new platform.</p>
+        </div>
+        <div class="flex gap-3 flex-wrap">
+          <Button variant="secondary" href={links.thinkific}>Go to the current courses</Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sign-up CTA -->
+  <section class="sec flush" aria-labelledby="cta-h">
+    <div class="wrap">
+      <div class="flex flex-wrap gap-6 items-center justify-between bg-surface-tint rounded-lg p-10">
+        <div class="flex flex-col gap-2 flex-[1_1_420px] min-w-0">
+          <h2 id="cta-h" class="t-h2">Hear when the free courses open</h2>
+          <p class="t-muted">We'll email you when Introduction to R opens in December 2026.</p>
+        </div>
+        <Button href="/#signup">Get updates</Button>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .page-sec { padding-top: 96px; padding-bottom: 64px; }
+  .three { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); }
+  .four { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-6); }
+  .split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-12); align-items: center; }
+  .flush { padding-top: 0; }
+  @media (max-width: 860px) {
+    .three, .split { grid-template-columns: minmax(0, 1fr); }
+    .four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 520px) {
+    .four { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>
