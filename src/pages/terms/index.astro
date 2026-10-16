@@ -1,0 +1,67 @@
+---
+import Base from '../../layouts/Base.astro';
+import { contactEmail } from '../../data/site';
+---
+
+<Base
+  title="Terms"
+  description="The terms for using the Rsquared Academy website."
+>
+  <section class="sec" aria-labelledby="legal-h">
+    <div class="wrap">
+      <article class="legal">
+        <span class="eyebrow">Legal</span>
+        <h1 id="legal-h" class="t-h1">Terms</h1>
+        <p class="t-small t-muted">Last updated: 16 October 2026</p>
+
+        <h2 class="t-h3">About these terms</h2>
+        <p>By using www.rsquaredacademy.com you agree to these terms. Rsquared Academy runs the site.</p>
+
+        <h2 class="t-h3">Using the site</h2>
+        <p>Free to read. Don't misuse it: no attempts to break, overload or scrape the site at scale, and no unlawful use.</p>
+
+        <h2 class="t-h3">Our content</h2>
+        <p>Site text, design and logo belong to Rsquared Academy. Our eBooks, open course material and R packages are published under their own licences, shown in each repository on GitHub; those licences apply to them.</p>
+
+        <h2 class="t-h3">Courses</h2>
+        <p>The Foundations courses are free. Courses and the learning platform (app.rsquaredacademy.com) may have their own terms when they open, and those terms will apply there. Our current courses on Thinkific are covered by Thinkific's terms.</p>
+
+        <h2 class="t-h3">Links to other sites</h2>
+        <p>We link to sites we don't control (for example GitHub, CRAN, YouTube, Thinkific). We're not responsible for their content or practices.</p>
+
+        <h2 class="t-h3">No warranty</h2>
+        <p>The site and its material are provided as is. We work to keep them accurate, but we don't guarantee they are complete, current or free of errors.</p>
+
+        <h2 class="t-h3">Limitation of liability</h2>
+        <p>To the extent the law allows, Rsquared Academy is not liable for any indirect or consequential loss arising from use of the site.</p>
+
+        <h2 class="t-h3">Governing law</h2>
+        <p>These terms are governed by the laws of Karnataka, India.</p>
+
+        <h2 class="t-h3">Changes and contact</h2>
+        <p>We may update these terms and will change the date at the top. Questions: <a href={`mailto:${contactEmail}`}>{contactEmail}</a>, or see our <a href="/privacy/">Privacy</a> page.</p>
+      </article>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .legal {
+    max-width: var(--text-max);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .legal p,
+  .legal li {
+    margin: 0;
+  }
+  .legal ul {
+    margin: 0;
+    padding-left: 24px;
+    list-style: disc;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+</style>
