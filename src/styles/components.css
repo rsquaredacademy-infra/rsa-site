@@ -66,6 +66,8 @@ a.rsa-card:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px;
 .rsa-input[aria-invalid="true"] { border-color: var(--danger); }
 .rsa-help { font-size: 15px; line-height: 22px; color: var(--ink-muted); }
 .rsa-error { font-size: 15px; line-height: 22px; color: var(--danger); font-weight: 600; }
+.rsa-signup .rsa-signup__status--error { font-size: 15px; line-height: 22px; color: var(--danger); font-weight: 600; }
+.rsa-signup .rsa-signup__status--success { font-size: 15px; line-height: 22px; color: var(--ink); font-weight: 600; }
 @media (max-width: 720px) { .rsa-signup { grid-template-columns: minmax(0, 1fr); padding: var(--space-6); } }
 
 /* Footer */
