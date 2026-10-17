@@ -279,14 +279,119 @@ test.describe('Extra tests', () => {
     const emailInput = form.locator('input[type="email"]');
     const submitBtn = form.locator('button[type="submit"]');
 
+    // The kit treats a submit within 2 s of load as a bot, so wait it out.
+    await page.waitForTimeout(2200);
+
     await emailInput.fill('not-an-email');
     await submitBtn.click();
 
-    const msgId = await emailInput.getAttribute('aria-describedby');
-    const msg = page.locator(`#${msgId}`);
-    await expect(msg).toHaveText('Enter an email address like name@example.com.');
+    const status = page.locator('[data-rsa-signup-status]');
+    await expect(status).toHaveText('Please enter a valid email address.');
+    await expect(status).toHaveClass(/rsa-signup__status--error/);
     await expect(emailInput).toHaveAttribute('aria-invalid', 'true');
     expect(new URL(page.url()).pathname).toBe('/');
+  });
+
+  test('sign-up band new contact', async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== 'desktop', 'Desktop project only');
+    await page.goto('/');
+
+    let requestBody: string | null = null;
+    await page.route('https://zgnp-zngp.maillist-manage.com/**', async (route) => {
+      requestBody = route.request().postData();
+      await route.fulfill({
+        status: 200,
+        headers: { 'Access-Control-Allow-Origin': '*' },
+        contentType: 'text/html',
+        body: '<html><body>We have sent a confirmation link ##ZCJSONSTART##{&#34;spmSubmit&#34;:false,&#34;emailid&#34;:&#34;a@b.com&#34;,&#34;isNewContact&#34;:true}##ZCJSON##</body></html>',
+      });
+    });
+
+    const form = page.locator('form[data-rsa-signup]');
+    const emailInput = form.locator('input[type="email"]');
+    const submitBtn = form.locator('button[type="submit"]');
+
+    await page.waitForTimeout(2200);
+
+    await emailInput.fill('reader@example.com');
+    await submitBtn.click();
+
+    await expect.poll(() => requestBody).not.toBeNull();
+    expect(requestBody).toContain('CONTACT_EMAIL=reader%40example.com');
+    expect(requestBody).toContain('CONTACT_CF1=www.rsquaredacademy.com');
+
+    const status = page.locator('[data-rsa-signup-status]');
+    await expect(status).toHaveText('Almost done: check your inbox for a confirmation email.');
+    await expect(status).toHaveClass(/rsa-signup__status--success/);
+    await expect(emailInput).toHaveValue('');
+  });
+
+  test('sign-up band existing contact', async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== 'desktop', 'Desktop project only');
+    await page.goto('/about/');
+
+    let requestBody: string | null = null;
+    await page.route('https://zgnp-zngp.maillist-manage.com/**', async (route) => {
+      requestBody = route.request().postData();
+      await route.fulfill({
+        status: 200,
+        headers: { 'Access-Control-Allow-Origin': '*' },
+        contentType: 'text/html',
+        body: '<html><body>##ZCJSONSTART##{&#34;spmSubmit&#34;:false,&#34;emailid&#34;:&#34;a@b.com&#34;,&#34;isNewContact&#34;:false}##ZCJSON##</body></html>',
+      });
+    });
+
+    const form = page.locator('form[data-rsa-signup]');
+    const emailInput = form.locator('input[type="email"]');
+    const submitBtn = form.locator('button[type="submit"]');
+
+    await page.waitForTimeout(2200);
+
+    await emailInput.fill('reader@example.com');
+    await submitBtn.click();
+
+    await expect.poll(() => requestBody).not.toBeNull();
+    expect(requestBody).toContain('CONTACT_CF1=www.rsquaredacademy.com%2Fabout');
+
+    const status = page.locator('[data-rsa-signup-status]');
+    await expect(status).toHaveText("You're already subscribed. Thank you!");
+    await expect(status).toHaveClass(/rsa-signup__status--success/);
+  });
+
+  test('sign-up band honeypot', async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== 'desktop', 'Desktop project only');
+    await page.goto('/');
+
+    let zohoRequests = 0;
+    await page.route('https://zgnp-zngp.maillist-manage.com/**', async (route) => {
+      zohoRequests += 1;
+      await route.fulfill({
+        status: 200,
+        headers: { 'Access-Control-Allow-Origin': '*' },
+        contentType: 'text/html',
+        body: '<html><body>##ZCJSONSTART##{&#34;spmSubmit&#34;:false,&#34;emailid&#34;:&#34;a@b.com&#34;,&#34;isNewContact&#34;:true}##ZCJSON##</body></html>',
+      });
+    });
+
+    const form = page.locator('form[data-rsa-signup]');
+    const emailInput = form.locator('input[type="email"]');
+    const submitBtn = form.locator('button[type="submit"]');
+
+    await page.evaluate(() => {
+      const hp = document.querySelector<HTMLInputElement>('form[data-rsa-signup] [data-rsa-signup-hp]');
+      if (hp) hp.value = 'spam';
+    });
+
+    await page.waitForTimeout(2200);
+
+    await emailInput.fill('reader@example.com');
+    await submitBtn.click();
+
+    const status = page.locator('[data-rsa-signup-status]');
+    await expect(status).toHaveText('Almost done: check your inbox for a confirmation email.');
+    await expect(status).toHaveClass(/rsa-signup__status--success/);
+    await page.waitForTimeout(500);
+    expect(zohoRequests).toBe(0);
   });
 
   test('educators form validation and submission', async ({ page }, testInfo) => {

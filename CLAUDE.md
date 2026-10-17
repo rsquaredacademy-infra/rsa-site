@@ -36,7 +36,7 @@ placeholders in that repo's `TODO.md`, not as TODO comments in this repo.
 - `src/data/site.ts` — nav, links, courses, badges. Reuse it; add shared data
   here instead of repeating it in pages.
 - `public/images/` — logo and page images. `public/site-kit/` — vendored
-  site-kit v1.0.0 (GA4 + consent); don't edit.
+  site-kit v1.2.0 (GA4 + consent + sign-up); don't edit.
   - The mockups reference images as `/_blob/<hash>`. Use these files instead:
     eBook covers `public/images/covers/{intro-r,wrangle-r,viz-ggplot2,rdbsql,bash-intro,viz-base}.svg`
     (in the order of the books in `Resources.dc.html`); package hex stickers
@@ -57,7 +57,8 @@ placeholders in that repo's `TODO.md`, not as TODO comments in this repo.
 - No new dependencies without asking. No client-side framework (no React).
   Small `<script>` blocks are fine.
 - Forms: Netlify Forms (`data-netlify="true"`, hidden `form-name`, honeypot),
-  posting to `/thanks/`.
+  posting to `/thanks/`. Exception: the sign-up band posts to Zoho Campaigns
+  through site-kit's enhance mode (`<form data-rsa-signup data-site>`).
 - This repo is public: no secrets, drafts or internal notes in code or commits.
 
 ## Checks

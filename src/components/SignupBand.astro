@@ -1,12 +1,13 @@
 ---
-// Email sign-up, posted to Netlify Forms ("updates").
+// Email sign-up, posted to Zoho Campaigns via site-kit enhance mode.
 import Button from './Button.astro';
-interface Props { title?: string; text?: string; button?: string; id?: string }
+interface Props { title?: string; text?: string; button?: string; id?: string; site: string }
 const {
   title = 'Get updates',
   text = 'Hear when the free courses open in December 2026. We email about once a month.',
   button = 'Get updates',
   id = 'signup-email',
+  site,
 } = Astro.props;
 ---
 <section class="rsa-signup" id="signup">
@@ -14,31 +15,13 @@ const {
     <h2>{title}</h2>
     <p>{text}</p>
   </div>
-  <form name="updates" method="POST" action="/thanks/" data-netlify="true" netlify-honeypot="company" novalidate data-rsa-signup>
-    <input type="hidden" name="form-name" value="updates" />
-    <p hidden><label>Leave this empty <input name="company" tabindex="-1" autocomplete="off" /></label></p>
+  <form novalidate data-rsa-signup data-site={site}>
+    <p hidden><label>Leave this empty <input name="website" tabindex="-1" autocomplete="off" data-rsa-signup-hp /></label></p>
     <label for={id}>Email</label>
     <div class="rsa-signup-row">
       <input id={id} name="email" class="rsa-input" type="email" autocomplete="email" placeholder="name@example.com" required aria-describedby={`${id}-msg`} />
       <Button type="submit">{button}</Button>
     </div>
-    <div id={`${id}-msg`} class="rsa-help">No spam. Unsubscribe any time.</div>
+    <div id={`${id}-msg`} class="rsa-help" data-rsa-signup-status role="status" aria-live="polite">No spam. Unsubscribe any time.</div>
   </form>
 </section>
-
-<script>
-  // Client-side check before the native submit; the message replaces the help text.
-  document.querySelectorAll<HTMLFormElement>('form[data-rsa-signup]').forEach((form) => {
-    const input = form.querySelector<HTMLInputElement>('input[type="email"]')!;
-    const msg = document.getElementById(input.getAttribute('aria-describedby')!)!;
-    form.addEventListener('submit', (e) => {
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value)) {
-        e.preventDefault();
-        input.setAttribute('aria-invalid', 'true');
-        msg.className = 'rsa-error';
-        msg.textContent = 'Enter an email address like name@example.com.';
-        input.focus();
-      }
-    });
-  });
-</script>
