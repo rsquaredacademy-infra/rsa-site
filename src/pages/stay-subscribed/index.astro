@@ -1,0 +1,15 @@
+---
+// Landing page for the Mailchimp re-permission email: old subscribers re-join
+// the Zoho list here (Signup site = mailchimp-repermission). Not in the sitemap.
+import Base from '../../layouts/Base.astro';
+import SignupBand from '../../components/SignupBand.astro';
+---
+<Base title="Stay subscribed" description="Confirm you'd like to keep getting Rsquared Academy updates." noindex>
+  <section class="sec">
+    <div class="wrap" style="display: flex; flex-direction: column; gap: 20px;">
+      <h1 class="t-h1">Stay subscribed</h1>
+      <p class="t-lead">We're moving our mailing list to a new system. To keep hearing from us, including when the free, in-browser R courses open in December 2026, enter your email below.</p>
+    </div>
+  </section>
+  <SignupBand site="mailchimp-repermission" title="Keep me subscribed" text="We'll send you a confirmation email. Click the link in it and you're done." button="Keep me subscribed" />
+</Base>
