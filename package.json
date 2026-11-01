@@ -11,6 +11,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "check": "astro check",
+    "og:card": "node scripts/og-card/render.mjs",
     "test:e2e": "playwright test"
   },
   "dependencies": {
