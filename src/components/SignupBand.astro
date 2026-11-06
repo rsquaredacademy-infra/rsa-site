@@ -1,27 +1,61 @@
 ---
-// Email sign-up, posted to Zoho Campaigns via site-kit enhance mode.
-import Button from './Button.astro';
-interface Props { title?: string; text?: string; button?: string; id?: string; site: string }
+// Email sign-up: Zoho Campaigns' hosted form, embedded in an iframe.
+//
+// Posting our own form from this page was rejected as spam by Zoho
+// (`spmSubmit: true`), so the hosted form is the supported path.
+// Cross-origin means we can only observe that the iframe was focused, not
+// whether the visitor submitted successfully: see the GA4 note below.
+interface Props { title?: string; text?: string; id?: string; site: string }
 const {
   title = 'Get updates',
   text = 'Hear when the free courses open in December 2026. We email about once a month.',
-  button = 'Get updates',
   id = 'signup-email',
   site,
 } = Astro.props;
+const formUrl = 'https://zgnp-zngp.maillist-manage.com/ua/Optin?od=11287ecdb0025d&zx=126630e09&lD=117e9dae2c8129085&sD=117e9dae2c8129b28';
 ---
 <section class="rsa-signup" id="signup">
-  <div>
+  <div class="rsa-signup-copy">
     <h2>{title}</h2>
     <p>{text}</p>
+    <p class="rsa-signup-note">No spam. Unsubscribe any time. <a href="/privacy/">Privacy</a></p>
   </div>
-  <form novalidate data-rsa-signup data-site={site}>
-    <p hidden><label>Leave this empty <input name="website" tabindex="-1" autocomplete="off" data-rsa-signup-hp /></label></p>
-    <label for={id}>Email</label>
-    <div class="rsa-signup-row">
-      <input id={id} name="email" class="rsa-input" type="email" autocomplete="email" placeholder="name@example.com" required aria-describedby={`${id}-msg`} />
-      <Button type="submit">{button}</Button>
-    </div>
-    <div id={`${id}-msg`} class="rsa-help" data-rsa-signup-status role="status" aria-live="polite">No spam. Unsubscribe any time.</div>
-  </form>
+  <div class="rsa-signup-embed">
+    <iframe
+      id={id}
+      src={formUrl}
+      title="Sign up for Rsquared Academy updates"
+      loading="lazy"
+      data-signup-embed
+      data-signup-site={site}
+    ></iframe>
+  </div>
 </section>
+
+<script>
+  // A cross-origin iframe cannot tell us when the hosted form was submitted,
+  // so GA4 gets one `signup_embed_interact` event on first focus instead of a
+  // `sign_up` success event. Clicking into the form focuses the iframe.
+  for (const iframe of document.querySelectorAll<HTMLIFrameElement>('iframe[data-signup-embed]')) {
+    const track = () => {
+      if (iframe.dataset.signupTracked === 'true') return;
+      iframe.dataset.signupTracked = 'true';
+      const gtag = (window as Window & { gtag?: (...args: unknown[]) => void }).gtag;
+      if (typeof gtag === 'function') {
+        gtag('event', 'signup_embed_interact', {
+          event_category: 'signup',
+          event_label: iframe.dataset.signupSite || 'www.rsquaredacademy.com',
+        });
+      }
+    };
+    iframe.addEventListener('focus', track);
+    // Clicking into a cross-origin iframe focuses its own document, not the
+    // parent's <iframe> element (no focus event here), but the parent window
+    // does blur. Check who has focus once the browser settles.
+    window.addEventListener('blur', () => {
+      window.setTimeout(() => {
+        if (document.activeElement === iframe) track();
+      }, 0);
+    });
+  }
+</script>

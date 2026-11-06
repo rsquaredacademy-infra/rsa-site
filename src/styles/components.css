@@ -58,17 +58,18 @@ a.rsa-card:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px;
 .rsa-signup { background: var(--surface-tint); border-radius: var(--radius-lg); padding: var(--space-8); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-8); align-items: center; }
 .rsa-signup h2 { font-family: var(--font-display); font-size: 30px; line-height: 36px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 var(--space-2); text-wrap: balance; }
 .rsa-signup p { margin: 0; color: var(--ink-muted); }
-.rsa-signup form { display: flex; flex-direction: column; gap: var(--space-2); }
-.rsa-signup label { font-weight: 600; font-size: 15px; line-height: 22px; }
-.rsa-signup-row { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+.rsa-signup-note { margin-top: var(--space-3); font-size: 15px; line-height: 22px; }
+.rsa-signup-embed { width: 100%; max-width: 320px; margin-inline: auto; }
+.rsa-signup-embed iframe { display: block; width: 100%; height: 320px; border: 0; border-radius: var(--radius-md); background: #fff; }
 .rsa-input { flex: 1 1 220px; min-width: 0; font: 400 17px/24px var(--font-body); color: var(--ink); background: var(--bg); border: 1px solid var(--line-strong); border-radius: var(--radius-sm); padding: 10px var(--space-4); }
 .rsa-input:focus-visible { outline: 2px solid var(--brand); outline-offset: 1px; }
 .rsa-input[aria-invalid="true"] { border-color: var(--danger); }
 .rsa-help { font-size: 15px; line-height: 22px; color: var(--ink-muted); }
 .rsa-error { font-size: 15px; line-height: 22px; color: var(--danger); font-weight: 600; }
-.rsa-signup .rsa-signup__status--error { font-size: 15px; line-height: 22px; color: var(--danger); font-weight: 600; }
-.rsa-signup .rsa-signup__status--success { font-size: 15px; line-height: 22px; color: var(--ink); font-weight: 600; }
-@media (max-width: 720px) { .rsa-signup { grid-template-columns: minmax(0, 1fr); padding: var(--space-6); } }
+@media (max-width: 767px) {
+  .rsa-signup { grid-template-columns: minmax(0, 1fr); padding: var(--space-6) var(--space-2); }
+  .rsa-signup-copy { padding-inline: var(--space-4); }
+}
 
 /* Footer */
 .rsa-footer { background: var(--surface); border-top: 1px solid var(--line); color: var(--ink-muted); font-size: 15px; line-height: 22px; }

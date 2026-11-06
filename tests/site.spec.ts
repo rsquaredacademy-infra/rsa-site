@@ -1,6 +1,19 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
+// The sign-up band embeds Zoho's hosted form. Tests must never reach or submit
+// to Zoho: a static stub keeps rendering checks deterministic and cannot create
+// contacts.
+test.beforeEach(async ({ page }) => {
+  await page.route('https://zgnp-zngp.maillist-manage.com/**', (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: 'text/html',
+      body: '<!doctype html><html lang="en"><head><title>Sign-up form</title></head><body><input type="email" aria-label="Email"></body></html>',
+    }),
+  );
+});
+
 const PAGES = [
   '/',
   '/courses/',
@@ -271,127 +284,76 @@ test.describe('Extra tests', () => {
     await expect(navLinks).toBeVisible();
   });
 
-  test('sign-up band invalid email', async ({ page }, testInfo) => {
+  test('sign-up band embeds the Zoho hosted form', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'desktop', 'Desktop project only');
     await page.goto('/');
 
-    const form = page.locator('form[data-rsa-signup]');
-    const emailInput = form.locator('input[type="email"]');
-    const submitBtn = form.locator('button[type="submit"]');
+    const iframe = page.locator('iframe[data-signup-embed]');
+    await expect(iframe).toHaveCount(1);
+    await expect(iframe).toHaveAttribute('title', 'Sign up for Rsquared Academy updates');
+    await expect(iframe).toHaveAttribute('loading', 'lazy');
+    await expect(iframe).toHaveAttribute(
+      'src',
+      /^https:\/\/zgnp-zngp\.maillist-manage\.com\/ua\/Optin\?/,
+    );
+    await expect(iframe).toBeVisible();
 
-    // The kit treats a submit within 2 s of load as a bot, so wait it out.
-    await page.waitForTimeout(2200);
+    const box = await iframe.boundingBox();
+    expect(box).not.toBeNull();
+    expect(box!.width).toBeGreaterThanOrEqual(310);
+    expect(box!.height).toBe(320);
 
-    await emailInput.fill('not-an-email');
-    await submitBtn.click();
+    const borderWidth = await iframe.evaluate((el) => getComputedStyle(el).borderTopWidth);
+    expect(borderWidth).toBe('0px');
 
-    const status = page.locator('[data-rsa-signup-status]');
-    await expect(status).toHaveText('Please enter a valid email address.');
-    await expect(status).toHaveClass(/rsa-signup__status--error/);
-    await expect(emailInput).toHaveAttribute('aria-invalid', 'true');
-    expect(new URL(page.url()).pathname).toBe('/');
+    // The old site-kit form and script are gone.
+    await expect(page.locator('form[data-rsa-signup]')).toHaveCount(0);
+    expect(await page.locator('script[src*="rsa-signup"]').count()).toBe(0);
   });
 
-  test('sign-up band new contact', async ({ page }, testInfo) => {
+  test('sign-up embed tracks first interaction', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'desktop', 'Desktop project only');
+    await page.addInitScript(() => {
+      (window as any).__gaEvents = [];
+      (window as any).gtag = (...args: unknown[]) => {
+        (window as any).__gaEvents.push(args);
+      };
+    });
     await page.goto('/');
 
-    let requestBody: string | null = null;
-    await page.route('https://zgnp-zngp.maillist-manage.com/**', async (route) => {
-      requestBody = route.request().postData();
-      await route.fulfill({
-        status: 200,
-        headers: { 'Access-Control-Allow-Origin': '*' },
-        contentType: 'text/html',
-        body: '<html><body>We have sent a confirmation link ##ZCJSONSTART##{&#34;spmSubmit&#34;:false,&#34;emailid&#34;:&#34;a@b.com&#34;,&#34;isNewContact&#34;:true}##ZCJSON##</body></html>',
-      });
+    await page.frameLocator('iframe[data-signup-embed]').locator('input[type="email"]').click();
+
+    await expect.poll(async () =>
+      page.evaluate(
+        () =>
+          ((window as any).__gaEvents as unknown[][]).filter(
+            (args) => args[1] === 'signup_embed_interact',
+          ).length,
+      ),
+    ).toBe(1);
+
+    const event = await page.evaluate(
+      () =>
+        ((window as any).__gaEvents as unknown[][]).find(
+          (args) => args[1] === 'signup_embed_interact',
+        ),
+    );
+    expect(event?.[2]).toMatchObject({
+      event_category: 'signup',
+      event_label: 'www.rsquaredacademy.com',
     });
 
-    const form = page.locator('form[data-rsa-signup]');
-    const emailInput = form.locator('input[type="email"]');
-    const submitBtn = form.locator('button[type="submit"]');
-
-    await page.waitForTimeout(2200);
-
-    await emailInput.fill('reader@example.com');
-    await submitBtn.click();
-
-    await expect.poll(() => requestBody).not.toBeNull();
-    expect(requestBody).toContain('CONTACT_EMAIL=reader%40example.com');
-    expect(requestBody).toContain('CONTACT_CF1=www.rsquaredacademy.com');
-
-    const status = page.locator('[data-rsa-signup-status]');
-    await expect(status).toHaveText('Almost done: check your inbox for a confirmation email.');
-    await expect(status).toHaveClass(/rsa-signup__status--success/);
-    await expect(emailInput).toHaveValue('');
-  });
-
-  test('sign-up band existing contact', async ({ page }, testInfo) => {
-    test.skip(testInfo.project.name !== 'desktop', 'Desktop project only');
-    await page.goto('/about/');
-
-    let requestBody: string | null = null;
-    await page.route('https://zgnp-zngp.maillist-manage.com/**', async (route) => {
-      requestBody = route.request().postData();
-      await route.fulfill({
-        status: 200,
-        headers: { 'Access-Control-Allow-Origin': '*' },
-        contentType: 'text/html',
-        body: '<html><body>##ZCJSONSTART##{&#34;spmSubmit&#34;:false,&#34;emailid&#34;:&#34;a@b.com&#34;,&#34;isNewContact&#34;:false}##ZCJSON##</body></html>',
-      });
-    });
-
-    const form = page.locator('form[data-rsa-signup]');
-    const emailInput = form.locator('input[type="email"]');
-    const submitBtn = form.locator('button[type="submit"]');
-
-    await page.waitForTimeout(2200);
-
-    await emailInput.fill('reader@example.com');
-    await submitBtn.click();
-
-    await expect.poll(() => requestBody).not.toBeNull();
-    expect(requestBody).toContain('CONTACT_CF1=www.rsquaredacademy.com%2Fabout');
-
-    const status = page.locator('[data-rsa-signup-status]');
-    await expect(status).toHaveText("You're already subscribed. Thank you!");
-    await expect(status).toHaveClass(/rsa-signup__status--success/);
-  });
-
-  test('sign-up band honeypot', async ({ page }, testInfo) => {
-    test.skip(testInfo.project.name !== 'desktop', 'Desktop project only');
-    await page.goto('/');
-
-    let zohoRequests = 0;
-    await page.route('https://zgnp-zngp.maillist-manage.com/**', async (route) => {
-      zohoRequests += 1;
-      await route.fulfill({
-        status: 200,
-        headers: { 'Access-Control-Allow-Origin': '*' },
-        contentType: 'text/html',
-        body: '<html><body>##ZCJSONSTART##{&#34;spmSubmit&#34;:false,&#34;emailid&#34;:&#34;a@b.com&#34;,&#34;isNewContact&#34;:true}##ZCJSON##</body></html>',
-      });
-    });
-
-    const form = page.locator('form[data-rsa-signup]');
-    const emailInput = form.locator('input[type="email"]');
-    const submitBtn = form.locator('button[type="submit"]');
-
-    await page.evaluate(() => {
-      const hp = document.querySelector<HTMLInputElement>('form[data-rsa-signup] [data-rsa-signup-hp]');
-      if (hp) hp.value = 'spam';
-    });
-
-    await page.waitForTimeout(2200);
-
-    await emailInput.fill('reader@example.com');
-    await submitBtn.click();
-
-    const status = page.locator('[data-rsa-signup-status]');
-    await expect(status).toHaveText('Almost done: check your inbox for a confirmation email.');
-    await expect(status).toHaveClass(/rsa-signup__status--success/);
-    await page.waitForTimeout(500);
-    expect(zohoRequests).toBe(0);
+    // Interacting again must not send a second event.
+    await page.frameLocator('iframe[data-signup-embed]').locator('input[type="email"]').click();
+    await page.waitForTimeout(100);
+    expect(
+      await page.evaluate(
+        () =>
+          ((window as any).__gaEvents as unknown[][]).filter(
+            (args) => args[1] === 'signup_embed_interact',
+          ).length,
+      ),
+    ).toBe(1);
   });
 
   test('educators form validation and submission', async ({ page }, testInfo) => {
