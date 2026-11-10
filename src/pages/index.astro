@@ -4,6 +4,7 @@ import Base from '../layouts/Base.astro';
 import Badge from '../components/Badge.astro';
 import Button from '../components/Button.astro';
 import CourseCard from '../components/CourseCard.astro';
+import LearningLadder from '../components/LearningLadder.astro';
 import SignupBand from '../components/SignupBand.astro';
 import { courses, foundationsBadges, links } from '../data/site';
 ---
@@ -75,6 +76,18 @@ import { courses, foundationsBadges, links } from '../data/site';
           <p class="t-muted">Find out straight away whether your answer is right, and what to fix if it isn't.</p>
         </li>
       </ol>
+    </div>
+  </section>
+
+  <!-- How you'll learn -->
+  <section class="sec" aria-labelledby="ladder-h">
+    <div class="wrap flex flex-col gap-8">
+      <div class="flex flex-col gap-2 max-w-[640px]">
+        <h2 id="ladder-h" class="t-h2">How you'll learn</h2>
+        <p class="t-lead">Each lesson takes one idea and climbs four steps, from watching it done to doing it yourself.</p>
+      </div>
+      <LearningLadder />
+      <div><Button variant="text" href="/how-we-teach/">How we teach</Button></div>
     </div>
   </section>
 

@@ -1,0 +1,104 @@
+---
+// How we teach.
+import Base from '../../layouts/Base.astro';
+import Button from '../../components/Button.astro';
+import LearningLadder from '../../components/LearningLadder.astro';
+---
+
+<Base
+  title="How we teach"
+  description="Every lesson runs R in your browser and climbs four steps: see it worked, fill in the blanks, fix the bug, write it yourself."
+>
+  <section class="sec page-sec">
+    <div class="wrap flex flex-col gap-5">
+      <span class="eyebrow">How we teach</span>
+      <h1 class="t-h1 max-w-[760px]">Learn by doing, one small step at a time</h1>
+      <p class="t-lead max-w-[680px]">Every lesson is built the same way, so you always know what to expect: one idea, four steps, and feedback that helps you work out the answer yourself.</p>
+    </div>
+  </section>
+
+  <section class="sec flush" aria-labelledby="browser-h">
+    <div class="wrap story">
+      <h2 id="browser-h" class="t-h2">R in your browser</h2>
+      <div class="prose">
+        <p>You write R in the lesson and press Run. The code runs in your browser, so there is nothing to install and nothing to set up.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec flush" aria-labelledby="ladder-h">
+    <div class="wrap flex flex-col gap-8">
+      <div class="flex flex-col gap-2 max-w-[680px]">
+        <h2 id="ladder-h" class="t-h2">Four steps in every idea</h2>
+        <p class="t-muted">Each idea is taught in a short sequence of lessons. Each step asks a little more of you than the one before.</p>
+      </div>
+      <LearningLadder detail />
+    </div>
+  </section>
+
+  <section class="sec flush" aria-labelledby="feedback-h">
+    <div class="wrap story">
+      <h2 id="feedback-h" class="t-h2">Feedback that teaches</h2>
+      <div class="prose">
+        <p>When you press Run, the lesson checks your code and tells you what it found. It points to the mistake and the idea behind it, and it does not hand you the answer. For example:</p>
+        <blockquote>Your code stopped with an error: R read <code>customers</code> as a variable name, not a column. Where do the two columns become positions on the chart?</blockquote>
+        <p>If you are still stuck, ask for a hint. Hints appear one at a time. The first names the idea, the next asks a pointed question, and the last narrows down where to look without writing the finished line for you. In quizzes, a wrong answer shows a hint, and the explanation comes once you get it right.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec flush" aria-labelledby="data-h">
+    <div class="wrap story">
+      <h2 id="data-h" class="t-h2">One realistic dataset</h2>
+      <div class="prose">
+        <p>The three Foundations courses use the same dataset: daily figures for Bean &amp; Barrel, a coffee chain with nine stores in five countries. It is built for the courses to look and behave like business data, so you meet the same kind of columns and questions an analyst does, and by the third course you already know the data.</p>
+        <p>The paid tracks follow the same idea with one online-shop dataset, ShopVibe, across every course.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec flush" aria-labelledby="pictures-h">
+    <div class="wrap story">
+      <h2 id="pictures-h" class="t-h2">Pictures where they help</h2>
+      <div class="prose">
+        <p>Some ideas are easier to see than to read. Where a picture explains an idea better than a paragraph, such as a name pointing at a row of numbered values, the lesson shows one.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec flush" aria-labelledby="short-h">
+    <div class="wrap story">
+      <h2 id="short-h" class="t-h2">Short lessons</h2>
+      <div class="prose">
+        <p>A lesson covers one idea and takes a few minutes, so you can finish one in a spare moment and pick up where you left off.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec flush" aria-labelledby="cta-h">
+    <div class="wrap">
+      <div class="flex flex-wrap gap-6 items-center justify-between bg-surface-tint rounded-lg p-10">
+        <div class="flex flex-col gap-2 flex-[1_1_420px] min-w-0">
+          <h2 id="cta-h" class="t-h2">Start with the free courses</h2>
+          <p class="t-muted">Three free Foundations courses open in December 2026.</p>
+        </div>
+        <div class="flex gap-3 flex-wrap">
+          <Button href="/courses/">See the courses</Button>
+          <Button variant="secondary" href="/#signup">Get updates</Button>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .page-sec { padding-top: 96px; padding-bottom: 64px; }
+  .flush { padding-top: 0; }
+  .prose { display: flex; flex-direction: column; gap: 20px; max-width: 680px; }
+  .prose p { margin: 0; }
+  .story { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: var(--space-12); align-items: start; }
+  blockquote { margin: 0; padding: var(--space-4) var(--space-6); border-left: 3px solid var(--brand); background: var(--surface); border-radius: var(--radius-md, 8px); }
+  @media (max-width: 860px) {
+    .story { grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
+  }
+</style>
