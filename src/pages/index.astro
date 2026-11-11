@@ -3,19 +3,9 @@
 import Base from '../layouts/Base.astro';
 import Badge from '../components/Badge.astro';
 import Button from '../components/Button.astro';
-import ConsoleSnippet from '../components/ConsoleSnippet.astro';
 import CourseCard from '../components/CourseCard.astro';
 import SignupBand from '../components/SignupBand.astro';
 import { courses, foundationsBadges, links } from '../data/site';
-
-// Hero R console: real R with its true output.
-const heroCode = [
-  { input: 'sales <- c(120, 95, 143, 110)' },
-  { input: 'mean(sales)' },
-  { output: '[1] 117' },
-  { input: 'max(sales) - min(sales)' },
-  { output: '[1] 48' },
-];
 ---
 
 <Base
@@ -37,10 +27,21 @@ const heroCode = [
           <Button variant="secondary" href="#courses">See the courses</Button>
         </div>
       </div>
-      <div class="flex flex-col gap-3 min-w-0">
-        <ConsoleSnippet lines={heroCode} label="An R console example" />
-        <p class="t-small t-muted">Real R, written and run in the lesson. No setup, nothing to download.</p>
-      </div>
+      <figure class="hero-figure">
+        <picture>
+          <source srcset="/images/lesson-player-hero.webp" type="image/webp" />
+          <img
+            class="hero-shot"
+            src="/images/lesson-player-hero.png"
+            width="1440"
+            height="900"
+            loading="eager"
+            decoding="async"
+            alt="The Rsquared Academy lesson player: a lesson, the code editor, a chart and instant feedback"
+          />
+        </picture>
+        <figcaption class="t-small t-muted">Real R, written and run in the lesson. No setup, nothing to download.</figcaption>
+      </figure>
     </div>
   </section>
 
@@ -164,6 +165,8 @@ const heroCode = [
 
 <style>
   .hero-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--space-12); align-items: center; }
+  .hero-figure { margin: 0; display: flex; flex-direction: column; gap: var(--space-3); min-width: 0; }
+  .hero-shot { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg); box-shadow: var(--shadow-card); }
   .trust-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-12); align-items: start; }
   .three { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); }
   .four { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-6); }

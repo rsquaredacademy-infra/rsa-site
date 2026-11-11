@@ -25,17 +25,20 @@ const statusId = `${id}-status`;
     <p class="rsa-signup-note">No spam. Unsubscribe any time. <a href="/privacy/">Privacy</a></p>
   </div>
   <form class="rsa-signup-form" data-signup-form data-signup-site={site} novalidate>
-    <div class="rsa-signup-field">
-      <label for={id}>Email address</label>
-      <input
-        id={id}
-        class="rsa-input"
-        name="email"
-        type="email"
-        autocomplete="email"
-        required
-        aria-describedby={statusId}
-      />
+    <div class="rsa-signup-row">
+      <div class="rsa-signup-field">
+        <label for={id}>Email address</label>
+        <input
+          id={id}
+          class="rsa-input"
+          name="email"
+          type="email"
+          autocomplete="email"
+          required
+          aria-describedby={statusId}
+        />
+      </div>
+      <Button type="submit">Get updates</Button>
     </div>
     <div class="rsa-signup-hp" aria-hidden="true">
       <label for={`${id}-website`}>Website</label>
@@ -48,7 +51,6 @@ const statusId = `${id}-status`;
       />
     </div>
     <div class="rsa-signup-turnstile" data-signup-turnstile></div>
-    <Button type="submit">Get updates</Button>
     <p id={statusId} class="rsa-help" data-signup-status role="status" aria-live="polite"></p>
   </form>
 </section>

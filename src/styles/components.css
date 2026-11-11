@@ -36,6 +36,10 @@ a.rsa-card:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px;
 .rsa-card-grid > .rsa-card:has(> .rsa-card-foot) { grid-row: span 4; }
 /* Track cards: badges, title, summary, curriculum list and note each line up across the row */
 .rsa-card-grid.rsa-card-grid--tracks > .rsa-card { grid-row: span 5; }
+/* CourseCard visual: the app home's course picture at the top of the card */
+.rsa-card--visual { padding-top: 0; }
+.rsa-card-visual { margin-inline: calc(var(--space-6) * -1); border-radius: calc(var(--radius-lg) - 1px) calc(var(--radius-lg) - 1px) 0 0; overflow: hidden; }
+.rsa-card-grid > .rsa-card.rsa-card--visual { grid-row: span 4; }
 
 /* Navbar */
 .rsa-nav { background: var(--bg); border-bottom: 1px solid var(--line); }
@@ -58,16 +62,26 @@ a.rsa-card:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px;
 }
 
 /* SignupBand */
-.rsa-signup { background: var(--surface-tint); border-radius: var(--radius-lg); padding: var(--space-8); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-8); align-items: center; }
+/* One control height for the email field and the button: the button's 24px
+   line + 2×11px padding + 2×1px border = 48px. The field and button sit on one
+   row from 640px (input grows, button fixed); stacked full width below that. */
+.rsa-signup { --control-h: 48px; background: var(--surface-tint); border-radius: var(--radius-lg); padding: var(--space-8); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-8); align-items: center; }
 .rsa-signup h2 { font-family: var(--font-display); font-size: 30px; line-height: 36px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 var(--space-2); text-wrap: balance; }
 .rsa-signup p { margin: 0; color: var(--ink-muted); }
 .rsa-signup-note { margin-top: var(--space-3); font-size: 15px; line-height: 22px; }
 .rsa-signup-form { display: flex; flex-direction: column; gap: var(--space-3); min-width: 0; }
-.rsa-signup-field { display: flex; flex-direction: column; gap: var(--space-2); }
+.rsa-signup-row { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-3); align-items: end; min-width: 0; }
+.rsa-signup-field { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
 .rsa-signup-form label { font-weight: 600; font-size: 15px; line-height: 22px; }
-.rsa-signup-form .rsa-input { width: 100%; }
-.rsa-signup-form .rsa-btn { width: 100%; }
+.rsa-signup-form .rsa-input { flex: none; width: 100%; height: var(--control-h); padding-block: 0; }
+.rsa-signup-form .rsa-btn { width: 100%; height: var(--control-h); }
+/* The Turnstile widget's slot keeps its height, so mounting it never moves the field */
+.rsa-signup-turnstile { display: flex; align-items: center; min-height: 65px; }
 .rsa-signup-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+@media (min-width: 640px) {
+  .rsa-signup-row { grid-template-columns: minmax(0, 1fr) auto; }
+  .rsa-signup-form .rsa-btn { width: auto; }
+}
 [data-signup-status][data-kind="error"] { color: var(--danger); font-weight: 600; }
 [data-signup-status][data-kind="success"] { color: var(--ink); font-weight: 600; }
 .rsa-input { flex: 1 1 220px; min-width: 0; font: 400 17px/24px var(--font-body); color: var(--ink); background: var(--bg); border: 1px solid var(--line-strong); border-radius: var(--radius-sm); padding: 10px var(--space-4); }
