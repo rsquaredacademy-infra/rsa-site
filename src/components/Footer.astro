@@ -1,7 +1,11 @@
 ---
 import Wordmark from './Wordmark.astro';
-import { footerColumns, contactEmail } from '../data/site';
+import { footerColumns, footerLegalLinks, contactEmail } from '../data/site';
+import { pricingPublished } from '../data/payment';
 const year = new Date().getFullYear();
+const legalLinks = pricingPublished
+  ? [...footerLegalLinks, { label: 'Pricing', href: '/pricing/' }]
+  : footerLegalLinks;
 ---
 <footer class="rsa-footer">
   <div class="rsa-footer-inner">
@@ -18,7 +22,7 @@ const year = new Date().getFullYear();
     ))}
     <div class="rsa-footer-base">
       <span>© {year} Rsquared Academy</span>
-      <span><a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a></span>
+      <span>{legalLinks.map((l, i) => <>{i > 0 && ' · '}<a href={l.href}>{l.label}</a></>)}</span>
     </div>
   </div>
 </footer>

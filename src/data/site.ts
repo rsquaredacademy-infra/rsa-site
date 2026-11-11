@@ -13,6 +13,9 @@ export const cta = { label: 'Get updates', href: '/#signup' };
 
 export const contactEmail = 'support@rsquaredacademy.com';
 
+export const MONTHLY_PRICE_INR = 329;
+export const MONTHLY_PRICE_USD = 7; // final price set before launch
+
 export const links = {
   github: 'https://github.com/rsquaredacademy',
   youtube: 'https://www.youtube.com/user/rsquaredin',
@@ -43,6 +46,15 @@ export const footerColumns = [
   ] },
 ];
 
+export const footerLegalLinks = [
+  { label: 'Contact', href: '/contact/' },
+  { label: 'Support', href: '/support/' },
+  { label: 'Refund', href: '/refund/' },
+  { label: 'Delivery', href: '/delivery/' },
+  { label: 'Privacy', href: '/privacy/' },
+  { label: 'Terms', href: '/terms/' },
+];
+
 export type BadgeTone = 'free' | 'soon' | 'neutral';
 
 export const foundationsBadges: { text: string; tone: BadgeTone }[] = [
@@ -53,12 +65,37 @@ export const foundationsBadges: { text: string; tone: BadgeTone }[] = [
 // `short` is used on Home and For educators; `long` on Courses.
 export const courses = [
   { id: 'intro', eyebrow: 'Course 1', title: 'Introduction to R',
+    href: 'https://app.rsquaredacademy.com/intro-r',
     short: 'Write your first R code: values, vectors, data frames and functions.',
     long: 'Write your first R code: values, vectors, data frames and functions. No experience needed.' },
   { id: 'dplyr', eyebrow: 'Course 2', title: 'Data Wrangling with dplyr',
+    href: 'https://app.rsquaredacademy.com/dplyr',
     short: 'Filter, sort, summarise and join data with the dplyr verbs and the pipe.',
     long: 'Filter, sort, summarise and join data with the dplyr verbs and the pipe.' },
   { id: 'ggplot2', eyebrow: 'Course 3', title: 'Data Viz with ggplot2',
+    href: 'https://app.rsquaredacademy.com/ggplot2',
     short: 'Build clear charts layer by layer with ggplot2.',
     long: 'Build clear charts layer by layer with ggplot2, from a first scatter plot to a finished figure.' },
+];
+
+// Paid tracks. One business dataset (ShopVibe) runs through every course.
+export const paidTracks = [
+  {
+    id: 'data-analyst-with-r',
+    title: 'Data Analyst with R',
+    summary: 'Start with R, then work through the analysis tasks analysts do on a real online shop.',
+    covers: 'RFM, SQL in R, text, dates and categories, cleaning, market basket analysis, A/B testing, regression, reporting and a capstone. Builds on the free Introduction to R, dplyr and ggplot2 courses.',
+  },
+  {
+    id: 'data-analyst-with-python',
+    title: 'Data Analyst with Python',
+    summary: 'The same analyst projects as the R track, written in Python.',
+    covers: 'The same modules as the R track, written in Python: cleaning, customer analysis, A/B testing, regression and a capstone.',
+  },
+  {
+    id: 'sql-for-data-analysts',
+    title: 'SQL for Data Analysts',
+    summary: 'Query the ShopVibe database and build the customer analysis analysts use.',
+    covers: 'Querying, joins and aggregation; text, dates and CASE; window functions and CTEs; customer analytics with RFM, cohorts and retention; and a capstone.',
+  },
 ];

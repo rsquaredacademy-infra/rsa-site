@@ -1,6 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { contactEmail } from '../../data/site';
+import { operator, support } from '../../data/payment';
 ---
 
 <Base
@@ -12,35 +12,75 @@ import { contactEmail } from '../../data/site';
       <article class="legal">
         <span class="eyebrow">Legal</span>
         <h1 id="legal-h" class="t-h1">Privacy</h1>
-        <p class="t-small t-muted">Last updated: 10 November 2026</p>
+        <p class="t-small t-muted">Last updated: 11 November 2026</p>
+
+        <section class="flex flex-col gap-4" aria-labelledby="app-privacy-h">
+          <h2 id="app-privacy-h" class="t-h3">The learning app (app.rsquaredacademy.com)</h2>
+          <p>You can learn without an account. Signing up for email updates does not create a learning account or upload your saved progress.</p>
+
+          <h3 class="font-semibold">Progress in your browser</h3>
+          <p>Your lesson progress, streaks, XP, code drafts and settings stay on this device in your browser's storage (localStorage and, for some session settings, sessionStorage). Clearing site data for app.rsquaredacademy.com removes them. They do not follow you to another browser or device.</p>
+
+          <h3 class="font-semibold">Analytics (Google Analytics 4)</h3>
+          <p>In the European Economic Area, the United Kingdom and Switzerland, GA4 loads and sends events only after you accept the cookie banner. Elsewhere, analytics is on unless you turn it off. You can turn it off at any time using the learning app's footer.</p>
+          <p>GA4 receives page views and lesson events, such as starting or finishing a lesson, submitting an answer, running code or opening a hint. These include course and lesson IDs, lesson type, step numbers and whether an answer passed. Feedback events include only a rating or problem category. Page addresses and titles are limited to known routes, catalog titles and allowed campaign tags. We never send GA4 your name, email, code, answers, output, feedback message or other free text. We do not use it for advertising.</p>
+
+          <h3 class="font-semibold">Learning activity</h3>
+          <p>When analytics is on, we also send lesson activity to our own Netlify Blobs store, learning-events, to improve the courses. Each event has a course, lesson and exercise ID and a time. Depending on the event, it includes the lesson type, attempt and hint numbers, whether a check passed, a short hash identifying the checker message, whether you viewed a solution before answering correctly, active time, and your optional difficulty rating (easy, about right or hard). We also record when the server received it.</p>
+          <p>This activity uses a random browser ID stored in localStorage, not your name, email or an account. The stored events contain no IP address, user agent, referrer, code, drafts, output or checker message text, and only the allowed fields are kept. This stream is separate from GA4 and follows the same analytics choice. We keep it for 12 months. Clearing site data resets the ID and breaks the link to future activity; it does not delete events already stored.</p>
+
+          <h3 class="font-semibold">Email sign-up (Zoho Campaigns)</h3>
+          <p>If you sign up for course updates, we send Zoho Campaigns your email address, the site you signed up on and which sign-up form you used. The app currently asks for no optional profile details. Zoho sends a confirmation email (double opt-in). Every marketing email has an unsubscribe link.</p>
+
+          <h3 class="font-semibold">Error reports (Sentry)</h3>
+          <p>When error reporting is enabled, Sentry receives reports of app faults to help us fix them. Reports keep only allowed fields: a report ID and time, error type, known app-fault messages, file paths and line and column numbers from this app's build, app version, environment and a broad browser class.</p>
+          <p>Other error text is replaced with [redacted]. Reports exclude personal data, learner code and answers, email, request details, cookies, headers, query strings, function names, frame variables and browsing breadcrumbs. Errors from your R code are not reported. There is no session replay or performance tracing.</p>
+
+          <h3 class="font-semibold">Feedback and Report a problem</h3>
+          <p>We store only the allowed form fields: the form type, your message or problem details, rating or problem category, course and lesson IDs, exercise step for a problem report, page path without its query or fragment, app version and submission time. Your email is optional. A problem report includes editor code only if you tick "Include my code".</p>
+          <p>Submissions are kept in our Netlify Blobs store, forms-inbox, and deleted after 90 days by a daily job that removes entries older than that. We do not store your IP address, user agent or spam-check token with the submission.</p>
+
+          <h3 class="font-semibold">Spam protection (Cloudflare Turnstile)</h3>
+          <p>Turnstile loads only when you open a feedback, problem-report or email sign-up form. Cloudflare processes your IP address and browser, device and interaction signals to decide whether you are human. It may use a cookie or browser storage for this check. Our server sends your IP address and the one-time challenge token to Cloudflare to verify the result.</p>
+          <p>We do not store the token or challenge signals. We keep daily pass/fail counts and short reason codes without personal details. Read <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare's privacy policy</a> and its <a href="https://www.cloudflare.com/turnstile-privacy-policy/">Turnstile privacy terms</a>.</p>
+
+          <h3 class="font-semibold">Privacy and grievance contact (India DPDP Act)</h3>
+          <p>For privacy questions or grievances under India's Digital Personal Data Protection Act, contact our Privacy Grievance Officer at <a href={`mailto:${support.email}?subject=Privacy`}>{support.email}</a>. To ask for access, correction or deletion, email with "Privacy" in the subject and describe the data or submission involved. For learning activity, include your random browser ID if you still have it so we can locate the relevant events.</p>
+        </section>
 
         <h2 class="t-h3">Who we are</h2>
-        <p>Rsquared Academy runs www.rsquaredacademy.com and the learning app at app.rsquaredacademy.com. Contact: <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.</p>
+        <p>{operator.line} It runs www.rsquaredacademy.com and the learning app at app.rsquaredacademy.com. Contact: <a href={`mailto:${support.email}`}>{support.email}</a>.</p>
 
         <h2 class="t-h3">What we collect and why</h2>
         <ul>
+          <li><strong>Account data (app.rsquaredacademy.com)</strong>: when you create an account (from the paid launch), your email address, display name, the sign-in method you use and sign-in times, so you can sign in and keep your progress. We don't store passwords.</li>
+          <li><strong>Learning data</strong>: Your progress, streaks and XP are kept in your browser (local storage) on this device. When you create an account (from the paid launch), they are also saved to your account so you can continue on another device. We use them to show your progress in the course.</li>
           <li><strong>Email sign-up ("Get updates")</strong>: your email address, to send you news about our courses, about once a month. We ask you to confirm by email before we add you (double opt-in), and we note which of our sites you signed up on. Every email has an unsubscribe link.</li>
           <li><strong>For educators form</strong>: name, email, institution, role, number of students, course, start date and your message, so we can reply and help you use the courses with a class.</li>
+          <li><strong>Payments</strong>: payments in India are processed by Razorpay. Payments outside India are processed by a merchant of record. We receive the order, amount, date, country and the email used at checkout. We never see or store full card numbers.</li>
+          <li><strong>Support emails</strong>: your email address, your message and any details you include, so we can answer your request and keep a record of it.</li>
           <li><strong>Analytics</strong>: We use Google Analytics 4 to understand how people use this site (pages visited, referring sites, device type and approximate location) so we can improve our free learning material. Google Analytics uses cookies and a pseudonymous identifier; we don't use it for advertising and we never send Google names or email addresses. Visitors in the European Economic Area, the United Kingdom and Switzerland are asked for consent first, and if they decline, no analytics cookies are stored. Anyone can switch analytics off at any time: <button type="button" data-rsa-analytics-optout class="rsa-btn rsa-btn-text">Turn off analytics</button>.</li>
-          <li><strong>Learning activity</strong>: When analytics is on, the learning app records how you work through exercises: which exercise you open, whether a check passes, when you use a hint or view a solution, how hard you rate it, and the time spent. It's linked to a random ID stored in your browser, not to your name or email, and we never store the code you write. We use it only to improve the courses and keep it for 12 months. To reset it, clear your browser's storage for app.rsquaredacademy.com.</li>
         </ul>
 
         <h2 class="t-h3">Who processes your data for us</h2>
-        <p>Netlify (hosts the site and the learning app, receives the For educators form and stores learning activity), Zoho Campaigns (stores the email list and sends our emails), Google Analytics (analytics, as above), Google Fonts (the site's fonts load from Google's servers, which see your IP address). We don't sell or rent your data, and we don't share it with anyone else except where the law requires it.</p>
+        <p>Netlify (hosts the site and the learning app, receives the For educators form and stores learning activity, app feedback and problem reports), Zoho Campaigns (stores the email list and sends our emails), Google Analytics (analytics, as above), Cloudflare (Turnstile spam checks), Sentry (app error reports when enabled), Google Fonts (the site's fonts load from Google's servers, which see your IP address), Razorpay (payments in India), our merchant of record (payments outside India), and (from the paid launch) the providers that host learning accounts. We don't sell or rent your data, and we don't share it with anyone else except where the law requires it.</p>
 
         <h2 class="t-h3">How long we keep it</h2>
         <ul>
+          <li>Account data and saved progress (from the paid launch): while your account exists. If you delete the account, we delete or anonymize the data within 30 days, except records we must keep for tax or legal reasons.</li>
+          <li>Payment records: as long as tax and accounting law requires.</li>
           <li>Sign-up emails: until you unsubscribe or ask us to delete them.</li>
           <li>Educator form messages: as long as we need them to reply and follow up.</li>
+          <li>Support emails: as long as we need them to resolve the request and keep a record.</li>
           <li>Analytics data: Google Analytics' retention settings, at most 14 months.</li>
           <li>Learning activity: 12 months.</li>
         </ul>
 
         <h2 class="t-h3">Your choices</h2>
         <ul>
-          <li>Unsubscribe from any email.</li>
+          <li>Unsubscribe from any marketing email. Once you have an account, emails about receipts, access and sign-in links are not marketing and are sent as part of the service.</li>
           <li>Turn off analytics (the button above).</li>
-          <li>Email <a href={`mailto:${contactEmail}`}>{contactEmail}</a> to see, correct or delete the data we hold about you; we reply within 30 days.</li>
+          <li>Email <a href={`mailto:${support.email}?subject=Privacy`}>{support.email}</a> with "Privacy" in the subject line to see, correct or delete the data we hold about you, including your account once you have one. We reply within 30 days.</li>
         </ul>
 
         <h2 class="t-h3">Children</h2>

@@ -4,7 +4,7 @@ import Base from '../../layouts/Base.astro';
 import Badge from '../../components/Badge.astro';
 import Button from '../../components/Button.astro';
 import CourseCard from '../../components/CourseCard.astro';
-import { courses, foundationsBadges, links } from '../../data/site';
+import { courses, foundationsBadges, links, paidTracks } from '../../data/site';
 ---
 
 <Base
@@ -34,16 +34,17 @@ import { courses, foundationsBadges, links } from '../../data/site';
       </div>
       <div class="three rsa-card-grid">
         {courses.map((course) => (
-          <CourseCard eyebrow={course.eyebrow} title={course.title} description={course.long} badges={foundationsBadges} />
+          <CourseCard eyebrow={course.eyebrow} title={course.title} description={course.long} badges={foundationsBadges} href={course.href} />
         ))}
       </div>
+      <p class="t-muted">Free Intro to SQL and Intro to Python courses are coming soon.</p>
     </div>
   </section>
 
-  <!-- Every course comes with -->
+  <!-- What's inside -->
   <section class="sec bg-surface" aria-labelledby="every-h">
     <div class="wrap flex flex-col gap-8">
-      <h2 id="every-h" class="t-h2">Every course comes with</h2>
+      <h2 id="every-h" class="t-h2">What's inside</h2>
       <ul class="four list-none m-0 p-0">
         <li class="flex flex-col gap-2">
           <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="text-brand"><path d="M2 4h6a4 4 0 0 1 4 4v12a3 3 0 0 0-3-3H2z"></path><path d="M22 4h-6a4 4 0 0 0-4 4v12a3 3 0 0 1 3-3h7z"></path></svg>
@@ -66,19 +67,63 @@ import { courses, foundationsBadges, links } from '../../data/site';
           <p class="t-muted">Read ahead or look back at any time.</p>
         </li>
       </ul>
+      <ul class="four list-none m-0 p-0">
+        <li class="flex flex-col gap-2">
+          <h3 class="t-h3">Printed tables</h3>
+          <p class="t-muted">Printed tables in the console keep their columns aligned so you can read each row.</p>
+        </li>
+        <li class="flex flex-col gap-2">
+          <h3 class="t-h3">Datasets panel</h3>
+          <p class="t-muted">Open the datasets panel to look at the data while you code.</p>
+        </li>
+        <li class="flex flex-col gap-2">
+          <h3 class="t-h3">A console that fits</h3>
+          <p class="t-muted">The console fits its pane, with scrolling for wide tables and long output.</p>
+        </li>
+        <li class="flex flex-col gap-2">
+          <h3 class="t-h3">Step-through diagrams <Badge tone="soon">Coming soon</Badge></h3>
+          <p class="t-muted">Animated step-through diagrams showing how dplyr functions act on rows are coming with the dplyr course.</p>
+        </li>
+        <li class="flex flex-col gap-2">
+          <h3 class="t-h3">A hint when you need it</h3>
+          <p class="t-muted">After a wrong answer, use the hint button for a nudge towards your next attempt.</p>
+        </li>
+        <li class="flex flex-col gap-2">
+          <h3 class="t-h3">Key-idea boxes <Badge tone="soon">Coming soon</Badge></h3>
+          <p class="t-muted">Key-idea boxes that draw out a lesson's main point are coming soon.</p>
+        </li>
+        <li class="flex flex-col gap-2">
+          <h3 class="t-h3">Report a problem</h3>
+          <p class="t-muted">Every lesson has a "Report a problem" link so you can tell us where something needs fixing.</p>
+        </li>
+        <li class="flex flex-col gap-2">
+          <h3 class="t-h3">Our video player <Badge tone="soon">Coming soon</Badge></h3>
+          <p class="t-muted">Short lesson videos in our own player are coming soon.</p>
+        </li>
+      </ul>
     </div>
   </section>
 
-  <!-- The Data Analyst track -->
-  <section class="sec" aria-labelledby="next-h">
-    <div class="wrap">
-      <div class="flex flex-wrap gap-6 items-center justify-between p-8 border border-line rounded-lg">
-        <div class="flex flex-col gap-2 flex-[1_1_480px] min-w-0">
-          <div><Badge tone="soon">Coming 2027</Badge></div>
-          <h2 id="next-h" class="t-h2">The Data Analyst track</h2>
-          <p class="t-muted max-w-[600px]">A longer path after the Foundations, built around one realistic business dataset, with SQL and customer analytics.</p>
-        </div>
-        <Button variant="secondary" href="/#signup">Hear when it opens</Button>
+  <!-- Paid tracks -->
+  <section class="sec" aria-labelledby="paid-h">
+    <div class="wrap flex flex-col gap-8">
+      <div class="flex flex-col gap-2 max-w-[680px]">
+        <div><Badge tone="soon">Coming 2027</Badge></div>
+        <h2 id="paid-h" class="t-h2">Paid tracks (coming 2027)</h2>
+        <p class="t-muted">Choose a 12-month pass or a 1-month pass. Both cover all three tracks, with one-time payments and no automatic renewal. One business dataset, the ShopVibe online shop, runs through every course. You build the skills analysts use, in your browser, with instant feedback.</p>
+      </div>
+      <div class="three">
+        {paidTracks.map((track) => (
+          <article class="rsa-card" id={track.id}>
+            <div class="rsa-card-badges"><Badge tone="soon">Coming 2027</Badge></div>
+            <h3 class="rsa-card-title">{track.title}</h3>
+            <p class="rsa-card-text">{track.summary}</p>
+            <p class="t-small t-muted">{track.covers}</p>
+          </article>
+        ))}
+      </div>
+      <div>
+        <Button variant="secondary" href="/#signup">Hear when the tracks open</Button>
       </div>
     </div>
   </section>

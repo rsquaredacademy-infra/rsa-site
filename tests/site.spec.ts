@@ -21,6 +21,11 @@ const PAGES = [
   '/open-source/',
   '/educators/',
   '/about/',
+  '/contact/',
+  '/support/',
+  '/refund/',
+  '/delivery/',
+  '/pricing/',
   '/privacy/',
   '/terms/',
   '/thanks/',
@@ -259,6 +264,44 @@ for (const path of PAGES) {
 }
 
 test.describe('Extra tests', () => {
+  test('payment pages return 200, footer links exist and /pricing/ is unlisted', async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== 'desktop', 'Desktop project only');
+
+    const paymentPages = ['/contact/', '/support/', '/refund/', '/delivery/', '/pricing/'];
+    const legalLinks = [
+      ['Contact', '/contact/'],
+      ['Support', '/support/'],
+      ['Refund', '/refund/'],
+      ['Delivery', '/delivery/'],
+      ['Privacy', '/privacy/'],
+      ['Terms', '/terms/'],
+    ];
+
+    for (const path of paymentPages) {
+      const response = await page.goto(path);
+      expect(response?.status(), `Expected status 200 for ${path}`).toBe(200);
+      for (const [label, href] of legalLinks) {
+        const link = page.locator(`footer a[href="${href}"]`);
+        await expect(link, `Footer ${label} link missing on ${path}`).toHaveCount(1);
+        await expect(link).toHaveText(label);
+      }
+    }
+
+    // The unlisted pricing page must not be linked from any page.
+    for (const path of [...PAGES, ...paymentPages]) {
+      await page.goto(path);
+      const pricingLinks = await page.locator('a[href="/pricing/"]').count();
+      expect(pricingLinks, `${path} links to the unlisted /pricing/ page`).toBe(0);
+    }
+
+    // /pricing/ is noindex and absent from the sitemap.
+    await page.goto('/pricing/');
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex');
+    const sitemap = await page.request.get('/sitemap-0.xml');
+    expect(sitemap.status()).toBe(200);
+    expect(await sitemap.text()).not.toContain('/pricing/');
+  });
+
   test('404 page returns 404 and shows "Page not found" h1', async ({ page }) => {
     const response = await page.goto('/does-not-exist/');
     expect(response?.status()).toBe(404);

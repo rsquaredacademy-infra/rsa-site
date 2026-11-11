@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import Button from '../../components/Button.astro';
 import SignupBand from '../../components/SignupBand.astro';
 import { contactEmail, links } from '../../data/site';
+import { operator } from '../../data/payment';
 ---
 
 <Base
@@ -25,6 +26,16 @@ import { contactEmail, links } from '../../data/site';
         <p>Along the way we built open-source R packages for everyday analysis work, including olsrr for regression models, descriptr for descriptive statistics and rfm for customer segmentation.</p>
         <p>We've also learned that free material isn't enough for many learners. Reading about R is one thing; writing code, running it and finding out straight away what to fix is how it sticks.</p>
         <p>So we're rebuilding our courses and learning platform from scratch, so you can learn R in your browser with instant feedback. The first three free courses open in December 2026. Our current courses stay open on Thinkific while we move each one to the new platform.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top: 0;" aria-labelledby="who-h">
+    <div class="wrap story">
+      <h2 id="who-h" class="t-h2">Who runs Rsquared Academy</h2>
+      <div class="prose">
+        <p>{operator.line} He writes and maintains the R packages olsrr, descriptr and rfm, has written the Rsquared Academy eBooks, and teaches R.</p>
+        <p>Courses, eBooks and package documentation are written and maintained by Aravind. For questions about the courses, the eBooks or our packages, see the <a href="/contact/">Contact</a> page.</p>
       </div>
     </div>
   </section>
@@ -55,8 +66,8 @@ import { contactEmail, links } from '../../data/site';
   <section class="sec" aria-labelledby="trust-h">
     <div class="wrap trust-grid">
       <div style="display: flex; flex-direction: column; gap: 16px; min-width: 0;">
-        <h2 id="trust-h" class="t-h2">The team behind the R packages olsrr, descriptr and rfm</h2>
-        <p class="t-muted" style="max-width: 560px;">Our packages are on CRAN, and their code is open on GitHub.</p>
+        <h2 id="trust-h" class="t-h2">The R packages olsrr, descriptr and rfm</h2>
+        <p class="t-muted" style="max-width: 560px;">Aravind Hebbali writes and maintains them. They are on CRAN, and their code is open on GitHub.</p>
         <div style="display: flex; gap: 24px; flex-wrap: wrap;">
           <Button variant="text" href="/open-source/">See our open-source work</Button>
           <Button variant="text" href={links.ebooks}>Read the eBooks</Button>
