@@ -20,6 +20,16 @@ export const support = {
   responseTime: '2 business days',
 };
 
+// Pass lengths are exact: a 12-month pass is 365 days and a 1-month pass is
+// 30 days, counted from the time of purchase shown on the receipt.
+export const passes = {
+  annual: { name: '12-month pass', exact: '12-month pass (365 days)', months: 12, days: 365 },
+  monthly: { name: '1-month pass', exact: '1-month pass (30 days)', months: 1, days: 30 },
+};
+
+// Use wherever access length is explained, so the start point is always stated.
+export const passLengthNote = 'Pass lengths are counted from the time of purchase shown on the receipt.';
+
 export const offer = {
   accessMonths: 12,
   foundingSeats: 200,

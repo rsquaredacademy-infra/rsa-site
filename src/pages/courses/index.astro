@@ -5,18 +5,19 @@ import Badge from '../../components/Badge.astro';
 import Button from '../../components/Button.astro';
 import CourseCard from '../../components/CourseCard.astro';
 import { courses, foundationsBadges, links, paidTracks } from '../../data/site';
+import { passes } from '../../data/payment';
 ---
 
 <Base
   title="Courses"
-  description="We're rebuilding our courses and learning platform from scratch, so you can learn R in your browser with instant feedback."
+  description="We're rebuilding our courses and learning platform from scratch, so you can learn R, Python and SQL in your browser with instant feedback."
 >
   <!-- Page header -->
   <section class="sec page-sec">
     <div class="wrap flex flex-col gap-5">
       <span class="eyebrow">Courses</span>
-      <h1 class="t-h1 max-w-[760px]">Interactive R courses for data analysis</h1>
-      <p class="t-lead max-w-[680px]">We're rebuilding our courses and learning platform from scratch, so you can learn R in your browser with instant feedback. Start with three free Foundations courses, opening in December 2026.</p>
+      <h1 class="t-h1 max-w-[760px]">Interactive courses in R, Python and SQL for data analysis</h1>
+      <p class="t-lead max-w-[680px]">We're rebuilding our courses and learning platform from scratch, so you can learn R, Python and SQL in your browser with instant feedback. Start with three free Foundations courses in R, opening in December 2026.</p>
     </div>
   </section>
 
@@ -110,7 +111,7 @@ import { courses, foundationsBadges, links, paidTracks } from '../../data/site';
       <div class="flex flex-col gap-2 max-w-[680px]">
         <div><Badge tone="soon">Coming 2027</Badge></div>
         <h2 id="paid-h" class="t-h2">Paid tracks (coming 2027)</h2>
-        <p class="t-muted">Choose a 12-month pass or a 1-month pass. Both cover all three tracks, with one-time payments and no automatic renewal. One business dataset, the ShopVibe online shop, runs through every course. You build the skills analysts use, in your browser, with instant feedback.</p>
+        <p class="t-muted">Choose a {passes.annual.exact} or a {passes.monthly.exact}. Both cover all three tracks, with one-time payments and no automatic renewal. One business dataset, the ShopVibe online shop, runs through every course. You build the skills analysts use, in your browser, with instant feedback.</p>
       </div>
       <div class="three">
         {paidTracks.map((track) => (
@@ -118,7 +119,10 @@ import { courses, foundationsBadges, links, paidTracks } from '../../data/site';
             <div class="rsa-card-badges"><Badge tone="soon">Coming 2027</Badge></div>
             <h3 class="rsa-card-title">{track.title}</h3>
             <p class="rsa-card-text">{track.summary}</p>
-            <p class="t-small t-muted">{track.covers}</p>
+            <ul class="t-small t-muted track-list">
+              {track.curriculum.map((course) => <li>{course}</li>)}
+            </ul>
+            {track.note && <p class="t-small t-muted">{track.note}</p>}
           </article>
         ))}
       </div>
@@ -160,6 +164,7 @@ import { courses, foundationsBadges, links, paidTracks } from '../../data/site';
 <style>
   .page-sec { padding-top: 96px; padding-bottom: 64px; }
   .three { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); }
+  .track-list { margin: 0; padding-left: 20px; list-style: disc; display: flex; flex-direction: column; gap: 4px; }
   .four { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-6); }
   .split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-12); align-items: center; }
   .flush { padding-top: 0; }

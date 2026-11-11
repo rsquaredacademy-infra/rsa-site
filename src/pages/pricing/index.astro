@@ -3,19 +3,19 @@ import Base from '../../layouts/Base.astro';
 import Badge from '../../components/Badge.astro';
 import Button from '../../components/Button.astro';
 import { MONTHLY_PRICE_INR, MONTHLY_PRICE_USD, paidTracks } from '../../data/site';
-import { offer } from '../../data/payment';
+import { offer, passes, passLengthNote } from '../../data/payment';
 ---
 
 <Base
   title="Pricing"
-  description="Rsquared Academy prepaid passes: 12 months or 1 month, all tracks, one-time payments and no automatic renewal."
+  description={`Rsquared Academy prepaid passes: the ${passes.annual.exact} or the ${passes.monthly.exact}, all tracks, one-time payments and no automatic renewal.`}
   noindex
 >
   <section class="sec page-head" aria-labelledby="pricing-h">
     <div class="wrap flex flex-col gap-5">
       <span class="eyebrow">Pricing</span>
       <h1 id="pricing-h" class="t-h1 max-w-[760px]">Two passes. Pay once, learn at your pace.</h1>
-      <p class="t-lead max-w-[680px]">Choose a 12-month pass or a 1-month pass. Both cover all three paid tracks. Both are prepaid, one-time payments with no automatic renewal.</p>
+      <p class="t-lead max-w-[680px]">Choose a {passes.annual.exact} or a {passes.monthly.exact}. Both cover all three paid tracks. Both are prepaid, one-time payments with no automatic renewal. {passLengthNote}</p>
       <div><Badge tone="soon">Paid tracks coming 2027</Badge></div>
     </div>
   </section>
@@ -24,21 +24,21 @@ import { offer } from '../../data/payment';
     <div class="wrap">
       <div class="plan">
         <div class="flex flex-col gap-4 min-w-0">
-          <h2 id="plan-h" class="t-h2">12-month pass — our main plan</h2>
+          <h2 id="plan-h" class="t-h2">{passes.annual.exact} — our main plan</h2>
           <p class="price">{offer.planPrice}</p>
-          <p class="t-muted">One-time payment for {offer.accessMonths} months of access</p>
+          <p class="t-muted">One-time payment for {passes.annual.months} months ({passes.annual.days} days) of access, counted from the time of purchase shown on the receipt.</p>
           <ul class="checklist">
             <li>All three paid tracks: Data Analyst with R, Data Analyst with Python and SQL for Data Analysts.</li>
             <li>Every lesson and exercise, with instant feedback in your browser.</li>
-            <li>Updates released during your {offer.accessMonths} months.</li>
+            <li>Updates released during your {passes.annual.months} months ({passes.annual.days} days).</li>
             <li>Email support.</li>
           </ul>
           <div><Button href="/#signup">Hear when the tracks open</Button></div>
         </div>
         <div class="flex flex-col gap-3 min-w-0 plan-note">
-          <h3 class="t-h3">1-month pass</h3>
+          <h3 class="t-h3">{passes.monthly.exact}</h3>
           <p class="t-h3">India: ₹{MONTHLY_PRICE_INR}<br />Outside India: US${MONTHLY_PRICE_USD}</p>
-          <p class="t-muted">One-time payment for 1 month of the same access to all tracks, updates and email support. No automatic renewal.</p>
+          <p class="t-muted">One-time payment for {passes.monthly.months} month ({passes.monthly.days} days) of the same access to all tracks, updates and email support. No automatic renewal.</p>
           <p class="t-muted">Both passes are available in India through Razorpay and outside India through our merchant of record.</p>
           <h3 class="t-h3">When you pay</h3>
           <p class="t-muted">Your first pass starts right after payment is confirmed. Buying again before your pass ends adds the new period after the current end date. No days are lost. There is no upgrade credit.</p>
@@ -51,7 +51,7 @@ import { offer } from '../../data/payment';
   <section class="sec bg-surface" aria-labelledby="founding-h">
     <div class="wrap flex flex-col gap-4">
       <h2 id="founding-h" class="t-h2">Founding offer</h2>
-      <p class="t-muted max-w-[680px]">The founding offer is for the 12-month pass only, limited to {offer.foundingSeats} seats. The founding price is <strong>{offer.foundingPrice}</strong> for {offer.accessMonths} months of access to all tracks.</p>
+      <p class="t-muted max-w-[680px]">The founding offer is for the {passes.annual.exact} only, limited to {offer.foundingSeats} seats. The founding price is <strong>{offer.foundingPrice}</strong> for {passes.annual.months} months ({passes.annual.days} days) of access to all tracks.</p>
       <p class="t-muted max-w-[680px]">Founding members keep their founding price for each 12-month renewal bought before the pass ends or within {offer.renewalWindowDays} days after it ends. After a longer gap, the list price applies.</p>
       <p class="t-muted max-w-[680px]">There is no automatic billing. A renewal is a new purchase.</p>
     </div>
@@ -69,7 +69,10 @@ import { offer } from '../../data/payment';
             <div class="rsa-card-badges"><Badge tone="soon">Coming 2027</Badge></div>
             <h3 class="rsa-card-title">{track.title}</h3>
             <p class="rsa-card-text">{track.summary}</p>
-            <p class="t-small t-muted">{track.covers}</p>
+            <ul class="t-small t-muted track-list">
+              {track.curriculum.map((course) => <li>{course}</li>)}
+            </ul>
+            {track.note && <p class="t-small t-muted">{track.note}</p>}
           </article>
         ))}
       </div>
@@ -95,10 +98,10 @@ import { offer } from '../../data/payment';
     <div class="wrap legal">
       <h2 id="know-h" class="t-h2">What to know</h2>
       <ul>
-        <li>We email before your pass ends: 30 and 7 days before for a 12-month pass; 5 and 1 days before for a 1-month pass.</li>
+        <li>We email before your pass ends: 30 and 7 days before for a {passes.annual.exact}; 5 and 1 days before for a {passes.monthly.exact}.</li>
         <li>Your progress is kept after your pass ends. Free courses and free lessons stay free. See <a href="/delivery/">Delivery and access</a>.</li>
-        <li>12-month pass: a full refund within 14 days of purchase if you have completed less than 20% of the lessons in every paid track (no single track at 20% or more).</li>
-        <li>1-month pass: no refunds, except a duplicate charge or a technical problem we can't fix. See the <a href="/refund/">Refund and cancellation policy</a>.</li>
+        <li>{passes.annual.exact}: a full refund within 14 days of purchase if you have completed less than 20% of the lessons in every paid track (no single track at 20% or more).</li>
+        <li>{passes.monthly.exact}: no refunds, except a duplicate charge or a technical problem we can't fix. See the <a href="/refund/">Refund and cancellation policy</a>.</li>
         <li>We never see your card details. See <a href="/privacy/">Privacy</a>.</li>
         <li>Questions about an order or a track? See <a href="/contact/">Contact</a> or <a href="/support/">Support</a>.</li>
       </ul>
@@ -145,6 +148,14 @@ import { offer } from '../../data/payment';
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--space-6);
+  }
+  .track-list {
+    margin: 0;
+    padding-left: 20px;
+    list-style: disc;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
   }
   .split {
     display: grid;

@@ -79,23 +79,50 @@ export const courses = [
 ];
 
 // Paid tracks. One business dataset (ShopVibe) runs through every course.
+// `curriculum` is one course per bullet on the pricing and courses cards.
 export const paidTracks = [
   {
     id: 'data-analyst-with-r',
     title: 'Data Analyst with R',
     summary: 'Start with R, then work through the analysis tasks analysts do on a real online shop.',
-    covers: 'RFM, SQL in R, text, dates and categories, cleaning, market basket analysis, A/B testing, regression, reporting and a capstone. Builds on the free Introduction to R, dplyr and ggplot2 courses.',
+    curriculum: [
+      'RFM and customer segmentation',
+      'SQL in R',
+      'Text, dates and categories',
+      'Data cleaning',
+      'Market basket analysis',
+      'A/B testing',
+      'Regression',
+      'Reporting',
+      'Capstone',
+    ],
+    note: 'Builds on the free Introduction to R, dplyr and ggplot2 courses.',
   },
   {
     id: 'data-analyst-with-python',
     title: 'Data Analyst with Python',
     summary: 'The same analyst projects as the R track, written in Python.',
-    covers: 'The same modules as the R track, written in Python: cleaning, customer analysis, A/B testing, regression and a capstone.',
+    curriculum: [
+      'Data cleaning',
+      'Customer analysis',
+      'A/B testing',
+      'Regression',
+      'Reporting',
+      'Capstone',
+    ],
+    note: 'The same modules as the R track, written in Python.',
   },
   {
     id: 'sql-for-data-analysts',
     title: 'SQL for Data Analysts',
     summary: 'Query the ShopVibe database and build the customer analysis analysts use.',
-    covers: 'Querying, joins and aggregation; text, dates and CASE; window functions and CTEs; customer analytics with RFM, cohorts and retention; and a capstone.',
+    curriculum: [
+      'Querying, joins and aggregation',
+      'Text, dates and CASE',
+      'Window functions and CTEs',
+      'Customer analytics with RFM, cohorts and retention',
+      'Capstone',
+    ],
+    note: '',
   },
 ];
