@@ -4,9 +4,17 @@ interface Props {
   size?: 'md' | 'sm';
   href?: string;
   type?: 'button' | 'submit';
+  disabled?: boolean;
   class?: string;
 }
-const { variant = 'primary', size = 'md', href, type = 'button', class: extra } = Astro.props;
+const {
+  variant = 'primary',
+  size = 'md',
+  href,
+  type = 'button',
+  disabled = false,
+  class: extra,
+} = Astro.props;
 const cls = ['rsa-btn', `rsa-btn-${variant}`, size === 'sm' && 'rsa-btn-sm', extra].filter(Boolean).join(' ');
 ---
-{href ? <a class={cls} href={href}><slot /></a> : <button class={cls} type={type}><slot /></button>}
+{href ? <a class={cls} href={href}><slot /></a> : <button class={cls} type={type} disabled={disabled}><slot /></button>}

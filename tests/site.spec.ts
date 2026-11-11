@@ -1,19 +1,6 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
-// The sign-up band embeds Zoho's hosted form. Tests must never reach or submit
-// to Zoho: a static stub keeps rendering checks deterministic and cannot create
-// contacts.
-test.beforeEach(async ({ page }) => {
-  await page.route('https://zgnp-zngp.maillist-manage.com/**', (route) =>
-    route.fulfill({
-      status: 200,
-      contentType: 'text/html',
-      body: '<!doctype html><html lang="en"><head><title>Sign-up form</title></head><body><input type="email" aria-label="Email"></body></html>',
-    }),
-  );
-});
-
 const PAGES = [
   '/',
   '/courses/',
@@ -155,8 +142,12 @@ for (const path of PAGES) {
                 if (inSentence) continue;
               }
 
-              // Must be visible
+              // Must be visible and operable by the visitor (not an off-screen
+              // honeypot or another tabindex="-1" control).
               if (el.hasAttribute('hidden') || el.closest('[hidden]')) {
+                continue;
+              }
+              if (el.getAttribute('tabindex') === '-1') {
                 continue;
               }
               const style = window.getComputedStyle(el);
@@ -325,78 +316,6 @@ test.describe('Extra tests', () => {
     await expect(toggle).toHaveAttribute('aria-expanded', 'true');
     await expect(toggle).toHaveText('Close');
     await expect(navLinks).toBeVisible();
-  });
-
-  test('sign-up band embeds the Zoho hosted form', async ({ page }, testInfo) => {
-    test.skip(testInfo.project.name !== 'desktop', 'Desktop project only');
-    await page.goto('/');
-
-    const iframe = page.locator('iframe[data-signup-embed]');
-    await expect(iframe).toHaveCount(1);
-    await expect(iframe).toHaveAttribute('title', 'Sign up for Rsquared Academy updates');
-    await expect(iframe).toHaveAttribute('loading', 'lazy');
-    await expect(iframe).toHaveAttribute(
-      'src',
-      /^https:\/\/zgnp-zngp\.maillist-manage\.com\/ua\/Optin\?/,
-    );
-    await expect(iframe).toBeVisible();
-
-    const box = await iframe.boundingBox();
-    expect(box).not.toBeNull();
-    expect(box!.width).toBeGreaterThanOrEqual(310);
-    expect(box!.height).toBe(320);
-
-    const borderWidth = await iframe.evaluate((el) => getComputedStyle(el).borderTopWidth);
-    expect(borderWidth).toBe('0px');
-
-    // The old site-kit form and script are gone.
-    await expect(page.locator('form[data-rsa-signup]')).toHaveCount(0);
-    expect(await page.locator('script[src*="rsa-signup"]').count()).toBe(0);
-  });
-
-  test('sign-up embed tracks first interaction', async ({ page }, testInfo) => {
-    test.skip(testInfo.project.name !== 'desktop', 'Desktop project only');
-    await page.addInitScript(() => {
-      (window as any).__gaEvents = [];
-      (window as any).gtag = (...args: unknown[]) => {
-        (window as any).__gaEvents.push(args);
-      };
-    });
-    await page.goto('/');
-
-    await page.frameLocator('iframe[data-signup-embed]').locator('input[type="email"]').click();
-
-    await expect.poll(async () =>
-      page.evaluate(
-        () =>
-          ((window as any).__gaEvents as unknown[][]).filter(
-            (args) => args[1] === 'signup_embed_interact',
-          ).length,
-      ),
-    ).toBe(1);
-
-    const event = await page.evaluate(
-      () =>
-        ((window as any).__gaEvents as unknown[][]).find(
-          (args) => args[1] === 'signup_embed_interact',
-        ),
-    );
-    expect(event?.[2]).toMatchObject({
-      event_category: 'signup',
-      event_label: 'www.rsquaredacademy.com',
-    });
-
-    // Interacting again must not send a second event.
-    await page.frameLocator('iframe[data-signup-embed]').locator('input[type="email"]').click();
-    await page.waitForTimeout(100);
-    expect(
-      await page.evaluate(
-        () =>
-          ((window as any).__gaEvents as unknown[][]).filter(
-            (args) => args[1] === 'signup_embed_interact',
-          ).length,
-      ),
-    ).toBe(1);
   });
 
   test('educators form validation and submission', async ({ page }, testInfo) => {
