@@ -4,7 +4,7 @@ import Base from '../../layouts/Base.astro';
 import Badge from '../../components/Badge.astro';
 import Button from '../../components/Button.astro';
 import CourseCard from '../../components/CourseCard.astro';
-import { courses, foundationsBadges, links, paidTracks } from '../../data/site';
+import { courses, foundationsBadges, lessonTiles, links, paidTracks } from '../../data/site';
 import { passes } from '../../data/payment';
 ---
 
@@ -35,60 +35,40 @@ import { passes } from '../../data/payment';
       </div>
       <div class="three rsa-card-grid">
         {courses.map((course) => (
-          <CourseCard eyebrow={course.eyebrow} title={course.title} description={course.long} badges={foundationsBadges} href={course.href} />
+          <CourseCard eyebrow={course.eyebrow} title={course.title} description={course.long} badges={foundationsBadges} href={course.href} visual={course.visual} />
         ))}
       </div>
       <p class="t-muted">Free Intro to SQL and Intro to Python courses are coming soon.</p>
     </div>
   </section>
 
-  <!-- What's inside -->
-  <section class="sec bg-surface" aria-labelledby="every-h">
+  <!-- See how a lesson works -->
+  <section class="sec bg-surface" aria-labelledby="how-h">
     <div class="wrap flex flex-col gap-8">
-      <h2 id="every-h" class="t-h2">What's inside</h2>
-      <ul class="inside-grid list-none m-0 p-0">
-        <li class="inside-item">
-          <div class="inside-head">
-            <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="text-brand"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
-            <h3 class="t-h3">R in your browser</h3>
-          </div>
-          <p class="t-muted">Write and run code in the lesson. Nothing to install.</p>
-        </li>
-        <li class="inside-item">
-          <div class="inside-head">
-            <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="text-brand"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path><path d="m15 5 4 4"></path></svg>
-            <h3 class="t-h3">Practice by doing</h3>
-          </div>
-          <p class="t-muted">Worked example, then fill in, fix and write your own code.</p>
-        </li>
-        <li class="inside-item">
-          <div class="inside-head">
-            <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="text-brand"><circle cx="12" cy="12" r="9"></circle><polyline points="8 12 11 15 16 9"></polyline></svg>
-            <h3 class="t-h3">Feedback and hints</h3>
-          </div>
-          <p class="t-muted">Instant feedback on every answer, with a hint when you're stuck.</p>
-        </li>
-        <li class="inside-item">
-          <div class="inside-head">
-            <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="text-brand"><rect width="8" height="8" x="3" y="3" rx="1"></rect><path d="M7 11v4a2 2 0 0 0 2 2h4"></path><rect width="8" height="8" x="13" y="13" rx="1"></rect></svg>
-            <h3 class="t-h3">Step-through diagrams</h3>
-          </div>
-          <p class="t-muted">Watch each dplyr step change the data. Coming with the dplyr course.</p>
-        </li>
-        <li class="inside-item">
-          <div class="inside-head">
-            <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="text-brand"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5v14a9 3 0 0 0 18 0V5"></path><path d="M3 12a9 3 0 0 0 18 0"></path></svg>
-            <h3 class="t-h3">Datasets panel</h3>
-          </div>
-          <p class="t-muted">Open the data beside your code and check it as you work.</p>
-        </li>
-        <li class="inside-item">
-          <div class="inside-head">
-            <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="text-brand"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
-            <h3 class="t-h3">Report a problem</h3>
-          </div>
-          <p class="t-muted">Use the link in any lesson to tell us what needs fixing.</p>
-        </li>
+      <div class="flex flex-col gap-2 max-w-[680px]">
+        <h2 id="how-h" class="t-h2">See how a lesson works</h2>
+        <p class="t-muted">Real screenshots from the live lesson player. Read a little, write a little, and see the answer in front of you.</p>
+      </div>
+      <ul class="lesson-grid list-none m-0 p-0">
+        {lessonTiles.map((tile) => (
+          <li class="lesson-tile">
+            <picture>
+              <source srcset={`/images/lessons/${tile.image}.webp`} type="image/webp" />
+              <img
+                src={`/images/lessons/${tile.image}.png`}
+                width="800"
+                height="800"
+                loading="lazy"
+                decoding="async"
+                alt={tile.alt}
+              />
+            </picture>
+            <div class="flex flex-col gap-1">
+              <h3 class="t-h3">{tile.title}</h3>
+              <p class="t-small t-muted">{tile.line}</p>
+            </div>
+          </li>
+        ))}
       </ul>
     </div>
   </section>
@@ -153,15 +133,18 @@ import { passes } from '../../data/payment';
   .page-sec { padding-top: 96px; padding-bottom: 64px; }
   .three { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); }
   .track-list { margin: 0; padding-left: 20px; list-style: disc; display: flex; flex-direction: column; gap: 4px; }
-  .inside-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--space-12); row-gap: var(--space-8); }
-  .inside-item { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
-  .inside-head { display: flex; align-items: center; gap: var(--space-3); }
-  .inside-head svg { flex: none; }
+  .lesson-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); }
+  .lesson-grid > .lesson-tile { display: grid; grid-template-rows: subgrid; grid-row: span 2; row-gap: var(--space-3); align-content: start; min-width: 0; }
+  .lesson-tile picture { display: block; min-width: 0; }
+  .lesson-tile img { display: block; width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--bg); }
   .flush { padding-top: 0; }
+  @media (max-width: 900px) {
+    .lesson-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
   @media (max-width: 860px) {
     .three { grid-template-columns: minmax(0, 1fr); }
   }
-  @media (max-width: 640px) {
-    .inside-grid { grid-template-columns: minmax(0, 1fr); row-gap: var(--space-6); }
+  @media (max-width: 600px) {
+    .lesson-grid { grid-template-columns: minmax(0, 1fr); }
   }
 </style>

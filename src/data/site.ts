@@ -63,19 +63,61 @@ export const foundationsBadges: { text: string; tone: BadgeTone }[] = [
 ];
 
 // `short` is used on Home and For educators; `long` on Courses.
+// `visual` is the course picture from the app home (Courses page cards).
 export const courses = [
-  { id: 'intro', eyebrow: 'Course 1', title: 'Introduction to R',
+  { id: 'intro', eyebrow: 'Course 1', title: 'Introduction to R', visual: 1,
     href: 'https://app.rsquaredacademy.com/intro-r',
     short: 'Write your first R code: values, vectors, data frames and functions.',
     long: 'Write your first R code: values, vectors, data frames and functions. No experience needed.' },
-  { id: 'dplyr', eyebrow: 'Course 2', title: 'Data Wrangling with dplyr',
+  { id: 'dplyr', eyebrow: 'Course 2', title: 'Data Wrangling with dplyr', visual: 2,
     href: 'https://app.rsquaredacademy.com/dplyr',
     short: 'Filter, sort, summarise and join data with the dplyr verbs and the pipe.',
     long: 'Filter, sort, summarise and join data with the dplyr verbs and the pipe.' },
-  { id: 'ggplot2', eyebrow: 'Course 3', title: 'Data Viz with ggplot2',
+  { id: 'ggplot2', eyebrow: 'Course 3', title: 'Data Viz with ggplot2', visual: 3,
     href: 'https://app.rsquaredacademy.com/ggplot2',
     short: 'Build clear charts layer by layer with ggplot2.',
     long: 'Build clear charts layer by layer with ggplot2, from a first scatter plot to a finished figure.' },
+];
+
+// "See how a lesson works": real screenshots of the live lesson player.
+// `image` is the file stem under public/images/lessons/ (WebP + PNG fallback).
+export const lessonTiles = [
+  {
+    image: 'lesson-run',
+    title: 'Run R in place',
+    line: 'Type into the editor and press Run. R runs in the page, with nothing to install.',
+    alt: "The lesson player's code editor with a short R script and its console output below it",
+  },
+  {
+    image: 'lesson-practice',
+    title: 'Fill the gaps',
+    line: 'Every lesson moves from a worked example to code you complete yourself.',
+    alt: 'The Fill the gaps badge and task instructions on a practice page',
+  },
+  {
+    image: 'lesson-feedback',
+    title: 'Instant feedback',
+    line: 'A correct answer turns green and explains the result in plain words.',
+    alt: 'A green Correct banner under the code editor, with the next lesson button',
+  },
+  {
+    image: 'lesson-hints',
+    title: 'Hints when stuck',
+    line: 'A wrong answer says what to check, and a hint is one click away.',
+    alt: 'A not-yet feedback card with a Show hint link and the Hints button in the toolbar',
+  },
+  {
+    image: 'lesson-diagram',
+    title: 'Step-through diagrams',
+    line: 'Watch each dplyr step change the table, one row group at a time.',
+    alt: 'A step-through diagram mid-step, with the sales table grouped by product',
+  },
+  {
+    image: 'lesson-datasets',
+    title: 'Datasets beside code',
+    line: 'Open both course datasets, with their columns and first rows, beside your code.',
+    alt: 'The datasets panel open beside the code editor, listing the columns of store_days.csv',
+  },
 ];
 
 // Paid tracks. One business dataset (ShopVibe) runs through every course.
