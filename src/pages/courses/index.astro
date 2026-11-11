@@ -46,60 +46,48 @@ import { passes } from '../../data/payment';
   <section class="sec bg-surface" aria-labelledby="every-h">
     <div class="wrap flex flex-col gap-8">
       <h2 id="every-h" class="t-h2">What's inside</h2>
-      <ul class="four list-none m-0 p-0">
-        <li class="flex flex-col gap-2">
-          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="text-brand"><path d="M2 4h6a4 4 0 0 1 4 4v12a3 3 0 0 0-3-3H2z"></path><path d="M22 4h-6a4 4 0 0 0-4 4v12a3 3 0 0 1 3-3h7z"></path></svg>
-          <h3 class="t-h3">Short lessons</h3>
-          <p class="t-muted">One idea at a time, with small, real datasets.</p>
-        </li>
-        <li class="flex flex-col gap-2">
-          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="text-brand"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
-          <h3 class="t-h3">R in your browser</h3>
+      <ul class="inside-grid list-none m-0 p-0">
+        <li class="inside-item">
+          <div class="inside-head">
+            <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="text-brand"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+            <h3 class="t-h3">R in your browser</h3>
+          </div>
           <p class="t-muted">Write and run code in the lesson. Nothing to install.</p>
         </li>
-        <li class="flex flex-col gap-2">
-          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="text-brand"><circle cx="12" cy="12" r="9"></circle><polyline points="8 12 11 15 16 9"></polyline></svg>
-          <h3 class="t-h3">Instant feedback</h3>
-          <p class="t-muted">See straight away whether your answer is right, and what to fix.</p>
+        <li class="inside-item">
+          <div class="inside-head">
+            <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="text-brand"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path><path d="m15 5 4 4"></path></svg>
+            <h3 class="t-h3">Practice by doing</h3>
+          </div>
+          <p class="t-muted">Worked example, then fill in, fix and write your own code.</p>
         </li>
-        <li class="flex flex-col gap-2">
-          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="text-brand"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"></path><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"></path></svg>
-          <h3 class="t-h3">A free eBook to go with it</h3>
-          <p class="t-muted">Read ahead or look back at any time.</p>
+        <li class="inside-item">
+          <div class="inside-head">
+            <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="text-brand"><circle cx="12" cy="12" r="9"></circle><polyline points="8 12 11 15 16 9"></polyline></svg>
+            <h3 class="t-h3">Feedback and hints</h3>
+          </div>
+          <p class="t-muted">Instant feedback on every answer, with a hint when you're stuck.</p>
         </li>
-      </ul>
-      <ul class="four list-none m-0 p-0">
-        <li class="flex flex-col gap-2">
-          <h3 class="t-h3">Printed tables</h3>
-          <p class="t-muted">Printed tables in the console keep their columns aligned so you can read each row.</p>
+        <li class="inside-item">
+          <div class="inside-head">
+            <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="text-brand"><rect width="8" height="8" x="3" y="3" rx="1"></rect><path d="M7 11v4a2 2 0 0 0 2 2h4"></path><rect width="8" height="8" x="13" y="13" rx="1"></rect></svg>
+            <h3 class="t-h3">Step-through diagrams</h3>
+          </div>
+          <p class="t-muted">Watch each dplyr step change the data. Coming with the dplyr course.</p>
         </li>
-        <li class="flex flex-col gap-2">
-          <h3 class="t-h3">Datasets panel</h3>
-          <p class="t-muted">Open the datasets panel to look at the data while you code.</p>
+        <li class="inside-item">
+          <div class="inside-head">
+            <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="text-brand"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5v14a9 3 0 0 0 18 0V5"></path><path d="M3 12a9 3 0 0 0 18 0"></path></svg>
+            <h3 class="t-h3">Datasets panel</h3>
+          </div>
+          <p class="t-muted">Open the data beside your code and check it as you work.</p>
         </li>
-        <li class="flex flex-col gap-2">
-          <h3 class="t-h3">A console that fits</h3>
-          <p class="t-muted">The console fits its pane, with scrolling for wide tables and long output.</p>
-        </li>
-        <li class="flex flex-col gap-2">
-          <h3 class="t-h3">Step-through diagrams <Badge tone="soon">Coming soon</Badge></h3>
-          <p class="t-muted">Animated step-through diagrams showing how dplyr functions act on rows are coming with the dplyr course.</p>
-        </li>
-        <li class="flex flex-col gap-2">
-          <h3 class="t-h3">A hint when you need it</h3>
-          <p class="t-muted">After a wrong answer, use the hint button for a nudge towards your next attempt.</p>
-        </li>
-        <li class="flex flex-col gap-2">
-          <h3 class="t-h3">Key-idea boxes <Badge tone="soon">Coming soon</Badge></h3>
-          <p class="t-muted">Key-idea boxes that draw out a lesson's main point are coming soon.</p>
-        </li>
-        <li class="flex flex-col gap-2">
-          <h3 class="t-h3">Report a problem</h3>
-          <p class="t-muted">Every lesson has a "Report a problem" link so you can tell us where something needs fixing.</p>
-        </li>
-        <li class="flex flex-col gap-2">
-          <h3 class="t-h3">Our video player <Badge tone="soon">Coming soon</Badge></h3>
-          <p class="t-muted">Short lesson videos in our own player are coming soon.</p>
+        <li class="inside-item">
+          <div class="inside-head">
+            <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="text-brand"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
+            <h3 class="t-h3">Report a problem</h3>
+          </div>
+          <p class="t-muted">Use the link in any lesson to tell us what needs fixing.</p>
         </li>
       </ul>
     </div>
@@ -113,7 +101,7 @@ import { passes } from '../../data/payment';
         <h2 id="paid-h" class="t-h2">Paid tracks (coming 2027)</h2>
         <p class="t-muted">Choose a {passes.annual.exact} or a {passes.monthly.exact}. Both cover all three tracks, with one-time payments and no automatic renewal. One business dataset, the ShopVibe online shop, runs through every course. You build the skills analysts use, in your browser, with instant feedback.</p>
       </div>
-      <div class="three">
+      <div class="three rsa-card-grid rsa-card-grid--tracks">
         {paidTracks.map((track) => (
           <article class="rsa-card" id={track.id}>
             <div class="rsa-card-badges"><Badge tone="soon">Coming 2027</Badge></div>
@@ -122,7 +110,7 @@ import { passes } from '../../data/payment';
             <ul class="t-small t-muted track-list">
               {track.curriculum.map((course) => <li>{course}</li>)}
             </ul>
-            {track.note && <p class="t-small t-muted">{track.note}</p>}
+            <p class="t-small t-muted track-note">{track.note}</p>
           </article>
         ))}
       </div>
@@ -135,13 +123,13 @@ import { passes } from '../../data/payment';
   <!-- Current courses -->
   <section class="sec flush" aria-labelledby="current-h">
     <div class="wrap">
-      <div class="split bg-surface rounded-lg p-10">
+      <div class="bg-surface rounded-lg p-10 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
         <div class="flex flex-col gap-2 min-w-0">
           <h2 id="current-h" class="t-h2">Looking for our current courses?</h2>
           <p class="t-muted">Our current courses stay open on Thinkific while we move each one to the new platform.</p>
         </div>
-        <div class="flex gap-3 flex-wrap">
-          <Button variant="secondary" href={links.thinkific}>Go to the current courses</Button>
+        <div class="flex sm:flex-none">
+          <Button variant="secondary" href={links.thinkific} class="w-full whitespace-nowrap sm:w-auto">Go to the current courses</Button>
         </div>
       </div>
     </div>
@@ -165,14 +153,15 @@ import { passes } from '../../data/payment';
   .page-sec { padding-top: 96px; padding-bottom: 64px; }
   .three { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); }
   .track-list { margin: 0; padding-left: 20px; list-style: disc; display: flex; flex-direction: column; gap: 4px; }
-  .four { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-6); }
-  .split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-12); align-items: center; }
+  .inside-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--space-12); row-gap: var(--space-8); }
+  .inside-item { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
+  .inside-head { display: flex; align-items: center; gap: var(--space-3); }
+  .inside-head svg { flex: none; }
   .flush { padding-top: 0; }
   @media (max-width: 860px) {
-    .three, .split { grid-template-columns: minmax(0, 1fr); }
-    .four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three { grid-template-columns: minmax(0, 1fr); }
   }
-  @media (max-width: 520px) {
-    .four { grid-template-columns: minmax(0, 1fr); }
+  @media (max-width: 640px) {
+    .inside-grid { grid-template-columns: minmax(0, 1fr); row-gap: var(--space-6); }
   }
 </style>

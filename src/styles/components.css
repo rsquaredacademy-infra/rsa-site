@@ -33,6 +33,8 @@ a.rsa-card:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px;
 /* In a .rsa-card-grid, badges, title and description (and footer) rows line up across cards */
 .rsa-card-grid > .rsa-card { display: grid; grid-template-rows: subgrid; grid-row: span 3; row-gap: var(--space-4); align-content: start; }
 .rsa-card-grid > .rsa-card:has(> .rsa-card-foot) { grid-row: span 4; }
+/* Track cards: badges, title, summary, curriculum list and note each line up across the row */
+.rsa-card-grid.rsa-card-grid--tracks > .rsa-card { grid-row: span 5; }
 
 /* Navbar */
 .rsa-nav { background: var(--bg); border-bottom: 1px solid var(--line); }

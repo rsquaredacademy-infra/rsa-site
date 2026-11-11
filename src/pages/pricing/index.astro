@@ -63,7 +63,7 @@ import { offer, passes, passLengthNote } from '../../data/payment';
         <h2 id="tracks-h" class="t-h2">Paid tracks</h2>
         <p class="t-muted">One business dataset, the ShopVibe online shop, runs through every course. You build the skills analysts use, in your browser, with instant feedback. All tracks are coming in 2027.</p>
       </div>
-      <div class="three">
+      <div class="three rsa-card-grid rsa-card-grid--tracks">
         {paidTracks.map((track) => (
           <article class="rsa-card" id={track.id}>
             <div class="rsa-card-badges"><Badge tone="soon">Coming 2027</Badge></div>
@@ -72,7 +72,7 @@ import { offer, passes, passLengthNote } from '../../data/payment';
             <ul class="t-small t-muted track-list">
               {track.curriculum.map((course) => <li>{course}</li>)}
             </ul>
-            {track.note && <p class="t-small t-muted">{track.note}</p>}
+            <p class="t-small t-muted track-note">{track.note}</p>
           </article>
         ))}
       </div>

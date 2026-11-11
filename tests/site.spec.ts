@@ -445,15 +445,28 @@ test.describe('Extra tests', () => {
   // Cards in the same row must line up section by section (badges, title, description, link)
   const alignmentCases = [
     { path: '/', grid: '.rsa-card-grid', parts: ['.rsa-card-title', '.rsa-card-text'] },
-    { path: '/courses/', grid: '.rsa-card-grid', parts: ['.rsa-card-title', '.rsa-card-text'] },
+    { path: '/courses/', grid: 'section[aria-labelledby="found-h"] .rsa-card-grid', parts: ['.rsa-card-title', '.rsa-card-text'] },
     { path: '/educators/', grid: '.rsa-card-grid', parts: ['.rsa-card-title', '.rsa-card-text'] },
     { path: '/', grid: '.res-grid', parts: [':scope > :nth-child(2)', ':scope > :nth-child(3)'] },
+    // Paid tracks: title, summary, curriculum list and note line up, with no empty space at the end.
+    {
+      path: '/courses/',
+      grid: 'section[aria-labelledby="paid-h"] .rsa-card-grid',
+      parts: ['.rsa-card-title', '.rsa-card-text', '.track-list', '.track-note'],
+      evenLists: true,
+    },
+    {
+      path: '/pricing/',
+      grid: 'section[aria-labelledby="tracks-h"] .rsa-card-grid',
+      parts: ['.rsa-card-title', '.rsa-card-text', '.track-list', '.track-note'],
+      evenLists: true,
+    },
   ];
-  for (const { path, grid, parts } of alignmentCases) {
+  for (const { path, grid, parts, evenLists } of alignmentCases) {
     test(`card sections align across a row: ${grid} on ${path}`, async ({ page }, testInfo) => {
       test.skip(testInfo.project.name === 'phone', 'Cards stack in one column on phones');
       await page.goto(path);
-      const misaligned = await page.evaluate(({ grid, parts }) => {
+      const misaligned = await page.evaluate(({ grid, parts, evenLists }) => {
         const cards = Array.from(document.querySelector(grid)!.children) as HTMLElement[];
         // group cards by row (same top edge)
         const rows = new Map<number, HTMLElement[]>();
@@ -468,9 +481,27 @@ test.describe('Extra tests', () => {
             const tops = row.map((c) => Math.round(c.querySelector(part)!.getBoundingClientRect().top));
             if (Math.max(...tops) - Math.min(...tops) > 1) issues.push(`${part}: tops ${tops.join(', ')}`);
           }
+          if (evenLists) {
+            const counts = row.map((c) => c.querySelectorAll('.track-list li').length);
+            if (new Set(counts).size > 1) issues.push(`curriculum bullets: ${counts.join(', ')}`);
+            for (const c of row) {
+              const title = c.querySelector('.rsa-card-title')!.textContent;
+              const note = c.querySelector('.track-note')!;
+              const pad = parseFloat(getComputedStyle(c).paddingBottom);
+              const leftover = Math.round(c.getBoundingClientRect().bottom - note.getBoundingClientRect().bottom - pad);
+              if (leftover > 1) issues.push(`${title}: empty space below the note (${leftover}px)`);
+              // Every section must be followed by exactly the grid gap: no blank line inside a card.
+              const sections = Array.from(c.children) as HTMLElement[];
+              const rowGap = parseFloat(getComputedStyle(c).rowGap) || 0;
+              for (let i = 1; i < sections.length; i++) {
+                const gap = Math.round(sections[i].getBoundingClientRect().top - sections[i - 1].getBoundingClientRect().bottom);
+                if (Math.abs(gap - rowGap) > 1) issues.push(`${title}: ${gap}px gap before section ${i + 1} (expected ${rowGap}px)`);
+              }
+            }
+          }
         }
         return issues;
-      }, { grid, parts });
+      }, { grid, parts, evenLists: evenLists ?? false });
       expect(misaligned, `Misaligned card sections in ${grid} on ${path}`).toEqual([]);
     });
   }
