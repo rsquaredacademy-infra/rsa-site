@@ -99,10 +99,10 @@ export const paidTracks = [
     title: 'Data Analyst with Python',
     summary: 'The same analyst projects as the R track, written in Python.',
     curriculum: [
-      'Data cleaning',
-      'Customer analysis',
+      'RFM and customer segmentation',
+      'SQL in Python',
+      'Market basket analysis',
       'A/B testing',
-      'Regression',
       'Capstone',
     ],
     note: 'The same modules as the R track, written in Python.',
