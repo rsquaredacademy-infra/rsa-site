@@ -1,5 +1,7 @@
 import { defineConfig } from '@playwright/test';
 
+const PORT = Number(process.env.E2E_PORT ?? 4321);
+
 export default defineConfig({
   testDir: './tests',
   fullyParallel: true,
@@ -9,7 +11,7 @@ export default defineConfig({
   reporter: [['list'], ['html', { open: 'never' }]],
   use: {
     browserName: 'chromium',
-    baseURL: 'http://localhost:4321',
+    baseURL: `http://localhost:${PORT}`,
     trace: 'on-first-retry',
   },
   projects: [
@@ -38,8 +40,10 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'npm run build && npx astro preview --port 4321',
-    url: 'http://localhost:4321',
+    command: `npm run build && npx astro preview --port ${PORT}`,
+    url: `http://localhost:${PORT}`,
+    // The e2e build ships Cloudflare's dummy Turnstile keys; production builds never do.
+    env: { PUBLIC_TURNSTILE_TEST: '1' },
     reuseExistingServer: !process.env.CI,
     timeout: 180 * 1000,
   },

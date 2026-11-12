@@ -3,24 +3,14 @@
 import Base from '../layouts/Base.astro';
 import Badge from '../components/Badge.astro';
 import Button from '../components/Button.astro';
-import ConsoleSnippet from '../components/ConsoleSnippet.astro';
 import CourseCard from '../components/CourseCard.astro';
 import SignupBand from '../components/SignupBand.astro';
 import { courses, foundationsBadges, links } from '../data/site';
-
-// Hero R console: real R with its true output.
-const heroCode = [
-  { input: 'sales <- c(120, 95, 143, 110)' },
-  { input: 'mean(sales)' },
-  { output: '[1] 117' },
-  { input: 'max(sales) - min(sales)' },
-  { output: '[1] 48' },
-];
 ---
 
 <Base
   title="Rsquared Academy"
-  description="Free interactive courses with instant feedback. Nothing to install."
+  description="Interactive courses in R, Python and SQL for data analysis, with instant feedback. Nothing to install."
 >
   <!-- Hero -->
   <section class="sec hero-sec">
@@ -28,19 +18,30 @@ const heroCode = [
       <div class="flex flex-col gap-6 min-w-0">
         <div class="flex gap-2 flex-wrap">
           <Badge tone="free">Free courses</Badge>
-          <Badge tone="soon">First courses launching Dec 2026</Badge>
+          <Badge tone="soon">First courses launching soon</Badge>
         </div>
-        <h1 class="t-display max-w-[640px]">Learn R for data analysis, in your browser.</h1>
+        <h1 class="t-display max-w-[640px]">Learn data analysis by doing, in your browser.</h1>
         <p class="t-lead max-w-[560px]">Free interactive courses with instant feedback. Nothing to install.</p>
         <div class="flex gap-3 flex-wrap">
           <Button href="#signup">Get updates</Button>
           <Button variant="secondary" href="#courses">See the courses</Button>
         </div>
       </div>
-      <div class="flex flex-col gap-3 min-w-0">
-        <ConsoleSnippet lines={heroCode} label="An R console example" />
-        <p class="t-small t-muted">Real R, written and run in the lesson. No setup, nothing to download.</p>
-      </div>
+      <figure class="hero-figure">
+        <picture>
+          <source srcset="/images/lesson-player-hero.webp" type="image/webp" />
+          <img
+            class="hero-shot"
+            src="/images/lesson-player-hero.png"
+            width="1440"
+            height="900"
+            loading="eager"
+            decoding="async"
+            alt="The Rsquared Academy lesson player: a lesson, the code editor, a chart and instant feedback"
+          />
+        </picture>
+        <figcaption class="t-small t-muted">Real R, written and run in the lesson. No setup, nothing to download.</figcaption>
+      </figure>
     </div>
   </section>
 
@@ -55,7 +56,7 @@ const heroCode = [
             <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="text-ink-muted"><path d="M2 4h6a4 4 0 0 1 4 4v12a3 3 0 0 0-3-3H2z"></path><path d="M22 4h-6a4 4 0 0 0-4 4v12a3 3 0 0 1 3-3h7z"></path></svg>
           </div>
           <h3 class="t-h3">Read a short lesson</h3>
-          <p class="t-muted">Each idea comes with a small, real dataset, explained in plain words.</p>
+          <p class="t-muted">Each idea comes with a small, realistic dataset, explained in plain words.</p>
         </li>
         <li class="flex flex-col gap-3">
           <div class="flex items-center gap-3">
@@ -83,7 +84,7 @@ const heroCode = [
       <div class="flex flex-col gap-2 max-w-[640px]">
         <span class="eyebrow">Foundations</span>
         <h2 id="courses-h" class="t-h2">Three free courses to start with</h2>
-        <p class="t-lead">We're rebuilding our courses and learning platform from scratch, so you can learn R in your browser with instant feedback. The first three free courses open in December 2026.</p>
+        <p class="t-lead">We're rebuilding our courses and learning platform from scratch, so you can learn R, Python and SQL in your browser with instant feedback. The first three free courses, in R, open soon.</p>
       </div>
       <div class="three rsa-card-grid">
         {courses.map((course) => (
@@ -97,7 +98,7 @@ const heroCode = [
   <section class="sec bg-surface" aria-labelledby="trust">
     <div class="wrap trust-grid">
       <div class="flex flex-col gap-4 min-w-0">
-        <h2 id="trust" class="t-h2">From the team behind the R packages olsrr, descriptr and rfm</h2>
+        <h2 id="trust" class="t-h2">Learn R from the author of the packages olsrr, descriptr and rfm</h2>
         <p class="t-muted max-w-[560px]">The courses are built from our free eBooks, so you can read ahead or look back at any time.</p>
         <div><Button variant="text" href="/open-source/">See our open-source work</Button></div>
       </div>
@@ -140,16 +141,16 @@ const heroCode = [
     </div>
   </section>
 
-  <!-- The Data Analyst track -->
+  <!-- Paid tracks -->
   <section class="sec flush" aria-labelledby="next">
     <div class="wrap">
       <div class="flex flex-wrap gap-6 items-center justify-between p-8 border border-line rounded-lg">
         <div class="flex flex-col gap-2 flex-[1_1_480px] min-w-0">
           <div><Badge tone="soon">Coming 2027</Badge></div>
-          <h2 id="next" class="t-h2">The Data Analyst track</h2>
-          <p class="t-muted max-w-[600px]">A longer path after the Foundations, built around one realistic business dataset, with SQL and customer analytics.</p>
+          <h2 id="next" class="t-h2">Paid tracks coming in 2027</h2>
+          <p class="t-muted max-w-[600px]">Data Analyst with R, Data Analyst with Python and SQL for Data Analysts. Each track builds on one realistic business dataset. See the <a href="/courses/#paid-h">full descriptions</a>.</p>
         </div>
-        <Button variant="secondary" href="#signup">Hear when it opens</Button>
+        <Button variant="secondary" href="#signup">Hear when they open</Button>
       </div>
     </div>
   </section>
@@ -163,7 +164,12 @@ const heroCode = [
 </Base>
 
 <style>
-  .hero-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--space-12); align-items: center; }
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-10, 40px); justify-items: center; text-align: center; }
+  .hero-grid > .flex { align-items: center; }
+  .hero-grid .flex-wrap { justify-content: center; }
+  .hero-figure { width: 100%; max-width: 1200px; }
+  .hero-figure { margin: 0; display: flex; flex-direction: column; gap: var(--space-3); min-width: 0; }
+  .hero-shot { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg); box-shadow: var(--shadow-card); }
   .trust-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-12); align-items: start; }
   .three { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); }
   .four { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-6); }
@@ -179,7 +185,7 @@ const heroCode = [
     .four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
   @media (max-width: 860px) {
-    .hero-grid, .trust-grid { grid-template-columns: minmax(0, 1fr); }
+    .trust-grid { grid-template-columns: minmax(0, 1fr); }
     .three { grid-template-columns: minmax(0, 1fr); }
   }
   @media (max-width: 600px) {

@@ -1,30 +1,49 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { contactEmail } from '../../data/site';
+import { operator, offer, support, passes, passLengthNote } from '../../data/payment';
 ---
 
 <Base
   title="Terms"
-  description="The terms for using the Rsquared Academy website."
+  description="The terms for using the Rsquared Academy website, accounts and paid course tracks."
 >
   <section class="sec" aria-labelledby="legal-h">
     <div class="wrap">
       <article class="legal">
         <span class="eyebrow">Legal</span>
         <h1 id="legal-h" class="t-h1">Terms</h1>
-        <p class="t-small t-muted">Last updated: 16 October 2026</p>
+        <p class="t-small t-muted">Last updated: 11 November 2026</p>
 
         <h2 class="t-h3">About these terms</h2>
-        <p>By using www.rsquaredacademy.com you agree to these terms. Rsquared Academy runs the site.</p>
+        <p>These terms are between you and {operator.legalName} ({operator.knownAs}), trading as Rsquared Academy, {operator.address.join(', ')}, India. By using www.rsquaredacademy.com you agree to these terms.</p>
 
         <h2 class="t-h3">Using the site</h2>
-        <p>Free to read. Don't misuse it: no attempts to break, overload or scrape the site at scale, and no unlawful use.</p>
+        <p>Don't misuse the site: no attempts to break, overload or scrape it at scale, and no unlawful use.</p>
 
-        <h2 class="t-h3">Our content</h2>
-        <p>Site text, design and logo belong to Rsquared Academy. Our eBooks, open course material and R packages are published under their own licences, shown in each repository on GitHub; those licences apply to them.</p>
+        <h2 class="t-h3">Accounts</h2>
+        <p>Give accurate details when you create an account. One person per account, and don't share it. You are responsible for keeping your sign-in method secure and for activity on your account. You can ask us to delete your account at any time.</p>
 
-        <h2 class="t-h3">Courses</h2>
-        <p>The Foundations courses are free. Courses and the learning platform (app.rsquaredacademy.com) may have their own terms when they open, and those terms will apply there. Our current courses on Thinkific are covered by Thinkific's terms.</p>
+        <h2 class="t-h3">Paid access</h2>
+        <p>Choose a {passes.annual.exact}, our main plan, or a {passes.monthly.exact}. Both cover all paid tracks. Both are prepaid, one-time payments with no automatic renewal. The price and what is included are shown at checkout.</p>
+        <p>Your first pass starts when payment is confirmed and runs for {passes.annual.months} months ({passes.annual.days} days) or {passes.monthly.months} month ({passes.monthly.days} days). {passLengthNote} Buying again before your pass ends adds the new period after the current end date. No days are lost. There is no upgrade credit.</p>
+        <p>The founding offer is for the {passes.annual.exact} only, limited to {offer.foundingSeats} seats. Founding members keep their founding price for each 12-month renewal bought before the pass ends or within {offer.renewalWindowDays} days after it ends. After a longer gap, the list price applies.</p>
+        <p>We email before your pass ends: 30 and 7 days before for a {passes.annual.exact}; 5 and 1 days before for a {passes.monthly.exact}. Your progress is kept after your pass ends. Free courses stay free. Lessons 0–2 of every course are free to try before you buy. See <a href="/delivery/">Delivery and access</a>.</p>
+
+        <h2 class="t-h3">Refunds</h2>
+        <p>{passes.annual.exact}: a full refund within 14 days of purchase if you have completed less than 20% of the lessons in every paid track (no single track at 20% or more). {passes.monthly.exact}: no refunds, except a duplicate charge or a technical problem we can't fix. The <a href="/refund/">Refund and cancellation policy</a> gives the full conditions and forms part of these terms. Nothing in these terms limits your legal rights.</p>
+
+        <h2 class="t-h3">License and intellectual property</h2>
+        <p>Site text, design, logo, course content, exercises, datasets and videos belong to Rsquared Academy. We grant you a personal, non-transferable, non-exclusive license to use the course content for your own learning during your access. You may not copy, resell, scrape or share credentials. Code you write yourself stays yours.</p>
+        <p>Our eBooks, open course material and R packages are published under their own licenses, shown in each repository on GitHub; those licenses apply to them.</p>
+
+        <h2 class="t-h3">Acceptable use</h2>
+        <p>Don't abuse the code runner, submit answers automatically, or try to break the platform. Don't share accounts or course access with anyone else.</p>
+
+        <h2 class="t-h3">Courses and changes to the service</h2>
+        <p>The Foundations courses are free. Paid tracks open in 2027. We may update or retire content. If we withdraw a paid track during a {passes.annual.exact}, we refund the unused part of the period. Refunds for a {passes.monthly.exact} follow the refund policy above. Our current courses on Thinkific are covered by Thinkific's terms.</p>
+
+        <h2 class="t-h3">Payments</h2>
+        <p>Payments in India are processed by Razorpay. Payments outside India are processed by a merchant of record, which is the seller of record for those purchases and whose terms also apply. We never see or store full card numbers. See <a href="/privacy/">Privacy</a>.</p>
 
         <h2 class="t-h3">Links to other sites</h2>
         <p>We link to sites we don't control (for example GitHub, CRAN, YouTube, Thinkific). We're not responsible for their content or practices.</p>
@@ -35,11 +54,14 @@ import { contactEmail } from '../../data/site';
         <h2 class="t-h3">Limitation of liability</h2>
         <p>To the extent the law allows, Rsquared Academy is not liable for any indirect or consequential loss arising from use of the site.</p>
 
+        <h2 class="t-h3">Suspension and termination</h2>
+        <p>We may suspend or end accounts that break these terms. If we end your {passes.annual.exact} for a reason other than a breach, we refund the unused part of the period. Refunds for a {passes.monthly.exact} follow the refund policy above.</p>
+
         <h2 class="t-h3">Governing law</h2>
-        <p>These terms are governed by the laws of Karnataka, India.</p>
+        <p>These terms are governed by the laws of India. The courts at Bengaluru, Karnataka have exclusive jurisdiction.</p>
 
         <h2 class="t-h3">Changes and contact</h2>
-        <p>We may update these terms and will change the date at the top. Questions: <a href={`mailto:${contactEmail}`}>{contactEmail}</a>, or see our <a href="/privacy/">Privacy</a> page.</p>
+        <p>We may update these terms and will change the date at the top. Questions: <a href={`mailto:${support.email}`}>{support.email}</a>, or see our <a href="/contact/">Contact</a> and <a href="/privacy/">Privacy</a> pages.</p>
       </article>
     </div>
   </section>
@@ -55,13 +77,5 @@ import { contactEmail } from '../../data/site';
   .legal p,
   .legal li {
     margin: 0;
-  }
-  .legal ul {
-    margin: 0;
-    padding-left: 24px;
-    list-style: disc;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
   }
 </style>

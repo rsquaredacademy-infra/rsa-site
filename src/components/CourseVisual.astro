@@ -1,0 +1,203 @@
+---
+// Course pictures for the free-course cards on the Courses page.
+//
+// These are the same pictures the app's home page draws on each course card
+// (homevis TrackPictures.tsx): Course 1 the first six store rows, Course 2 the
+// summarised country rows tinted by country, Course 3 the finished bar chart.
+// The numbers are the app's own: store averages from content/intro-r/data/
+// store_days.csv, 2026-03-01 to 2026-03-20, and the country means of them.
+// Nothing here is invented; it is a static copy of the app's drawings so the
+// cards need no client-side code.
+interface Props { order: number }
+const { order } = Astro.props;
+
+const stores: [string, string, string][] = [
+  ['Nairobi', 'Kenya', '1627.95'],
+  ['Lisbon', 'Portugal', '701.69'],
+  ['Toronto', 'Canada', '1334.57'],
+  ['Vancouver', 'Canada', '956.19'],
+  ['Berlin', 'Germany', '1050.51'],
+  ['Montreal', 'Canada', '1122.52'],
+];
+
+const countries: [string, string][] = [
+  ['Canada', '1137.76'],
+  ['Germany', '839.05'],
+  ['India', '1121.72'],
+  ['Kenya', '1627.95'],
+  ['Portugal', '701.69'],
+];
+
+// The app's country colours (index.css), used only inside these pictures.
+const countryColour: Record<string, string> = {
+  Canada: '#2563eb',
+  Germany: '#d97706',
+  India: '#0d9488',
+  Kenya: '#db2777',
+  Portugal: '#7c3aed',
+};
+
+const TABLE_WIDTH = 300;
+const TABLE_HEIGHT = 130;
+
+function cellX(columnCount: number, index: number): number {
+  return index === columnCount - 1 ? TABLE_WIDTH - 8 : 8 + index * (TABLE_WIDTH / columnCount - 10);
+}
+
+// Course 1: the first six store rows, no tint.
+const storeRowHeight = TABLE_HEIGHT / (stores.length + 1);
+
+// Course 2: the five country rows, tinted by the country value.
+const countryRowHeight = TABLE_HEIGHT / (countries.length + 1);
+const countryCellX = (index: number) => cellX(2, index);
+
+// Course 3: ggplot2's own bar chart, alphabetical, y axis 0–1,800.
+const CHART_WIDTH = 300;
+const CHART_HEIGHT = 130;
+const CHART_LEFT = 30;
+const CHART_BOTTOM = 18;
+const PLOT_WIDTH = CHART_WIDTH - CHART_LEFT - 4;
+const PLOT_HEIGHT = CHART_HEIGHT - CHART_BOTTOM - 4;
+const BAR_MAX = 1800;
+const BAR_SLOT = PLOT_WIDTH / countries.length;
+const BAR_WIDTH = BAR_SLOT * 0.62;
+const ticks = [0, 500, 1000, 1500];
+
+const NUMBER_WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
+const label =
+  order === 2
+    ? 'The summarised table: one row per country, average daily revenue'
+    : order === 3
+      ? 'Bar chart of average daily revenue by country: Kenya highest, Portugal lowest'
+      : `A table of ${NUMBER_WORDS[stores.length] ?? stores.length} example stores: city, country and average daily revenue`;
+---
+
+<div class={`course-visual cv-${order}`}>
+  <svg viewBox="0 0 300 150" role="img" aria-label={label}>
+    <g transform="translate(0 10)">
+      {order === 1 && (
+        <>
+          <rect x="0" y="0" width="300" height={storeRowHeight} rx="4" class="cv-head" />
+          {['city', 'country', 'revenue_usd'].map((column, index) => (
+            <text
+              x={cellX(3, index)}
+              y={storeRowHeight * 0.68}
+              font-size="10.5"
+              font-weight="700"
+              text-anchor={index === 2 ? 'end' : 'start'}
+              class="cv-mono cv-muted"
+            >{column}</text>
+          ))}
+          {stores.map((row, rowIndex) => {
+            const y = storeRowHeight * (rowIndex + 1);
+            return (
+              <g data-store-row>
+                <rect x="0" y={y + 1} width="300" height={storeRowHeight - 2} rx="3" class="cv-cell" />
+                {row.map((value, index) => (
+                  <text
+                    x={cellX(3, index)}
+                    y={y + storeRowHeight * 0.7}
+                    font-size="10.5"
+                    text-anchor={index === 2 ? 'end' : 'start'}
+                    class="cv-mono"
+                  >{value}</text>
+                ))}
+              </g>
+            );
+          })}
+        </>
+      )}
+
+      {order === 2 && (
+        <>
+          <rect x="0" y="0" width="300" height={countryRowHeight} rx="4" class="cv-head" />
+          {['country', 'revenue'].map((column, index) => (
+            <text
+              x={countryCellX(index)}
+              y={countryRowHeight * 0.68}
+              font-size="10.5"
+              font-weight="700"
+              text-anchor={index === 1 ? 'end' : 'start'}
+              class="cv-mono cv-muted"
+            >{column}</text>
+          ))}
+          {countries.map(([country, revenue], rowIndex) => {
+            const y = countryRowHeight * (rowIndex + 1);
+            return (
+              <g>
+                <rect
+                  x="0"
+                  y={y + 1}
+                  width="300"
+                  height={countryRowHeight - 2}
+                  rx="3"
+                  style={`fill: color-mix(in srgb, ${countryColour[country]} 18%, var(--bg))`}
+                />
+                <rect
+                  x="0"
+                  y={y + 1}
+                  width="3"
+                  height={countryRowHeight - 2}
+                  style={`fill: ${countryColour[country]}`}
+                />
+                <text x={countryCellX(0)} y={y + countryRowHeight * 0.7} font-size="10.5" class="cv-mono">{country}</text>
+                <text x={countryCellX(1)} y={y + countryRowHeight * 0.7} font-size="10.5" text-anchor="end" class="cv-mono">{revenue}</text>
+              </g>
+            );
+          })}
+        </>
+      )}
+
+      {order === 3 && (
+        <>
+          {ticks.map((tick) => {
+            const y = 4 + PLOT_HEIGHT - (tick / BAR_MAX) * PLOT_HEIGHT;
+            return (
+              <g>
+                <line x1={CHART_LEFT} x2={CHART_WIDTH - 2} y1={y} y2={y} class="cv-grid" />
+                <text x={CHART_LEFT - 4} y={y + 3} font-size="9" text-anchor="end" class="cv-sans cv-muted">
+                  {tick.toLocaleString('en-US')}
+                </text>
+              </g>
+            );
+          })}
+          {countries.map(([country, revenue], index) => {
+            const value = Number(revenue);
+            const barHeight = (value / BAR_MAX) * PLOT_HEIGHT;
+            const x = CHART_LEFT + BAR_SLOT * index + (BAR_SLOT - BAR_WIDTH) / 2;
+            return (
+              <g>
+                <rect x={x} y={4 + PLOT_HEIGHT - barHeight} width={BAR_WIDTH} height={barHeight} rx="2" fill="#4682b4" />
+                <text x={x + BAR_WIDTH / 2} y={CHART_HEIGHT - 4} font-size="9.5" text-anchor="middle" class="cv-sans">
+                  {country}
+                </text>
+              </g>
+            );
+          })}
+        </>
+      )}
+    </g>
+  </svg>
+</div>
+
+<style>
+  .course-visual { aspect-ratio: 2 / 1; overflow: hidden; }
+  .course-visual svg { display: block; width: 100%; height: 100%; }
+  .cv-1 { background: #dbeafe; }
+  .cv-2 { background: #ccfbf1; }
+  .cv-3 { background: #fef3c7; }
+  .cv-mono { font-family: var(--font-mono); fill: var(--ink); }
+  .cv-muted { fill: var(--ink-muted); }
+  .cv-sans { font-family: var(--font-body); fill: var(--ink); }
+  .cv-head { fill: var(--bg); opacity: 0.7; }
+  .cv-cell { fill: var(--bg); }
+  .cv-grid { stroke: var(--line); stroke-width: 1; }
+  @media (prefers-color-scheme: dark) {
+    .cv-1 { background: #172a4a; }
+    .cv-2 { background: #0b3330; }
+    .cv-3 { background: #3a2a0c; }
+  }
+  :global([data-theme="dark"]) .cv-1 { background: #172a4a; }
+  :global([data-theme="dark"]) .cv-2 { background: #0b3330; }
+  :global([data-theme="dark"]) .cv-3 { background: #3a2a0c; }
+</style>

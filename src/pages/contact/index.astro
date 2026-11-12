@@ -1,0 +1,82 @@
+---
+import Base from '../../layouts/Base.astro';
+import { operator, support } from '../../data/payment';
+---
+
+<Base
+  title="Contact"
+  description="How to reach Rsquared Academy about courses, orders, refunds and privacy."
+>
+  <section class="sec page-head" aria-labelledby="contact-h">
+    <div class="wrap legal">
+      <span class="eyebrow">Contact</span>
+      <h1 id="contact-h" class="t-h1">Contact Rsquared Academy</h1>
+      <p class="t-lead">{operator.line}</p>
+      <p>Email is the fastest way to reach us. We reply within {support.responseTime} (Monday to Friday, India Standard Time). Refund and access problems are handled first.</p>
+    </div>
+  </section>
+
+  <section class="sec flush" aria-labelledby="email-h">
+    <div class="wrap legal">
+      <h2 id="email-h" class="t-h3">Email</h2>
+      <ul>
+        <li><strong>General questions and support:</strong> <a href={`mailto:${support.email}`}>{support.email}</a></li>
+        <li><strong>Orders, payments and refunds:</strong> <a href={`mailto:${support.email}?subject=Order`}>{support.email}</a>, with "Order" in the subject line.</li>
+        <li><strong>Privacy requests:</strong> <a href={`mailto:${support.email}?subject=Privacy`}>{support.email}</a>, with "Privacy" in the subject line.</li>
+        <li><strong>Teaching a class:</strong> use the form on the <a href="/educators/">For educators</a> page.</li>
+      </ul>
+
+      <h2 class="t-h3">Location</h2>
+      <address>
+        {operator.legalName} (Rsquared Academy)<br />
+        {operator.address.map((line, i) => <>{line}{i < operator.address.length - 1 && <br />}</>)}
+      </address>
+
+      <h2 class="t-h3">Elsewhere</h2>
+      <ul>
+        <li><strong>Website:</strong> <a href="https://www.rsquaredacademy.com">www.rsquaredacademy.com</a></li>
+        <li><strong>Learning platform:</strong> <a href="https://app.rsquaredacademy.com">app.rsquaredacademy.com</a></li>
+      </ul>
+
+      <h2 class="t-h3">Before you write</h2>
+      <p>Many questions are answered on the <a href="/support/">Support</a> page. For payment questions, include the email address you used at checkout and the date of the order.</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .page-head {
+    padding-top: 96px;
+    padding-bottom: 64px;
+  }
+  .legal {
+    max-width: var(--text-max);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .legal p,
+  .legal li,
+  .legal address {
+    margin: 0;
+  }
+  .legal ul {
+    margin: 0;
+    padding-left: 24px;
+    list-style: disc;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .legal address {
+    font-style: normal;
+  }
+  .flush {
+    padding-top: 0;
+  }
+  @media (max-width: 860px) {
+    .page-head {
+      padding-block: var(--space-12);
+    }
+  }
+</style>

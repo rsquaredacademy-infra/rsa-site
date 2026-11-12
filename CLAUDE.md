@@ -57,10 +57,10 @@ placeholders in that repo's `TODO.md`, not as TODO comments in this repo.
 - No new dependencies without asking. No client-side framework (no React).
   Small `<script>` blocks are fine.
 - Forms: Netlify Forms (`data-netlify="true"`, hidden `form-name`, honeypot),
-  posting to `/thanks/`. Exception: the sign-up band embeds Zoho Campaigns'
-  hosted form in an iframe (our own posts were rejected as spam). Because it is
-  cross-origin, GA4 gets `signup_embed_interact` on first focus, not a success
-  event.
+  posting to `/thanks/`. Exception: the sign-up band posts JSON to the app's
+  `https://app.rsquaredacademy.com/api/subscribe` (Zoho Campaigns via the app),
+  guarded by Cloudflare Turnstile, which loads on first focus. GA4 gets
+  `sign_up` only after the API confirms the contact.
 - This repo is public: no secrets, drafts or internal notes in code or commits.
 
 ## Checks

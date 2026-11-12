@@ -1,61 +1,412 @@
 ---
-// Email sign-up: Zoho Campaigns' hosted form, embedded in an iframe.
+// Email sign-up: a native form that posts JSON to the app's `/api/subscribe`
+// endpoint (Zoho Campaigns via the app), guarded by Cloudflare Turnstile.
 //
-// Posting our own form from this page was rejected as spam by Zoho
-// (`spmSubmit: true`), so the hosted form is the supported path.
-// Cross-origin means we can only observe that the iframe was focused, not
-// whether the visitor submitted successfully: see the GA4 note below.
+// Nothing loads from Cloudflare until the email field is focused. The body is
+// the same one the app's SignupCard sends, with `site` fixed to the www site
+// label that the endpoint allows. GA4 gets `sign_up` only after the API
+// confirms the contact; the email address is never sent to GA4.
+import Button from './Button.astro';
+import { contactEmail } from '../data/site';
+
 interface Props { title?: string; text?: string; id?: string; site: string }
 const {
   title = 'Get updates',
-  text = 'Hear when the free courses open in December 2026. We email about once a month.',
+  text = 'Hear when the free courses open. We email about once a month.',
   id = 'signup-email',
   site,
 } = Astro.props;
-const formUrl = 'https://zgnp-zngp.maillist-manage.com/ua/Optin?od=11287ecdb0025d&zx=126630e09&lD=117e9dae2c8129085&sD=117e9dae2c8129b28';
+const statusId = `${id}-status`;
 ---
+
 <section class="rsa-signup" id="signup">
   <div class="rsa-signup-copy">
     <h2>{title}</h2>
     <p>{text}</p>
     <p class="rsa-signup-note">No spam. Unsubscribe any time. <a href="/privacy/">Privacy</a></p>
   </div>
-  <div class="rsa-signup-embed">
-    <iframe
-      id={id}
-      src={formUrl}
-      title="Sign up for Rsquared Academy updates"
-      loading="lazy"
-      data-signup-embed
-      data-signup-site={site}
-    ></iframe>
-  </div>
+  {/* Hidden until the script runs: without JavaScript there is nothing to submit,
+       so the address can never end up in a URL (see the noscript note). The
+       app endpoint accepts JSON only, so there is no plain-form fallback.
+       method="post" keeps a stray submit from ever using GET. */}
+  <form class="rsa-signup-form" data-signup-form data-signup-site={site} method="post" action="#signup" hidden novalidate>
+    <div class="rsa-signup-row">
+      <div class="rsa-signup-field">
+        <label for={id}>Email address</label>
+        <input
+          id={id}
+          class="rsa-input"
+          name="email"
+          type="email"
+          autocomplete="email"
+          required
+          aria-describedby={statusId}
+        />
+      </div>
+      <Button type="submit">Get updates</Button>
+    </div>
+    <div class="rsa-signup-hp" aria-hidden="true">
+      <label for={`${id}-website`}>Website</label>
+      <input
+        id={`${id}-website`}
+        name="website"
+        type="text"
+        tabindex="-1"
+        autocomplete="off"
+      />
+    </div>
+    <div class="rsa-signup-turnstile" data-signup-turnstile></div>
+    <p id={statusId} class="rsa-help" data-signup-status role="status" aria-live="polite"></p>
+  </form>
+  <noscript>
+    <p class="rsa-signup-note">Sign-up needs JavaScript. Turn it on and reload, or email <a href={`mailto:${contactEmail}`}>{contactEmail}</a> and we'll add you.</p>
+  </noscript>
 </section>
 
 <script>
-  // A cross-origin iframe cannot tell us when the hosted form was submitted,
-  // so GA4 gets one `signup_embed_interact` event on first focus instead of a
-  // `sign_up` success event. Clicking into the form focuses the iframe.
-  for (const iframe of document.querySelectorAll<HTMLIFrameElement>('iframe[data-signup-embed]')) {
-    const track = () => {
-      if (iframe.dataset.signupTracked === 'true') return;
-      iframe.dataset.signupTracked = 'true';
-      const gtag = (window as Window & { gtag?: (...args: unknown[]) => void }).gtag;
-      if (typeof gtag === 'function') {
-        gtag('event', 'signup_embed_interact', {
-          event_category: 'signup',
-          event_label: iframe.dataset.signupSite || 'www.rsquaredacademy.com',
-        });
+  // Cloudflare Turnstile: the script is loaded on first focus, not on page
+  // load, so a visitor who never signs up makes no request to Cloudflare.
+  const TURNSTILE_SRC = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+  const TURNSTILE_SITE_KEY = '0x4AAAAAAF8S08JtgwM8pxF9';
+  // True only in dev and in builds made with PUBLIC_TURNSTILE_TEST=1 (the e2e
+  // tests). A production build replaces this with `false`, so the test keys and
+  // the test-mode branch are removed from the shipped script.
+  const TEST_BUILD = import.meta.env.DEV || import.meta.env.PUBLIC_TURNSTILE_TEST === '1';
+  const LOAD_TIMEOUT_MS = 20_000;
+  const REQUEST_TIMEOUT_MS = 20_000;
+  const MAX_LOAD_ATTEMPTS = 3;
+
+  const API_URL = 'https://app.rsquaredacademy.com/api/subscribe';
+  const SITE = 'www.rsquaredacademy.com';
+  const PLACEMENT = 'www_band';
+  const MIN_FILL_MS = 3000;
+
+  const COPY = {
+    success: 'Check your inbox to confirm.',
+    invalid: "That email doesn't look right.",
+    error: "Couldn't sign you up just now. Try again in a minute.",
+    timeout: 'That took too long. Check your connection and try again.',
+    pending: 'Signing you up…',
+    spamLoad:
+      "Couldn't load the spam check. Check your connection or email support@rsquaredacademy.com.",
+    spamNotReady: 'The spam check is still running. Please try again in a moment.',
+  };
+
+  interface TurnstileOptions {
+    sitekey: string;
+    action: string;
+    appearance?: 'always' | 'execute' | 'interaction-only';
+    callback: (token: string) => void;
+    'error-callback'?: () => void;
+    'expired-callback'?: () => void;
+    'timeout-callback'?: () => void;
+  }
+
+  interface TurnstileApi {
+    render(container: HTMLElement, options: TurnstileOptions): string;
+    reset(widgetId: string): void;
+    remove(widgetId: string): void;
+  }
+
+  interface TurnstileConfig {
+    siteKey: string;
+    testMode: 'pass' | 'fail' | null;
+  }
+
+  function turnstileConfig(): TurnstileConfig {
+    if (TEST_BUILD) {
+      // Dev, preview and e2e builds only: Cloudflare's dummy keys.
+      let flag: string | null = null;
+      try {
+        flag = window.sessionStorage.getItem('turnstile-test-mode');
+      } catch {
+        // Storage blocked: use the always-pass key.
       }
+      const mode = flag === 'fail' ? 'fail' : 'pass';
+      return {
+        siteKey: mode === 'fail' ? '2x00000000000000000000AB' : '1x00000000000000000000AA',
+        testMode: mode,
+      };
+    }
+    return { siteKey: TURNSTILE_SITE_KEY, testMode: null };
+  }
+
+  let scriptPromise: Promise<TurnstileApi> | null = null;
+
+  function loadTurnstile(): Promise<TurnstileApi> {
+    const existing = (window as Window & { turnstile?: TurnstileApi }).turnstile;
+    if (existing) return Promise.resolve(existing);
+    if (scriptPromise) return scriptPromise;
+    const promise = new Promise<TurnstileApi>((resolve, reject) => {
+      const script = document.createElement('script');
+      let done = false;
+      const finish = (error: Error | null, api?: TurnstileApi) => {
+        if (done) return;
+        done = true;
+        window.clearTimeout(timer);
+        if (error) {
+          script.remove();
+          reject(error);
+        } else {
+          resolve(api as TurnstileApi);
+        }
+      };
+      const timer = window.setTimeout(
+        () => finish(new Error('turnstile load timed out')),
+        LOAD_TIMEOUT_MS,
+      );
+      script.src = TURNSTILE_SRC;
+      script.async = true;
+      script.onload = () => {
+        const api = (window as Window & { turnstile?: TurnstileApi }).turnstile;
+        if (api) finish(null, api);
+        else finish(new Error('turnstile missing'));
+      };
+      script.onerror = () => finish(new Error('turnstile load failed'));
+      document.head.appendChild(script);
+    });
+    scriptPromise = promise;
+    // A failed load clears the cache so a later focus or submit tries again.
+    promise.catch(() => {
+      if (scriptPromise === promise) scriptPromise = null;
+    });
+    return promise;
+  }
+
+  /** A trimmed, plausible address: one `@`, a dot in the domain, ≤ 254 chars. */
+  function isValidEmail(value: string): boolean {
+    const email = value.trim();
+    if (email.length === 0 || email.length > 254) return false;
+    if (/\s/.test(email)) return false;
+    const atIndex = email.indexOf('@');
+    if (atIndex <= 0) return false;
+    if (email.indexOf('@', atIndex + 1) !== -1) return false;
+    const local = email.slice(0, atIndex);
+    const domain = email.slice(atIndex + 1);
+    if (local.length === 0 || domain.length === 0) return false;
+    if (!domain.includes('.')) return false;
+    if (domain.startsWith('.') || domain.endsWith('.')) return false;
+    if (domain.includes('..')) return false;
+    return true;
+  }
+
+  function sleep(ms: number): Promise<void> {
+    return new Promise((resolve) => window.setTimeout(resolve, ms));
+  }
+
+  function trackSignUp(site: string): void {
+    const gtag = (window as Window & { gtag?: (...args: unknown[]) => void }).gtag;
+    if (typeof gtag !== 'function') return;
+    // No email or name: only the method, the site label and the placement.
+    gtag('event', 'sign_up', {
+      method: 'zoho_campaigns',
+      signup_site: site,
+      placement: PLACEMENT,
+    });
+  }
+
+  for (const form of document.querySelectorAll<HTMLFormElement>('form[data-signup-form]')) {
+    const input = form.querySelector<HTMLInputElement>('input[name="email"]');
+    const honeypot = form.querySelector<HTMLInputElement>('input[name="website"]');
+    const status = form.querySelector<HTMLElement>('[data-signup-status]');
+    const widget = form.querySelector<HTMLElement>('[data-signup-turnstile]');
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    if (!input || !status || !widget || !button) continue;
+
+    const site = form.dataset.signupSite || SITE;
+    const startedAt = Date.now();
+    let api: TurnstileApi | null = null;
+    let widgetId: string | null = null;
+    let token: string | null = null;
+    let errored = false;
+    let loadFailures = 0;
+    let mountPromise: Promise<void> | null = null;
+    let pending = false;
+    const waiters = new Set<(value: string | null) => void>();
+
+    // After MAX_LOAD_ATTEMPTS failed loads this page visit stops trying.
+    const gaveUp = () => loadFailures >= MAX_LOAD_ATTEMPTS;
+
+    const settle = (value: string | null) => {
+      for (const waiter of waiters) waiter(value);
+      waiters.clear();
     };
-    iframe.addEventListener('focus', track);
-    // Clicking into a cross-origin iframe focuses its own document, not the
-    // parent's <iframe> element (no focus event here), but the parent window
-    // does blur. Check who has focus once the browser settles.
-    window.addEventListener('blur', () => {
-      window.setTimeout(() => {
-        if (document.activeElement === iframe) track();
-      }, 0);
+
+    const setStatus = (message: string, kind: 'idle' | 'pending' | 'success' | 'error') => {
+      status.textContent = message;
+      status.dataset.kind = kind;
+    };
+
+    const reset = () => {
+      token = null;
+      if (api && widgetId !== null) api.reset(widgetId);
+    };
+
+    const getToken = (timeoutMs = 20_000): Promise<string | null> => {
+      if (token !== null) return Promise.resolve(token);
+      return new Promise((resolve) => {
+        const done = (value: string | null) => {
+          window.clearTimeout(timer);
+          waiters.delete(done);
+          resolve(value);
+        };
+        const timer = window.setTimeout(() => {
+          waiters.delete(done);
+          resolve(null);
+        }, timeoutMs);
+        waiters.add(done);
+      });
+    };
+
+    const mount = (): Promise<void> => {
+      if (mountPromise) return mountPromise;
+      if (widgetId !== null || gaveUp()) return Promise.resolve();
+      mountPromise = loadTurnstile().then(
+        (loaded) => {
+          api = loaded;
+          const config = turnstileConfig();
+          widgetId = loaded.render(widget, {
+            sitekey: config.siteKey,
+            action: 'signup',
+            appearance: 'interaction-only',
+            callback: (value) => {
+              errored = false;
+              token = value;
+              settle(value);
+            },
+            'expired-callback': () => {
+              token = null;
+            },
+            'error-callback': () => {
+              errored = true;
+              token = null;
+              settle(null);
+            },
+            'timeout-callback': () => {
+              token = null;
+            },
+          });
+        },
+        () => {
+          // Allow the next focus or submit to load the script again.
+          loadFailures += 1;
+          mountPromise = null;
+          settle(null);
+          setStatus(COPY.spamLoad, 'error');
+        },
+      );
+      return mountPromise;
+    };
+
+    // The widget is mounted only when the visitor starts to use the field.
+    input.addEventListener('focus', () => {
+      void mount();
+    });
+
+    // Without JavaScript the form stays hidden (see the noscript note).
+    form.hidden = false;
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (pending) return;
+      input.removeAttribute('aria-invalid');
+      setStatus('', 'idle');
+
+      const email = input.value.trim();
+      if (!isValidEmail(email)) {
+        input.setAttribute('aria-invalid', 'true');
+        setStatus(COPY.invalid, 'error');
+        input.focus();
+        return;
+      }
+
+      // aria-disabled, not disabled: a disabled button drops keyboard focus.
+      pending = true;
+      button.setAttribute('aria-disabled', 'true');
+      setStatus(COPY.pending, 'pending');
+
+      void (async () => {
+        const controller = new AbortController();
+        let timedOut = false;
+        let timer: number | undefined;
+        try {
+          // A submit without an earlier focus (autofill) starts the check now.
+          await mount();
+          const value = widgetId === null ? null : await getToken();
+          if (value === null) {
+            setStatus(
+              widgetId === null || errored ? COPY.spamLoad : COPY.spamNotReady,
+              'error',
+            );
+            return;
+          }
+
+          // Wait out the endpoint's anti-bot minimum instead of hiding a real
+          // sign-up behind the bot response.
+          const elapsed = Date.now() - startedAt;
+          if (elapsed < MIN_FILL_MS) await sleep(MIN_FILL_MS - elapsed);
+
+          const config = turnstileConfig();
+          timer = window.setTimeout(() => {
+            timedOut = true;
+            controller.abort();
+          }, REQUEST_TIMEOUT_MS);
+          const response = await fetch(API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email,
+              site: SITE,
+              placement: PLACEMENT,
+              hp: honeypot?.value.trim() ?? '',
+              t: Math.max(0, Math.round(Date.now() - startedAt)),
+              token: value,
+              testMode: config.testMode,
+            }),
+            mode: 'cors',
+            credentials: 'omit',
+            signal: controller.signal,
+          });
+
+          if (response.status === 400) {
+            input.setAttribute('aria-invalid', 'true');
+            setStatus(COPY.invalid, 'error');
+            input.focus();
+            return;
+          }
+          if (!response.ok) {
+            setStatus(COPY.error, 'error');
+            return;
+          }
+
+          let result: unknown = null;
+          try {
+            result = await response.json();
+          } catch {
+            // A non-JSON success (or a stalled body) is not a confirmed contact.
+          }
+          if (
+            result === null ||
+            typeof result !== 'object' ||
+            (result as { ok?: unknown }).ok !== true
+          ) {
+            setStatus(timedOut ? COPY.timeout : COPY.error, 'error');
+            return;
+          }
+
+          setStatus(COPY.success, 'success');
+          input.value = '';
+          trackSignUp(site);
+        } catch {
+          setStatus(timedOut ? COPY.timeout : COPY.error, 'error');
+        } finally {
+          window.clearTimeout(timer);
+          // A Turnstile token works once: get a fresh one for any retry.
+          reset();
+          pending = false;
+          button.removeAttribute('aria-disabled');
+        }
+      })();
     });
   }
 </script>

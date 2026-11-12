@@ -1,0 +1,74 @@
+---
+import Base from '../../layouts/Base.astro';
+import { operator, support, passes, passLengthNote } from '../../data/payment';
+---
+
+<Base
+  title="Refund and cancellation policy"
+  description="When Rsquared Academy refunds paid access, how to ask, and how long a refund takes."
+>
+  <section class="sec page-head" aria-labelledby="refund-h">
+    <div class="wrap legal">
+      <span class="eyebrow">Legal</span>
+      <h1 id="refund-h" class="t-h1">Refund and cancellation policy</h1>
+      <p class="t-small t-muted">Last updated: 11 November 2026</p>
+      <p>{operator.line}</p>
+    </div>
+  </section>
+
+  <section class="sec flush" aria-labelledby="policy-h">
+    <div class="wrap legal">
+      <h2 id="policy-h" class="t-h3">{passes.annual.exact}: refunds within 14 days</h2>
+      <p>For a {passes.annual.exact}, you can ask for a full refund within 14 days of purchase if you have completed less than 20% of the lessons in every paid track (no single track at 20% or more). Your account page shows your progress in each track.</p>
+      <p>After 14 days, or once you have completed 20% or more of the lessons in any paid track, we do not refund, except for duplicate charges, failed access we cannot fix within 7 days, or where the law in your country gives you a right to a refund.</p>
+
+      <h2 class="t-h3">{passes.monthly.exact}: no refunds</h2>
+      <p>The {passes.monthly.exact} has no refunds, except a duplicate charge or a technical problem we can't fix. Lessons 0–2 of every course are free to try before you buy.</p>
+
+      <h2 class="t-h3">How to ask</h2>
+      <p>Email <a href={`mailto:${support.email}?subject=Refund`}>{support.email}</a> from the address on your account. Include your account email and the payment id. We reply within {support.responseTime}.</p>
+
+      <h2 class="t-h3">How we refund</h2>
+      <p>Approved refunds go back to the original payment method through our payment provider. They normally reach you within 5 to 7 business days of approval, depending on your bank.</p>
+      <p>When we refund, paid access ends.</p>
+
+      <h2 class="t-h3">Duplicate charges and technical problems</h2>
+      <p>For either pass, we refund duplicate charges in full at any time. For a {passes.annual.exact}, we also refund in full at any time if we cannot give you access because of a fault on our side that we cannot fix within 7 days. For a {passes.monthly.exact}, we refund in full for a technical problem we can't fix.</p>
+
+      <h2 class="t-h3">Cancellation</h2>
+      <p>Both the {passes.annual.exact} and the {passes.monthly.exact} are prepaid, one-time payments with no automatic renewal, so there is no subscription to cancel. If you do not buy another pass, paid access ends on your pass's end date. {passLengthNote}</p>
+      <p>Buying again before your pass ends adds the new period after the current end date. No days are lost. There is no upgrade credit.</p>
+
+      <h2 class="t-h3">Your legal rights</h2>
+      <p>Nothing on this page limits rights you have under the law where you live.</p>
+
+      <h2 class="t-h3">Other policies</h2>
+      <p>See <a href="/delivery/">Delivery and access</a> for when access starts and how long it lasts, and <a href="/terms/">Terms</a> for the rest of the agreement.</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .page-head {
+    padding-top: 96px;
+    padding-bottom: 64px;
+  }
+  .legal {
+    max-width: var(--text-max);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .legal p,
+  .legal li {
+    margin: 0;
+  }
+  .flush {
+    padding-top: 0;
+  }
+  @media (max-width: 860px) {
+    .page-head {
+      padding-block: var(--space-12);
+    }
+  }
+</style>

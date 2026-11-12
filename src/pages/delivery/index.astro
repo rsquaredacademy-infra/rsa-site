@@ -1,0 +1,85 @@
+---
+import Base from '../../layouts/Base.astro';
+import { support, passes, passLengthNote } from '../../data/payment';
+---
+
+<Base
+  title="Delivery and access policy"
+  description="How and when Rsquared Academy delivers paid course access, how long it lasts, and what happens when it ends."
+>
+  <section class="sec page-head" aria-labelledby="delivery-h">
+    <div class="wrap legal">
+      <span class="eyebrow">Legal</span>
+      <h1 id="delivery-h" class="t-h1">Delivery and access policy</h1>
+      <p class="t-small t-muted">Last updated: 11 November 2026</p>
+    </div>
+  </section>
+
+  <section class="sec flush" aria-labelledby="receive-h">
+    <div class="wrap legal">
+      <h2 id="receive-h" class="t-h3">What you receive</h2>
+      <p>Our courses are digital. Nothing is shipped. After payment, you get access to all the paid tracks in the plan on <a href="https://app.rsquaredacademy.com">app.rsquaredacademy.com</a>, using the account tied to the email address you gave at checkout.</p>
+
+      <h2 class="t-h3">When access starts</h2>
+      <p>Access starts right after the payment is confirmed, usually within a few minutes. Our payment provider emails you a receipt. If access is not active 30 minutes after payment, email <a href={`mailto:${support.email}`}>{support.email}</a> with your receipt and we will fix it, normally within one business day.</p>
+
+      <h2 class="t-h3">How long access lasts</h2>
+      <p>Choose a {passes.annual.exact}, our main plan, or a {passes.monthly.exact}. Both cover all paid tracks. Both are prepaid, one-time payments with no automatic renewal, available through Razorpay in India and our merchant of record outside India.</p>
+      <p>Your first pass runs for {passes.annual.months} months ({passes.annual.days} days) or {passes.monthly.months} month ({passes.monthly.days} days). {passLengthNote} Buying again before your pass ends adds the new period after the current end date. No days are lost. There is no upgrade credit.</p>
+      <p>We email before your pass ends: 30 and 7 days before for a {passes.annual.exact}; 5 and 1 days before for a {passes.monthly.exact}.</p>
+
+      <h2 class="t-h3">What access includes</h2>
+      <ul>
+        <li>All lessons and exercises in all paid tracks, including updates released while your pass is active.</li>
+        <li>Use on your own devices, for your own learning. Accounts are personal and may not be shared.</li>
+        <li>Courses added to the paid tracks while your pass is active are included.</li>
+      </ul>
+
+      <h2 class="t-h3">When access ends</h2>
+      <ul>
+        <li>You can no longer open lessons or submit exercises that require a paid pass.</li>
+        <li>Your account and progress stay on file. If you buy again, your progress is still there.</li>
+        <li>Free courses stay free. Lessons 0–2 of every course stay free to try.</li>
+      </ul>
+
+      <h2 class="t-h3">Requirements</h2>
+      <p>A computer or tablet with a current browser and an internet connection. Nothing needs to be installed.</p>
+
+      <h2 class="t-h3">Problems with delivery</h2>
+      <p>For a {passes.annual.exact}, we refund in full if we cannot give you access because of a fault on our side that we cannot fix within 7 days. For a {passes.monthly.exact}, there are no refunds except a duplicate charge or a technical problem we can't fix. See the <a href="/refund/">Refund and cancellation policy</a>.</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .page-head {
+    padding-top: 96px;
+    padding-bottom: 64px;
+  }
+  .legal {
+    max-width: var(--text-max);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .legal p,
+  .legal li {
+    margin: 0;
+  }
+  .legal ul {
+    margin: 0;
+    padding-left: 24px;
+    list-style: disc;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .flush {
+    padding-top: 0;
+  }
+  @media (max-width: 860px) {
+    .page-head {
+      padding-block: var(--space-12);
+    }
+  }
+</style>
