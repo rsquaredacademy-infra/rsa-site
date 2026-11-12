@@ -164,7 +164,10 @@ import { courses, foundationsBadges, links } from '../data/site';
 </Base>
 
 <style>
-  .hero-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--space-12); align-items: center; }
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-10, 40px); justify-items: center; text-align: center; }
+  .hero-grid > .flex { align-items: center; }
+  .hero-grid .flex-wrap { justify-content: center; }
+  .hero-figure { width: 100%; max-width: 1200px; }
   .hero-figure { margin: 0; display: flex; flex-direction: column; gap: var(--space-3); min-width: 0; }
   .hero-shot { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg); box-shadow: var(--shadow-card); }
   .trust-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-12); align-items: start; }
@@ -182,7 +185,7 @@ import { courses, foundationsBadges, links } from '../data/site';
     .four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
   @media (max-width: 860px) {
-    .hero-grid, .trust-grid { grid-template-columns: minmax(0, 1fr); }
+    .trust-grid { grid-template-columns: minmax(0, 1fr); }
     .three { grid-template-columns: minmax(0, 1fr); }
   }
   @media (max-width: 600px) {
