@@ -25,7 +25,6 @@ export const links = {
   openCourses: 'https://courses.rsquaredacademy.com/',
   openCoursesRepo: 'https://github.com/rsquaredacademy-infra/open-courses',
   blog: 'https://blog.rsquaredacademy.com',
-  thinkific: 'https://rsquared-academy.thinkific.com/',
 };
 
 export const footerColumns = [
