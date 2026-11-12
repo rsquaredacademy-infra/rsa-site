@@ -12,7 +12,6 @@ const PAGES = [
   '/support/',
   '/refund/',
   '/delivery/',
-  '/pricing/',
   '/privacy/',
   '/terms/',
   '/thanks/',
@@ -255,10 +254,10 @@ for (const path of PAGES) {
 }
 
 test.describe('Extra tests', () => {
-  test('payment pages return 200, footer links exist and /pricing/ is unlisted', async ({ page }, testInfo) => {
+  test('payment pages return 200, footer links exist and /pricing/ is not built', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'desktop', 'Desktop project only');
 
-    const paymentPages = ['/contact/', '/support/', '/refund/', '/delivery/', '/pricing/'];
+    const paymentPages = ['/contact/', '/support/', '/refund/', '/delivery/'];
     const legalLinks = [
       ['Contact', '/contact/'],
       ['Support', '/support/'],
@@ -285,9 +284,11 @@ test.describe('Extra tests', () => {
       expect(pricingLinks, `${path} links to the unlisted /pricing/ page`).toBe(0);
     }
 
-    // /pricing/ is noindex and absent from the sitemap.
-    await page.goto('/pricing/');
-    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex');
+    // Prices are not approved: /pricing/ is not built at all, so no [TBD] page
+    // is reachable, and it is absent from the sitemap.
+    const pricing = await page.request.get('/pricing/');
+    expect(pricing.status()).toBe(404);
+    expect(await pricing.text()).not.toContain('[TBD]');
     const sitemap = await page.request.get('/sitemap-0.xml');
     expect(sitemap.status()).toBe(200);
     expect(await sitemap.text()).not.toContain('/pricing/');
@@ -371,12 +372,6 @@ test.describe('Extra tests', () => {
     {
       path: '/courses/',
       grid: 'section[aria-labelledby="paid-h"] .rsa-card-grid',
-      parts: ['.rsa-card-title', '.rsa-card-text', '.track-list', '.track-note'],
-      evenLists: true,
-    },
-    {
-      path: '/pricing/',
-      grid: 'section[aria-labelledby="tracks-h"] .rsa-card-grid',
       parts: ['.rsa-card-title', '.rsa-card-text', '.track-list', '.track-note'],
       evenLists: true,
     },

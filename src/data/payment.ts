@@ -40,7 +40,8 @@ export const offer = {
   foundingPrice: '[TBD]',
 };
 
-// /pricing/ is built but unlisted and noindex until prices are set.
-// To list it, set this to true: the footer link appears and the sitemap starts
-// including the page. Header nav is unchanged; add it there separately if wanted.
+// /pricing/ is not built at all until prices are set (the route is injected in
+// astro.config.mjs only when this is true; the page is src/routes/pricing.astro).
+// To publish it, set this to true: the page is built, the footer link appears
+// and the sitemap includes it. The page drops `noindex` by itself. Header nav is unchanged; add it there separately if wanted.
 export const pricingPublished = false;

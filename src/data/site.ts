@@ -126,7 +126,7 @@ export const paidTracks = [
   {
     id: 'data-analyst-with-r',
     title: 'Data Analyst with R',
-    summary: 'Start with R, then work through analyst tasks on a real online shop.',
+    summary: 'Start with R, then work through analyst tasks on a realistic online shop dataset.',
     curriculum: [
       'RFM and customer segmentation',
       'SQL in R',

@@ -23,16 +23,26 @@ const EEA_REGIONS = [
  * @returns {boolean}
  */
 function isEuropeanTimeZone(timeZone) {
-  if (!timeZone || typeof timeZone !== 'string') return false;
+  // Fail closed: an unknown or unparsable time zone gets the prompt.
+  if (!timeZone || typeof timeZone !== 'string') return true;
+  // Every Europe/* zone (EEA, UK, CH and neighbours: over-prompting is safe).
   if (timeZone.startsWith('Europe/')) return true;
-  if (
-    timeZone === 'Atlantic/Canary' ||
-    timeZone === 'Atlantic/Madeira' ||
-    timeZone === 'Atlantic/Reykjavik'
-  ) {
-    return true;
-  }
-  return false;
+  // Non-Europe/* zones that belong to EEA/UK/CH territory, incl. Cyprus
+  // (Asia/Nicosia, Asia/Famagusta), the Azores, Madeira, the Canaries,
+  // Ceuta/Melilla, Iceland, Svalbard and Jan Mayen.
+  return [
+    'Asia/Nicosia',
+    'Asia/Famagusta',
+    'Atlantic/Azores',
+    'Atlantic/Madeira',
+    'Atlantic/Canary',
+    'Atlantic/Reykjavik',
+    'Atlantic/Faroe',
+    'Atlantic/Jan_Mayen',
+    'Arctic/Longyearbyen',
+    'Africa/Ceuta',
+    'Africa/Melilla'
+  ].indexOf(timeZone) !== -1;
 }
 
 /**

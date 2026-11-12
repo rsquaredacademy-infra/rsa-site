@@ -83,6 +83,8 @@ test.describe('native sign-up band', () => {
 
     await expect(status).toHaveText('Check your inbox to confirm.', { timeout: 15_000 });
     await expect(email).toHaveValue('');
+    // W17-09: the keyboard user stays on the submit button after completion.
+    await expect(submit).toBeFocused();
 
     const sent = api.body();
     expect(sent).not.toBeNull();
@@ -136,6 +138,8 @@ test.describe('native sign-up band', () => {
     expect(api.calls()).toBe(1);
     await expect(email).toHaveValue('learner@example.com');
     await expect(submit).toBeEnabled();
+    // W17-09: focus is kept (here the field the visitor submitted from).
+    await expect(email).toBeFocused();
 
     const signUps = await page.evaluate(
       () => ((window as any).__gaEvents as unknown[][]).filter(

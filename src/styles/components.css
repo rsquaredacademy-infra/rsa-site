@@ -76,6 +76,8 @@ a.rsa-card:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px;
 .rsa-signup-form .rsa-input { flex: none; width: 100%; height: var(--control-h); padding-block: 0; }
 .rsa-signup-form .rsa-btn { width: 100%; height: var(--control-h); }
 /* The Turnstile widget's slot keeps its height, so mounting it never moves the field */
+.rsa-signup-form[hidden] { display: none; }
+.rsa-signup-form .rsa-btn[aria-disabled="true"] { opacity: 0.6; cursor: progress; }
 .rsa-signup-turnstile { display: flex; align-items: center; min-height: 65px; }
 .rsa-signup-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 @media (min-width: 640px) {

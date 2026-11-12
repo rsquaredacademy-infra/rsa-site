@@ -1,15 +1,15 @@
 ---
-import Base from '../../layouts/Base.astro';
-import Badge from '../../components/Badge.astro';
-import Button from '../../components/Button.astro';
-import { MONTHLY_PRICE_INR, MONTHLY_PRICE_USD, paidTracks } from '../../data/site';
-import { offer, passes, passLengthNote } from '../../data/payment';
+import Base from '../layouts/Base.astro';
+import Badge from '../components/Badge.astro';
+import Button from '../components/Button.astro';
+import { MONTHLY_PRICE_INR, MONTHLY_PRICE_USD, paidTracks } from '../data/site';
+import { offer, passes, passLengthNote, pricingPublished } from '../data/payment';
 ---
 
 <Base
   title="Pricing"
   description={`Rsquared Academy prepaid passes: the ${passes.annual.exact} or the ${passes.monthly.exact}, all tracks, one-time payments and no automatic renewal.`}
-  noindex
+  noindex={!pricingPublished}
 >
   <section class="sec page-head" aria-labelledby="pricing-h">
     <div class="wrap flex flex-col gap-5">
