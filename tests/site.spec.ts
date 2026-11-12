@@ -4,6 +4,7 @@ import AxeBuilder from '@axe-core/playwright';
 const PAGES = [
   '/',
   '/courses/',
+  '/how-we-teach/',
   '/resources/',
   '/open-source/',
   '/educators/',

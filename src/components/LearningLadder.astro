@@ -1,0 +1,36 @@
+---
+// The four steps of a lesson. Used on Home, Courses and How we teach.
+interface Props { detail?: boolean }
+const { detail = false } = Astro.props;
+const steps = [
+  { n: 1, title: 'See it worked', short: 'A short worked example shows the idea on the course data, with its answer.',
+    long: 'A short worked example shows the idea on the course data, with its answer and a quick check of what you took from it.' },
+  { n: 2, title: 'Fill in the blanks', short: 'Complete a few missing pieces of working code.',
+    long: 'Complete a few missing pieces of working code. The task states the goal, not the answer.' },
+  { n: 3, title: 'Fix the bug', short: 'Find the mistake in code that does not work yet.',
+    long: 'Run code that stops or gives a wrong result, read what went wrong, and fix it. Mistakes like these are the ones beginners really make.' },
+  { n: 4, title: 'Write it yourself', short: 'Start from a blank script and answer a question with your own code.',
+    long: 'Start from a blank script and answer a question with your own code, using what the earlier steps built up.' },
+];
+---
+<ol class="ladder list-none m-0 p-0">
+  {steps.map((s) => (
+    <li class="ladder-step">
+      <span class="step-num">{s.n}</span>
+      <h3 class="t-h3">{s.title}</h3>
+      <p class="t-muted">{detail ? s.long : s.short}</p>
+    </li>
+  ))}
+</ol>
+<style>
+  .ladder { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-6); }
+  .ladder-step { display: flex; flex-direction: column; gap: var(--space-3); padding-top: var(--space-4); border-top: 2px solid var(--line); }
+  .ladder-step:nth-child(2) { margin-top: -6px; }
+  .ladder-step:nth-child(3) { margin-top: -12px; }
+  .ladder-step:nth-child(4) { margin-top: -18px; border-top-color: var(--brand); }
+  .step-num { display: inline-flex; width: 36px; height: 36px; border-radius: var(--radius-pill); background: var(--brand); color: var(--on-brand); align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; }
+  @media (max-width: 860px) {
+    .ladder { grid-template-columns: minmax(0, 1fr); }
+    .ladder-step, .ladder-step:nth-child(n) { margin-top: 0; }
+  }
+</style>

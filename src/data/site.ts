@@ -31,6 +31,7 @@ export const links = {
 export const footerColumns = [
   { title: 'Learn', links: [
     { label: 'Courses', href: '/courses/' },
+    { label: 'How we teach', href: '/how-we-teach/' },
     { label: 'Free resources', href: '/resources/' },
     { label: 'For educators', href: '/educators/' },
   ] },
