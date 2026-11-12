@@ -86,37 +86,37 @@ export const lessonTiles = [
     image: 'lesson-run',
     title: 'Run R in place',
     line: 'Type into the editor and press Run. R runs in the page, with nothing to install.',
-    alt: "The lesson player's code editor with a short R script and its console output below it",
+    alt: "Illustration: three lines of R code, a Run button and a bar chart appearing below",
   },
   {
     image: 'lesson-practice',
     title: 'Fill the gaps',
     line: 'Every lesson moves from a worked example to code you complete yourself.',
-    alt: 'The Fill the gaps badge and task instructions on a practice page',
+    alt: 'Illustration: a line of ggplot2 code with a highlighted blank and geom_col() filling it, above a bar chart',
   },
   {
     image: 'lesson-feedback',
     title: 'Instant feedback',
     line: 'A correct answer turns green and explains the result in plain words.',
-    alt: 'A green Correct banner under the code editor, with the next lesson button',
+    alt: 'Illustration: R code that computes an average, with a green Correct banner explaining the result',
   },
   {
     image: 'lesson-hints',
     title: 'Hints when stuck',
     line: 'A wrong answer says what to check, and a hint is one click away.',
-    alt: 'A not-yet feedback card with a Show hint link and the Hints button in the toolbar',
+    alt: 'Illustration: a filter() call with a mistake, a Not yet message and a hint saying to use == to compare',
   },
   {
     image: 'lesson-diagram',
     title: 'Step-through diagrams',
     line: 'Watch each dplyr step change the table, one row group at a time.',
-    alt: 'A step-through diagram mid-step, with the sales table grouped by product',
+    alt: 'Illustration: a small table grouped by store with group_by(), then summarised into one row per store',
   },
   {
     image: 'lesson-datasets',
     title: 'Datasets beside code',
     line: 'Open both course datasets, with their columns and first rows, beside your code.',
-    alt: 'The datasets panel open beside the code editor, listing the columns of store_days.csv',
+    alt: 'Illustration: a Datasets panel listing four columns and their types, beside a code card',
   },
 ];
 
