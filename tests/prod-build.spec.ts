@@ -59,4 +59,17 @@ test.describe('production build', () => {
     expect(html).not.toMatch(/real (dataset|online shop|data\b)/i);
     expect(html).not.toMatch(/small, real\b/i);
   });
+
+  test('W17-13: the store-table visual names as many stores as it draws', async ({}, testInfo) => {
+    test.skip(testInfo.project.name !== 'desktop', 'Desktop project only');
+    const html = readFileSync(join(OUT_DIR, 'courses', 'index.html'), 'utf8');
+    const svg = html.match(/<div class="course-visual cv-1"[^>]*>[\s\S]*?<\/svg>/);
+    expect(svg, 'cv-1 visual on the courses page').not.toBeNull();
+    const words = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
+    const label = svg![0].match(/aria-label="A table of (\w+) example stores/);
+    expect(label, 'store-table aria-label').not.toBeNull();
+    const rows = (svg![0].match(/data-store-row/g) ?? []).length;
+    expect(rows).toBeGreaterThan(0);
+    expect(words.indexOf(label![1])).toBe(rows);
+  });
 });

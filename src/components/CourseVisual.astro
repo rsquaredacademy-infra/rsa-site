@@ -63,12 +63,13 @@ const BAR_SLOT = PLOT_WIDTH / countries.length;
 const BAR_WIDTH = BAR_SLOT * 0.62;
 const ticks = [0, 500, 1000, 1500];
 
+const NUMBER_WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
 const label =
   order === 2
     ? 'The summarised table: one row per country, average daily revenue'
     : order === 3
       ? 'Bar chart of average daily revenue by country: Kenya highest, Portugal lowest'
-      : 'A table of six example stores: city, country and average daily revenue';
+      : `A table of ${NUMBER_WORDS[stores.length] ?? stores.length} example stores: city, country and average daily revenue`;
 ---
 
 <div class={`course-visual cv-${order}`}>
@@ -90,7 +91,7 @@ const label =
           {stores.map((row, rowIndex) => {
             const y = storeRowHeight * (rowIndex + 1);
             return (
-              <g>
+              <g data-store-row>
                 <rect x="0" y={y + 1} width="300" height={storeRowHeight - 2} rx="3" class="cv-cell" />
                 {row.map((value, index) => (
                   <text
