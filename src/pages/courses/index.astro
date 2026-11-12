@@ -5,7 +5,7 @@ import Badge from '../../components/Badge.astro';
 import Button from '../../components/Button.astro';
 import CourseCard from '../../components/CourseCard.astro';
 import LearningLadder from '../../components/LearningLadder.astro';
-import { courses, foundationsBadges, lessonTiles, links, paidTracks } from '../../data/site';
+import { courses, foundationsBadges, lessonTiles, paidTracks } from '../../data/site';
 import { passes } from '../../data/payment';
 ---
 
@@ -44,7 +44,7 @@ import { passes } from '../../data/payment';
   </section>
 
   <!-- How you'll learn -->
-  <section class="sec" aria-labelledby="ladder-h">
+  <section class="sec flush" aria-labelledby="ladder-h">
     <div class="wrap flex flex-col gap-8">
       <div class="flex flex-col gap-2 max-w-[680px]">
         <h2 id="ladder-h" class="t-h2">How you'll learn</h2>
@@ -109,21 +109,6 @@ import { passes } from '../../data/payment';
       </div>
       <div>
         <Button variant="secondary" href="/#signup">Hear when the tracks open</Button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Current courses -->
-  <section class="sec flush" aria-labelledby="current-h">
-    <div class="wrap">
-      <div class="bg-surface rounded-lg p-10 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-        <div class="flex flex-col gap-2 min-w-0">
-          <h2 id="current-h" class="t-h2">Looking for our current courses?</h2>
-          <p class="t-muted">Our current courses stay open on Thinkific while we move each one to the new platform.</p>
-        </div>
-        <div class="flex sm:flex-none">
-          <Button variant="secondary" href={links.thinkific} class="w-full whitespace-nowrap sm:w-auto">Go to the current courses</Button>
-        </div>
       </div>
     </div>
   </section>
