@@ -47,12 +47,13 @@ const date = (value: string) => new Intl.DateTimeFormat('en-GB', {
   .trust-card { display: flex; flex-direction: column; align-items: start; gap: var(--space-3); min-width: 0; padding: var(--space-6); background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius-lg); }
   .trust-card p { margin: 0; }
   .package-logos, .book-covers { display: grid; width: 100%; gap: var(--space-4); list-style: none; margin: var(--space-3) 0; padding: 0; }
-  .package-logos { grid-template-columns: repeat(auto-fit, minmax(86px, 1fr)); }
-  .book-covers { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .package-logos { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .book-covers { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .package-logos a, .book-covers a { display: block; border-radius: var(--radius-sm); }
-  .package-logos a { width: fit-content; }
+  .package-logos a { width: 100%; max-width: 86px; }
   .book-covers a { width: 100%; max-width: 112px; }
-  .package-logos img { display: block; width: 86px; height: 100px; object-fit: contain; }
+  .package-logos img { display: block; width: 100%; height: auto; aspect-ratio: 86 / 100; object-fit: contain; }
   .book-covers img { display: block; width: 100%; max-width: 112px; height: auto; aspect-ratio: 3 / 4; border: 1px solid var(--line); border-radius: var(--radius-sm); }
-  @media (max-width: 600px) { .book-covers { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  /* Packages and eBooks side by side on wide screens; stacked on phones and tablets. */
+  @media (min-width: 900px) { .trust-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 </style>
