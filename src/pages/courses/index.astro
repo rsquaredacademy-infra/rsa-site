@@ -5,7 +5,7 @@ import Badge from '../../components/Badge.astro';
 import Button from '../../components/Button.astro';
 import CourseCard from '../../components/CourseCard.astro';
 import LearningLadder from '../../components/LearningLadder.astro';
-import { courses, foundationsBadges, lessonTiles, paidTracks } from '../../data/site';
+import { courses, foundationsBadges, lessonTiles, paidTracks, startLessonHref } from '../../data/site';
 import { passes } from '../../data/payment';
 ---
 
@@ -36,7 +36,7 @@ import { passes } from '../../data/payment';
       </div>
       <div class="three rsa-card-grid">
         {courses.map((course) => (
-          <CourseCard eyebrow={course.eyebrow} title={course.title} description={course.long} badges={foundationsBadges} href={course.href} visual={course.visual} />
+          <CourseCard eyebrow={course.eyebrow} title={course.title} description={course.long} badges={foundationsBadges} href={course.href} visual={course.visual} startLessonHref={startLessonHref(course, `course-${course.id}`)} />
         ))}
       </div>
       <p class="t-muted">Free Intro to SQL and Intro to Python courses are coming soon.</p>

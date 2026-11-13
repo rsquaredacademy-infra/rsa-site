@@ -6,7 +6,7 @@ import Button from '../components/Button.astro';
 import CourseCard from '../components/CourseCard.astro';
 import LearningLadder from '../components/LearningLadder.astro';
 import SignupBand from '../components/SignupBand.astro';
-import { courses, foundationsBadges, links } from '../data/site';
+import { courses, foundationsBadges, links, startLessonHref, startLessonLabel } from '../data/site';
 ---
 
 <Base
@@ -24,7 +24,7 @@ import { courses, foundationsBadges, links } from '../data/site';
         <h1 class="t-display max-w-[640px]">Learn data analysis by doing, in your browser.</h1>
         <p class="t-lead max-w-[560px]">Free interactive courses with instant feedback. Nothing to install.</p>
         <div class="flex gap-3 flex-wrap">
-          <Button href="#signup">Get updates</Button>
+          <Button href={startLessonHref(courses[0], 'hero')}>{startLessonLabel}</Button>
           <Button variant="secondary" href="#courses">See the courses</Button>
         </div>
       </div>
