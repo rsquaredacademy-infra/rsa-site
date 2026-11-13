@@ -27,7 +27,7 @@ const date = (value: string) => new Intl.DateTimeFormat('en-GB', {
         </ul>
         <p class="t-small t-muted">CRAN downloads, all time, through <time datetime={cran.end}>{date(cran.end)}</time>.</p>
         <p class="t-small t-muted">Source: <a href={cran.source}>cranlogs download totals</a>. Posit CRAN mirror only; other mirrors are not counted. Available logs start in October 2012. Downloads are not a count of people.</p>
-        <p class="t-small"><a href="/open-source/">Explore our open-source work</a></p>
+        <a href="/open-source/" class="card-action">Explore our open-source work<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
       </article>
       <article class="trust-card">
         <h3 class="t-h3">{ebooks.length} public eBooks</h3>
@@ -37,7 +37,7 @@ const date = (value: string) => new Intl.DateTimeFormat('en-GB', {
           ))}
         </ul>
         <p class="t-small t-muted">Free to read online, from your first R code to wrangling, charts and SQL.</p>
-        <p class="t-small"><a href="/resources/">Browse the free eBooks</a></p>
+        <a href="/resources/" class="card-action">Browse the free eBooks<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
       </article>
     </div>
   </div>
@@ -47,6 +47,13 @@ const date = (value: string) => new Intl.DateTimeFormat('en-GB', {
   .trust-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-6); }
   .trust-card { display: flex; flex-direction: column; align-items: start; gap: var(--space-3); min-width: 0; padding: var(--space-6); background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius-lg); }
   .trust-card p { margin: 0; }
+  /* Card action: tinted pill with an arrow that nudges right on hover. */
+  .card-action { display: inline-flex; align-items: center; gap: var(--space-2); min-height: 44px; margin-top: auto; padding: 0 18px; border-radius: 999px; background: var(--surface-tint); color: var(--link); font-weight: 600; text-decoration: none; transition: background-color .15s, color .15s; }
+  .card-action svg { flex: none; transition: transform .15s; }
+  .card-action:hover { background: var(--brand); color: var(--bg); }
+  .card-action:hover svg { transform: translateX(3px); }
+  .card-action:focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; }
+  @media (prefers-reduced-motion: reduce) { .card-action, .card-action svg { transition: none; } .card-action:hover svg { transform: none; } }
   .package-logos, .book-covers { display: grid; width: 100%; gap: var(--space-4); list-style: none; margin: var(--space-3) 0; padding: 0; }
   .package-logos { grid-template-columns: repeat(5, minmax(0, 1fr)); }
   .book-covers { grid-template-columns: repeat(3, minmax(0, 1fr)); }
