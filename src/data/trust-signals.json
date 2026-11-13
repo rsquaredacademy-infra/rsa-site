@@ -1,0 +1,58 @@
+{
+    "cran":  {
+                 "source":  "https://cranlogs.r-pkg.org/downloads/total/2012-10-01:2026-11-12/olsrr,blorr,descriptr,inferr,vistributions,rbin,rfm,xplorerr,yahoofinancer,standby",
+                 "start":  "2012-10-01",
+                 "end":  "2026-11-12",
+                 "retrievedAt":  "2026-11-13T15:56:00Z",
+                 "total":  2911772,
+                 "packages":  [
+                                  {
+                                      "package":  "olsrr",
+                                      "downloads":  1137178
+                                  },
+                                  {
+                                      "package":  "blorr",
+                                      "downloads":  108089
+                                  },
+                                  {
+                                      "package":  "descriptr",
+                                      "downloads":  173567
+                                  },
+                                  {
+                                      "package":  "inferr",
+                                      "downloads":  57986
+                                  },
+                                  {
+                                      "package":  "vistributions",
+                                      "downloads":  62309
+                                  },
+                                  {
+                                      "package":  "rbin",
+                                      "downloads":  164616
+                                  },
+                                  {
+                                      "package":  "rfm",
+                                      "downloads":  444596
+                                  },
+                                  {
+                                      "package":  "xplorerr",
+                                      "downloads":  714728
+                                  },
+                                  {
+                                      "package":  "yahoofinancer",
+                                      "downloads":  31509
+                                  },
+                                  {
+                                      "package":  "standby",
+                                      "downloads":  17194
+                                  }
+                              ]
+             },
+    "youtube":  {
+                    "source":  "https://www.youtube.com/user/rsquaredin/about",
+                    "channelId":  "UCVexlPS8V4Mldyakj5-le0g",
+                    "retrievedAt":  "2026-11-13T15:56:00Z",
+                    "videoCount":  179,
+                    "subscriberLabel":  "1.44K subscribers"
+                }
+}
