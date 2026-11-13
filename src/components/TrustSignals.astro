@@ -1,10 +1,11 @@
 ---
 import snapshot from '../data/trust-signals.json';
 import { ebooks } from '../data/ebooks';
-import { operator } from '../data/payment';
+import { packageGroups } from '../data/packages';
 
-const { cran, youtube } = snapshot;
-const number = new Intl.NumberFormat('en-US');
+const { cran } = snapshot;
+const downloadsInMillions = Math.floor(cran.total / 100_000) / 10;
+const packages = packageGroups.flatMap((group) => group.pkgs);
 const date = (value: string) => new Intl.DateTimeFormat('en-GB', {
   day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC',
 }).format(new Date(value));
@@ -14,36 +15,28 @@ const date = (value: string) => new Intl.DateTimeFormat('en-GB', {
   <div class="wrap flex flex-col gap-8">
     <div class="flex flex-col gap-4 max-w-[760px]">
       <h2 id="trust-h" class="t-h2">Built by the author of olsrr, descriptr and rfm</h2>
-      <p class="t-muted">{operator.knownAs} writes and maintains these R packages, writes our eBooks and teaches R. <a href="/about/#who-h">About the author</a>.</p>
+      <p class="t-muted">Learn from an experienced data science consultant, author of popular R packages and eBooks</p>
     </div>
     <div class="trust-grid">
       <article class="trust-card">
-        <h3 class="t-h3">{number.format(cran.total)}</h3>
-        <p class="trust-label">CRAN downloads, all time</p>
-        <p class="t-small t-muted">Across our listed R packages, through <time datetime={cran.end}>{date(cran.end)}</time>.</p>
+        <h3 class="t-h3">{downloadsInMillions} million downloads</h3>
+        <ul class="package-logos" aria-label="R packages">
+          {packages.map((pkg) => (
+            <li><a href={pkg.docs}><img src={pkg.hex} alt={`${pkg.name} R package logo`} width="86" height="100" loading="lazy" /></a></li>
+          ))}
+        </ul>
+        <p class="t-small t-muted">CRAN downloads, all time, through <time datetime={cran.end}>{date(cran.end)}</time>.</p>
         <p class="t-small t-muted">Source: <a href={cran.source}>cranlogs download totals</a>. Posit CRAN mirror only; other mirrors are not counted. Available logs start in October 2012. Downloads are not a count of people.</p>
-        <details>
-          <summary>Downloads by package</summary>
-          <ul class="package-totals t-small">
-            {cran.packages.map((pkg) => (
-              <li><a href={`https://cran.r-project.org/package=${pkg.package}`}>{pkg.package}</a><span>{number.format(pkg.downloads)}</span></li>
-            ))}
-          </ul>
-        </details>
         <p class="t-small"><a href="/open-source/">Explore our open-source work</a></p>
       </article>
       <article class="trust-card">
         <h3 class="t-h3">{ebooks.length} public eBooks</h3>
         <p class="t-muted">Free to read online, from your first R code to wrangling, charts and SQL.</p>
-        <ul class="book-links t-small">
-          {ebooks.map((book) => <li><a href={book.web}>{book.title}</a></li>)}
+        <ul class="book-covers" aria-label="eBooks">
+          {ebooks.map((book) => (
+            <li><a href={book.web}><img src={book.cover} alt={`${book.title} eBook cover`} width="300" height="400" loading="lazy" /></a></li>
+          ))}
         </ul>
-      </article>
-      <article class="trust-card">
-        <h3 class="t-h3">{number.format(youtube.videoCount)} videos on YouTube</h3>
-        <p class="t-muted">Walk through R code step by step on our public channel.</p>
-        {youtube.subscriberLabel && <p class="t-small t-muted">{youtube.subscriberLabel} (rounded by YouTube).</p>}
-        <p class="t-small t-muted">Source: <a href={youtube.source}>Rsquared Academy on YouTube</a>, checked <time datetime={youtube.retrievedAt.slice(0, 10)}>{date(youtube.retrievedAt)}</time>.</p>
       </article>
     </div>
   </div>
@@ -53,14 +46,13 @@ const date = (value: string) => new Intl.DateTimeFormat('en-GB', {
   .trust-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-6); }
   .trust-card { display: flex; flex-direction: column; align-items: start; gap: var(--space-3); min-width: 0; padding: var(--space-6); background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius-lg); }
   .trust-card p { margin: 0; }
-  .trust-label { font-weight: 600; }
-  .trust-card details { width: 100%; }
-  summary { cursor: pointer; display: list-item; padding-block: var(--space-3); min-height: 44px; font-size: 15px; }
-  summary:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
-  .book-links, .package-totals { list-style: none; margin: 0; padding: 0; }
-  .book-links a { display: inline-flex; align-items: center; min-height: 44px; }
-  .package-totals li { display: flex; justify-content: space-between; gap: var(--space-3); }
-  .package-totals a { display: inline-flex; align-items: center; min-height: 44px; }
-  .package-totals span { align-self: center; }
-  @media (min-width: 860px) { .trust-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .package-logos, .book-covers { display: grid; width: 100%; gap: var(--space-4); list-style: none; margin: var(--space-3) 0; padding: 0; }
+  .package-logos { grid-template-columns: repeat(auto-fit, minmax(86px, 1fr)); }
+  .book-covers { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .package-logos a, .book-covers a { display: block; border-radius: var(--radius-sm); }
+  .package-logos a { width: fit-content; }
+  .book-covers a { width: 100%; max-width: 112px; }
+  .package-logos img { display: block; width: 86px; height: 100px; object-fit: contain; }
+  .book-covers img { display: block; width: 100%; max-width: 112px; height: auto; aspect-ratio: 3 / 4; border: 1px solid var(--line); border-radius: var(--radius-sm); }
+  @media (max-width: 600px) { .book-covers { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 </style>

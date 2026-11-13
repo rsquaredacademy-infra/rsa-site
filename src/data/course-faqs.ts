@@ -26,7 +26,7 @@ export const freeCoursePages = courses.map((course) => {
     },
     {
       question: 'How long does it take?',
-      answer: 'The course is self-paced, with no fixed completion time. Work through the lessons and exercises at your own pace, and take breaks between lessons as you need.',
+      answer: 'The course takes about 3 hours, at your own pace. Work through the lessons and exercises, and take breaks between lessons as you need.',
     },
     {
       question: 'Do I get a certificate?',

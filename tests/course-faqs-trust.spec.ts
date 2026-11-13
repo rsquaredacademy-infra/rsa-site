@@ -50,7 +50,12 @@ for (const course of courses) {
     expect(answers).toContain('Not yet. We do not currently issue a certificate');
     expect(answers).toContain('December 2026');
     expect(answers).toContain('26 January 2027');
-    expect(answers).toContain('no fixed completion time');
+    expect(answers).toContain('about 3 hours, at your own pace');
+    const faqWidth = await page.locator('.faq-content').evaluate((el) => el.getBoundingClientRect().width);
+    expect(faqWidth).toBeLessThanOrEqual(760);
+    for (const answer of await details.locator('p').all()) {
+      expect(await answer.evaluate((el) => el.getBoundingClientRect().width)).toBe(faqWidth);
+    }
     expect(answers).not.toMatch(/₹|\$|\b(?:INR|USD)\b/);
     if (course.id !== 'intro') expect(answers).toContain('take our free Introduction to R course first');
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `https://www.rsquaredacademy.com${path}`);
@@ -101,17 +106,29 @@ test('trust figures have consistent totals, package coverage and public source l
   for (const path of ['/', '/about/']) {
     await page.goto(path);
     const trust = page.locator('#trust-signals');
-    await expect(trust).toContainText(snapshot.cran.total.toLocaleString('en-US'));
+    await expect(trust.getByRole('heading', { name: '2.9 million downloads', exact: true })).toBeVisible();
+    await expect(trust).toContainText('Learn from an experienced data science consultant, author of popular R packages and eBooks');
     await expect(trust).toContainText('CRAN downloads, all time');
     await expect(trust).toContainText('Posit CRAN mirror only');
     await expect(trust).toContainText('Downloads are not a count of people');
     await expect(trust.locator(`a[href="${snapshot.cran.source}"]`)).toHaveCount(1);
     await expect(trust).toContainText(`${ebooks.length} public eBooks`);
-    for (const book of ebooks) await expect(trust.getByRole('link', { name: book.title, exact: true })).toHaveAttribute('href', book.web);
-    await expect(trust).toContainText(`${snapshot.youtube.videoCount} videos on YouTube`);
-    if (snapshot.youtube.subscriberLabel) await expect(trust).toContainText(`${snapshot.youtube.subscriberLabel} (rounded by YouTube)`);
-    await expect(trust.locator(`a[href="${snapshot.youtube.source}"]`)).toHaveCount(1);
-    await expect(trust.getByRole('link', { name: 'About the author' })).toHaveAttribute('href', '/about/#who-h');
+    for (const book of ebooks) {
+      await expect(trust.getByRole('link', { name: `${book.title} eBook cover`, exact: true })).toHaveAttribute('href', book.web);
+      await expect(trust.getByRole('img', { name: `${book.title} eBook cover`, exact: true })).toHaveAttribute('src', book.cover);
+    }
+    for (const pkg of packageGroups.flatMap((group) => group.pkgs)) {
+      await expect(trust.getByRole('link', { name: `${pkg.name} R package logo`, exact: true })).toHaveAttribute('href', pkg.docs);
+      await expect(trust.getByRole('img', { name: `${pkg.name} R package logo`, exact: true })).toHaveAttribute('src', pkg.hex);
+    }
+    await expect(trust.locator('img')).toHaveCount(16);
+    await trust.scrollIntoViewIfNeeded();
+    await expect.poll(() => trust.locator('img').evaluateAll((images) => images.every((img) => {
+      const image = img as HTMLImageElement;
+      return image.complete && image.naturalWidth > 0 && image.hasAttribute('width') && image.hasAttribute('height');
+    }))).toBe(true);
+    await expect(trust).not.toContainText('YouTube');
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(page.viewportSize()!.width);
   }
 });
 
@@ -122,11 +139,20 @@ test('capture FAQ and trust sections for review', async ({ page }, testInfo) => 
   for (const width of [1280, 390]) {
     await page.setViewportSize({ width, height: 900 });
     await page.goto('/courses/intro-r/');
+    await page.addStyleTag({ content: 'astro-dev-toolbar { display: none !important; }' });
     await page.locator('#course-faq details').evaluateAll((items) => items.forEach((el) => { (el as HTMLDetailsElement).open = true; }));
     await page.evaluate(() => document.fonts.ready);
     await page.locator('#course-faq').screenshot({ path: join(output!, `intro-r-faq-${width}.png`) });
     await page.goto('/');
+    await page.addStyleTag({ content: 'astro-dev-toolbar { display: none !important; }' });
     await page.evaluate(() => document.fonts.ready);
+    await page.locator('#trust-signals img').evaluateAll(async (images) => {
+      await Promise.all(images.map(async (el) => {
+        const image = el as HTMLImageElement;
+        image.loading = 'eager';
+        await image.decode();
+      }));
+    });
     await page.locator('#trust-signals').screenshot({ path: join(output!, `trust-${width}.png`) });
   }
 });
