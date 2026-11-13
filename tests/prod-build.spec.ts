@@ -41,13 +41,18 @@ test.describe('production build', () => {
     expect(text).toContain('0x4AAAAAAF8S08JtgwM8pxF9');
   });
 
-  test('W17-04: /pricing/ is not emitted and no [TBD] reaches production', async ({}, testInfo) => {
+  test('public pricing is emitted, indexed and contains launch prices', async ({}, testInfo) => {
     test.skip(testInfo.project.name !== 'desktop', 'Desktop project only');
-    expect(existsSync(join(OUT_DIR, 'pricing'))).toBe(false);
+    expect(existsSync(join(OUT_DIR, 'pricing', 'index.html'))).toBe(true);
+    const pricing = readFileSync(join(OUT_DIR, 'pricing', 'index.html'), 'utf8');
+    for (const price of ['₹299', '₹629', '₹1,299', 'to be announced']) {
+      expect(pricing).toContain(price);
+    }
+    expect(pricing).not.toContain('noindex');
     for (const file of files(OUT_DIR).filter((f) => f.endsWith('.html'))) {
       expect(readFileSync(file, 'utf8'), file).not.toContain('[TBD]');
     }
-    expect(readFileSync(join(OUT_DIR, 'sitemap-0.xml'), 'utf8')).not.toContain('/pricing/');
+    expect(readFileSync(join(OUT_DIR, 'sitemap-0.xml'), 'utf8')).toContain('/pricing/');
   });
 
   test('W17-02: no page calls the synthetic course data real', async ({}, testInfo) => {

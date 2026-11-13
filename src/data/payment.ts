@@ -13,35 +13,30 @@ export const operator = {
   // City-level only: no street address on the public site (Aravind 2026-11-11).
   // If a payment gateway needs a full business address, use a business/virtual
   // office address, never the home address.
-  address: ['Bengaluru, Karnataka, India'],};
+  address: ['Bengaluru, Karnataka, India'],
+};
 
 export const support = {
   email: contactEmail,
   responseTime: '2 business days',
 };
 
-// Pass lengths are exact: a 12-month pass is 365 days and a 1-month pass is
-// 30 days, counted from the time of purchase shown on the receipt.
+// Launch prices in INR, effective 26 January 2027. Pass lengths are exact.
 export const passes = {
-  annual: { name: '12-month pass', exact: '12-month pass (365 days)', months: 12, days: 365 },
-  monthly: { name: '1-month pass', exact: '1-month pass (30 days)', months: 1, days: 30 },
+  monthly: { name: '1-month pass', exact: '1-month pass (30 days)', months: 1, days: 30, priceINR: 299 },
+  quarterly: { name: '3-month pass', exact: '3-month pass (90 days)', months: 3, days: 90, priceINR: 629 },
+  annual: { name: '12-month pass', exact: '12-month pass (365 days)', months: 12, days: 365, priceINR: 1299 },
 };
 
-// Use wherever access length is explained, so the start point is always stated.
-export const passLengthNote = 'Pass lengths are counted from the time of purchase shown on the receipt.';
+export const passChoiceNote = `Choose a ${passes.monthly.exact}, a ${passes.quarterly.exact} or a ${passes.annual.exact}.`;
+export const passLengthNote = 'Your first pass starts when payment is confirmed, as shown on your receipt.';
+export const stackingNote = 'Buying again before your pass ends adds the new period after the current end date, up to a maximum of 24 months of future access. No days are lost. There is no upgrade credit.';
+export const launchPricingNote = 'Launch pricing, one time only: courses as they are released, at a lower price, from 26 January 2027 until all three tracks are complete. Prices then rise for new purchases. Passes already bought run to their end date; your next purchase is at the then-current price. We announce any price rise at least 30 days ahead by email and on this website.';
+export const reminderNote = 'We email before your pass ends: 5 and 1 days before for a 1-month pass; 14 and 3 days before for a 3-month pass; 30 and 7 days before for a 12-month pass. We also email when your pass expires.';
+export const morTermsNote = 'Outside India, payments are processed by our merchant of record, whose terms also apply.';
 
-export const offer = {
-  accessMonths: 12,
-  foundingSeats: 200,
-  renewalWindowDays: 30,
-  // Prices are not set yet (PRICE-1..3). Fill them in here, including the
-  // currency, e.g. 'INR 9,999'. Every [TBD] on /pricing/ comes from this object.
-  planPrice: '[TBD]',
-  foundingPrice: '[TBD]',
-};
+// Replace this single placeholder when international prices are decided.
+export const internationalPrice = 'to be announced';
 
-// /pricing/ is not built at all until prices are set (the route is injected in
-// astro.config.mjs only when this is true; the page is src/routes/pricing.astro).
-// To publish it, set this to true: the page is built, the footer link appears
-// and the sitemap includes it. The page drops `noindex` by itself. Header nav is unchanged; add it there separately if wanted.
-export const pricingPublished = false;
+// Controls the pricing route, sitemap inclusion and footer link.
+export const pricingPublished = true;

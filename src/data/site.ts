@@ -2,6 +2,7 @@
 
 export const nav = [
   { label: 'Courses', href: '/courses/' },
+  { label: 'Pricing', href: '/pricing/' },
   { label: 'Free resources', href: '/resources/' },
   { label: 'Open source', href: '/open-source/' },
   { label: 'For educators', href: '/educators/' },
@@ -12,9 +13,6 @@ export const nav = [
 export const cta = { label: 'Get updates', href: '/#signup' };
 
 export const contactEmail = 'support@rsquaredacademy.com';
-
-export const MONTHLY_PRICE_INR = 329;
-export const MONTHLY_PRICE_USD = 7; // final price set before launch
 
 export const links = {
   github: 'https://github.com/rsquaredacademy',

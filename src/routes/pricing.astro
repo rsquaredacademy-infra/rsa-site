@@ -2,58 +2,49 @@
 import Base from '../layouts/Base.astro';
 import Badge from '../components/Badge.astro';
 import Button from '../components/Button.astro';
-import { MONTHLY_PRICE_INR, MONTHLY_PRICE_USD, paidTracks } from '../data/site';
-import { offer, passes, passLengthNote, pricingPublished } from '../data/payment';
+import { paidTracks } from '../data/site';
+import { passes, passChoiceNote, passLengthNote, stackingNote, launchPricingNote, reminderNote, morTermsNote, internationalPrice, pricingPublished } from '../data/payment';
 ---
 
 <Base
   title="Pricing"
-  description={`Rsquared Academy prepaid passes: the ${passes.annual.exact} or the ${passes.monthly.exact}, all tracks, one-time payments and no automatic renewal.`}
+  description={`Rsquared Academy launch pricing from 26 January 2027: ₹${passes.monthly.priceINR.toLocaleString('en-IN')} for ${passes.monthly.days} days, ₹${passes.quarterly.priceINR.toLocaleString('en-IN')} for ${passes.quarterly.days} days or ₹${passes.annual.priceINR.toLocaleString('en-IN')} for ${passes.annual.days} days. Prepaid, with no automatic renewal.`}
   noindex={!pricingPublished}
 >
   <section class="sec page-head" aria-labelledby="pricing-h">
     <div class="wrap flex flex-col gap-5">
       <span class="eyebrow">Pricing</span>
-      <h1 id="pricing-h" class="t-h1 max-w-[760px]">Two passes. Pay once, learn at your pace.</h1>
-      <p class="t-lead max-w-[680px]">Choose a {passes.annual.exact} or a {passes.monthly.exact}. Both cover all three paid tracks. Both are prepaid, one-time payments with no automatic renewal. {passLengthNote}</p>
-      <div><Badge tone="soon">Paid tracks coming 2027</Badge></div>
+      <h1 id="pricing-h" class="t-h1 max-w-[760px]">Three passes. Pay once, learn at your pace.</h1>
+      <p class="t-lead max-w-[680px]">{passChoiceNote} All three cover all paid tracks. Each is a prepaid, one-time payment with no automatic renewal.</p>
+      <div><Badge tone="soon">Paid tracks open from 26 January 2027</Badge></div>
     </div>
   </section>
 
   <section class="sec flush" aria-labelledby="plan-h">
     <div class="wrap">
-      <div class="plan">
-        <div class="flex flex-col gap-4 min-w-0">
-          <h2 id="plan-h" class="t-h2">{passes.annual.exact} — our main plan</h2>
-          <p class="price">{offer.planPrice}</p>
-          <p class="t-muted">One-time payment for {passes.annual.months} months ({passes.annual.days} days) of access, counted from the time of purchase shown on the receipt.</p>
-          <ul class="checklist">
-            <li>All three paid tracks: Data Analyst with R, Data Analyst with Python and SQL for Data Analysts.</li>
-            <li>Every lesson and exercise, with instant feedback in your browser.</li>
-            <li>Updates released during your {passes.annual.months} months ({passes.annual.days} days).</li>
-            <li>Email support.</li>
-          </ul>
-          <div><Button href="/#signup">Hear when the tracks open</Button></div>
-        </div>
-        <div class="flex flex-col gap-3 min-w-0 plan-note">
-          <h3 class="t-h3">{passes.monthly.exact}</h3>
-          <p class="t-h3">India: ₹{MONTHLY_PRICE_INR}<br />Outside India: US${MONTHLY_PRICE_USD}</p>
-          <p class="t-muted">One-time payment for {passes.monthly.months} month ({passes.monthly.days} days) of the same access to all tracks, updates and email support. No automatic renewal.</p>
-          <p class="t-muted">Both passes are available in India through Razorpay and outside India through our merchant of record.</p>
-          <h3 class="t-h3">When you pay</h3>
-          <p class="t-muted">Your first pass starts right after payment is confirmed. Buying again before your pass ends adds the new period after the current end date. No days are lost. There is no upgrade credit.</p>
-          <p class="t-small t-muted">Prices and any applicable taxes are shown at checkout. See <a href="/delivery/">Delivery and access</a> and the <a href="/refund/">Refund and cancellation policy</a>.</p>
-        </div>
+      <h2 id="plan-h" class="t-h2 mb-6">India launch prices</h2>
+      <div class="three">
+        {Object.values(passes).map((pass) => (
+          <article class="plan flex flex-col gap-4 min-w-0">
+            <h3 class="t-h3">{pass.name}</h3>
+            <p class="price">₹{pass.priceINR.toLocaleString('en-IN')}</p>
+            <p>{pass.days} days of access.</p>
+            <p class="t-muted">Prepaid. No automatic renewal.</p>
+            <p class="t-small t-muted">Outside India: {internationalPrice}.</p>
+          </article>
+        ))}
       </div>
+      <p class="t-small t-muted mt-6">Prices apply from 26 January 2027. These are the amounts you pay in India.</p>
+      <div class="mt-6"><Button href="/#signup">Hear when the tracks open</Button></div>
     </div>
   </section>
 
-  <section class="sec bg-surface" aria-labelledby="founding-h">
+  <section class="sec bg-surface" aria-labelledby="launch-h">
     <div class="wrap flex flex-col gap-4">
-      <h2 id="founding-h" class="t-h2">Founding offer</h2>
-      <p class="t-muted max-w-[680px]">The founding offer is for the {passes.annual.exact} only, limited to {offer.foundingSeats} seats. The founding price is <strong>{offer.foundingPrice}</strong> for {passes.annual.months} months ({passes.annual.days} days) of access to all tracks.</p>
-      <p class="t-muted max-w-[680px]">Founding members keep their founding price for each 12-month renewal bought before the pass ends or within {offer.renewalWindowDays} days after it ends. After a longer gap, the list price applies.</p>
-      <p class="t-muted max-w-[680px]">There is no automatic billing. A renewal is a new purchase.</p>
+      <h2 id="launch-h" class="t-h2">Launch pricing, one time only</h2>
+      <p class="t-muted max-w-[680px]">{launchPricingNote}</p>
+      <p class="t-muted max-w-[680px]">{passLengthNote} {stackingNote}</p>
+      <p class="t-muted max-w-[680px]">Payments in India are processed by Razorpay. {morTermsNote}</p>
     </div>
   </section>
 
@@ -61,12 +52,18 @@ import { offer, passes, passLengthNote, pricingPublished } from '../data/payment
     <div class="wrap flex flex-col gap-8">
       <div class="flex flex-col gap-2 max-w-[680px]">
         <h2 id="tracks-h" class="t-h2">Paid tracks</h2>
-        <p class="t-muted">One business dataset, the ShopVibe online shop, runs through every course. You build the skills analysts use, in your browser, with instant feedback. All tracks are coming in 2027.</p>
+        <p class="t-muted">One business dataset, the ShopVibe online shop, runs through every course. You build the skills analysts use, in your browser, with instant feedback. Paid tracks open from 26 January 2027, with courses released in stages.</p>
+        <ul class="checklist">
+          <li>All three paid tracks: Data Analyst with R, Data Analyst with Python and SQL for Data Analysts.</li>
+          <li>Every released lesson and exercise, with instant feedback in your browser.</li>
+          <li>Updates and courses released while your pass is active.</li>
+          <li>Email support.</li>
+        </ul>
       </div>
       <div class="three rsa-card-grid rsa-card-grid--tracks">
         {paidTracks.map((track) => (
           <article class="rsa-card" id={track.id}>
-            <div class="rsa-card-badges"><Badge tone="soon">Coming 2027</Badge></div>
+            <div class="rsa-card-badges"><Badge tone="soon">Opens from 26 January 2027</Badge></div>
             <h3 class="rsa-card-title">{track.title}</h3>
             <p class="rsa-card-text">{track.summary}</p>
             <ul class="t-small t-muted track-list">
@@ -98,9 +95,9 @@ import { offer, passes, passLengthNote, pricingPublished } from '../data/payment
     <div class="wrap legal">
       <h2 id="know-h" class="t-h2">What to know</h2>
       <ul>
-        <li>We email before your pass ends: 30 and 7 days before for a {passes.annual.exact}; 5 and 1 days before for a {passes.monthly.exact}.</li>
+        <li>{reminderNote}</li>
         <li>Your progress is kept after your pass ends. Free courses and free lessons stay free. See <a href="/delivery/">Delivery and access</a>.</li>
-        <li>{passes.annual.exact}: a full refund within 14 days of purchase if you have completed less than 20% of the lessons in every paid track (no single track at 20% or more).</li>
+        <li>{passes.quarterly.exact} and {passes.annual.exact}: a full refund within 14 days of purchase if you have completed less than 20% of the lessons in every paid track (no single track at 20% or more).</li>
         <li>{passes.monthly.exact}: no refunds, except a duplicate charge or a technical problem we can't fix. See the <a href="/refund/">Refund and cancellation policy</a>.</li>
         <li>We never see your card details. See <a href="/privacy/">Privacy</a>.</li>
         <li>Questions about an order or a track? See <a href="/contact/">Contact</a> or <a href="/support/">Support</a>.</li>
@@ -115,10 +112,6 @@ import { offer, passes, passLengthNote, pricingPublished } from '../data/payment
     padding-bottom: 64px;
   }
   .plan {
-    display: grid;
-    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
-    gap: var(--space-12);
-    align-items: start;
     border: 1px solid var(--line);
     border-radius: var(--radius-lg);
     padding: var(--space-8);
@@ -139,10 +132,6 @@ import { offer, passes, passLengthNote, pricingPublished } from '../data/payment
     flex-direction: column;
     gap: 8px;
     color: var(--ink-muted);
-  }
-  .plan-note {
-    border-left: 1px solid var(--line);
-    padding-left: var(--space-8);
   }
   .three {
     display: grid;
@@ -181,16 +170,9 @@ import { offer, passes, passLengthNote, pricingPublished } from '../data/payment
     .page-head {
       padding-block: var(--space-12);
     }
-    .plan,
     .three,
     .split {
       grid-template-columns: minmax(0, 1fr);
-    }
-    .plan-note {
-      border-left: 0;
-      border-top: 1px solid var(--line);
-      padding-left: 0;
-      padding-top: var(--space-6);
     }
     .price {
       font-size: 38px;

@@ -1,6 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { support, passes, passLengthNote } from '../../data/payment';
+import { support, passes, passChoiceNote, passLengthNote, stackingNote, launchPricingNote, reminderNote, morTermsNote } from '../../data/payment';
 ---
 
 <Base
@@ -11,7 +11,7 @@ import { support, passes, passLengthNote } from '../../data/payment';
     <div class="wrap legal">
       <span class="eyebrow">Legal</span>
       <h1 id="delivery-h" class="t-h1">Delivery and access policy</h1>
-      <p class="t-small t-muted">Last updated: 11 November 2026</p>
+      <p class="t-small t-muted">Last updated: 13 November 2026</p>
     </div>
   </section>
 
@@ -24,9 +24,10 @@ import { support, passes, passLengthNote } from '../../data/payment';
       <p>Access starts right after the payment is confirmed, usually within a few minutes. Our payment provider emails you a receipt. If access is not active 30 minutes after payment, email <a href={`mailto:${support.email}`}>{support.email}</a> with your receipt and we will fix it, normally within one business day.</p>
 
       <h2 class="t-h3">How long access lasts</h2>
-      <p>Choose a {passes.annual.exact}, our main plan, or a {passes.monthly.exact}. Both cover all paid tracks. Both are prepaid, one-time payments with no automatic renewal, available through Razorpay in India and our merchant of record outside India.</p>
-      <p>Your first pass runs for {passes.annual.months} months ({passes.annual.days} days) or {passes.monthly.months} month ({passes.monthly.days} days). {passLengthNote} Buying again before your pass ends adds the new period after the current end date. No days are lost. There is no upgrade credit.</p>
-      <p>We email before your pass ends: 30 and 7 days before for a {passes.annual.exact}; 5 and 1 days before for a {passes.monthly.exact}.</p>
+      <p>{passChoiceNote} All three cover all paid tracks. Each is a prepaid, one-time payment with no automatic renewal. Payments in India are processed by Razorpay. {morTermsNote}</p>
+      <p>{passLengthNote} {stackingNote}</p>
+      <p>{launchPricingNote}</p>
+      <p>{reminderNote}</p>
 
       <h2 class="t-h3">What access includes</h2>
       <ul>
@@ -46,7 +47,7 @@ import { support, passes, passLengthNote } from '../../data/payment';
       <p>A computer or tablet with a current browser and an internet connection. Nothing needs to be installed.</p>
 
       <h2 class="t-h3">Problems with delivery</h2>
-      <p>For a {passes.annual.exact}, we refund in full if we cannot give you access because of a fault on our side that we cannot fix within 7 days. For a {passes.monthly.exact}, there are no refunds except a duplicate charge or a technical problem we can't fix. See the <a href="/refund/">Refund and cancellation policy</a>.</p>
+      <p>For a {passes.quarterly.exact} or a {passes.annual.exact}, we refund in full if we cannot give you access because of a fault on our side that we cannot fix within 7 days. For a {passes.monthly.exact}, there are no refunds except a duplicate charge or a technical problem we can't fix. See the <a href="/refund/">Refund and cancellation policy</a>.</p>
     </div>
   </section>
 </Base>

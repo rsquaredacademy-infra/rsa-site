@@ -12,21 +12,25 @@ import { operator, support } from '../../data/payment';
       <article class="legal">
         <span class="eyebrow">Legal</span>
         <h1 id="legal-h" class="t-h1">Privacy</h1>
-        <p class="t-small t-muted">Last updated: 11 November 2026</p>
+        <p class="t-small t-muted">Last updated: 13 November 2026</p>
 
         <section class="flex flex-col gap-4" aria-labelledby="app-privacy-h">
           <h2 id="app-privacy-h" class="t-h3">The learning app (app.rsquaredacademy.com)</h2>
-          <p>You can learn without an account. Signing up for email updates does not create a learning account or upload your saved progress.</p>
+          <p>You can use free courses and paid-course previews without an account. Signing up for email updates does not create a learning account or upload your saved progress.</p>
+          <p>The app currently runs on Netlify. A move to Cloudflare Pages, Workers and D1 for app hosting, accounts and data storage is planned. The www website will stay on Netlify.</p>
 
           <h3 class="font-semibold">Progress in your browser</h3>
-          <p>Your lesson progress, streaks, XP, code drafts and settings stay on this device in your browser's storage (localStorage and, for some session settings, sessionStorage). Clearing site data for app.rsquaredacademy.com removes them. They do not follow you to another browser or device.</p>
+          <p>Your lesson progress, streaks, XP, code drafts and settings currently stay on this device in your browser's storage (localStorage and, for some session settings, sessionStorage). Clearing site data for app.rsquaredacademy.com removes them. Progress sync across devices is planned for pass holders at the paid launch. Code drafts stay in your browser and are not synced.</p>
+
+          <h3 class="font-semibold">Paid accounts (planned)</h3>
+          <p>Paid accounts will use an email code or magic link, with Google sign-in also planned. We will store your email, optional display name, Google account identifier if used, sign-in records and session details. We do not store passwords. Zoho will send sign-in codes, magic links and other service emails. Creating an account will not subscribe you to marketing emails.</p>
 
           <h3 class="font-semibold">Analytics (Google Analytics 4)</h3>
           <p>In the European Economic Area, the United Kingdom and Switzerland, GA4 loads and sends events only after you accept the cookie banner. We work out your region from your device's time zone (no IP lookup), so if your device is set to a time zone outside these regions you won't see the banner. If we can't read the time zone, we ask anyway. Elsewhere, analytics is on unless you turn it off. You can turn it off at any time using the learning app's footer.</p>
           <p>GA4 receives page views and lesson events, such as starting or finishing a lesson, submitting an answer, running code or opening a hint. These include course and lesson IDs, lesson type, step numbers and whether an answer passed. Feedback events include only a rating or problem category. Page addresses and titles are limited to known routes, catalog titles and allowed campaign tags. We never send GA4 your name, email, code, answers, output, feedback message or other free text. We do not use it for advertising.</p>
 
           <h3 class="font-semibold">Learning activity</h3>
-          <p>When analytics is on, we also send lesson activity to our own Netlify Blobs store, learning-events, to improve the courses. Each event has a course, lesson and exercise ID and a time. Depending on the event, it includes the lesson type, attempt and hint numbers, whether a check passed, a short hash identifying the checker message, whether you viewed a solution before answering correctly, active time, and your optional difficulty rating (easy, about right or hard). We also record when the server received it.</p>
+          <p>When analytics is on, we also send lesson activity to our own data store to improve the courses (currently Netlify Blobs; planned move to Cloudflare). Each event has a course, lesson and exercise ID and a time. Depending on the event, it includes the lesson type, attempt and hint numbers, whether a check passed, a short hash identifying the checker message, whether you viewed a solution before answering correctly, active time, and your optional difficulty rating (easy, about right or hard). We also record when the server received it.</p>
           <p>This activity uses a random browser ID stored in localStorage, not your name, email or an account. The stored events contain no IP address, user agent, referrer, code, drafts, output or checker message text, and only the allowed fields are kept. This stream is separate from GA4 and follows the same analytics choice. We keep it for 12 months. Clearing site data resets the ID and breaks the link to future activity; it does not delete events already stored.</p>
 
           <h3 class="font-semibold">Email sign-up (Zoho Campaigns)</h3>
@@ -38,7 +42,7 @@ import { operator, support } from '../../data/payment';
 
           <h3 class="font-semibold">Feedback and Report a problem</h3>
           <p>We store only the allowed form fields: the form type, your message or problem details, rating or problem category, course and lesson IDs, exercise step for a problem report, page path without its query or fragment, app version and submission time. Your email is optional. A problem report includes editor code only if you tick "Include my code".</p>
-          <p>Submissions are kept in our Netlify Blobs store, forms-inbox, and deleted after 90 days by a daily job that removes entries older than that. We do not store your IP address, user agent or spam-check token with the submission.</p>
+          <p>Submissions are kept in our forms inbox (currently Netlify Blobs; planned move to Cloudflare) and deleted after 90 days by a daily job that removes entries older than that. We do not store your IP address, user agent or spam-check token with the submission.</p>
 
           <h3 class="font-semibold">Spam protection (Cloudflare Turnstile)</h3>
           <p>Turnstile loads only when you open a feedback, problem-report or email sign-up form. Cloudflare processes your IP address and browser, device and interaction signals to decide whether you are human. It may use a cookie or browser storage for this check. Our server sends your IP address and the one-time challenge token to Cloudflare to verify the result.</p>
@@ -53,8 +57,8 @@ import { operator, support } from '../../data/payment';
 
         <h2 class="t-h3">What we collect and why</h2>
         <ul>
-          <li><strong>Account data (app.rsquaredacademy.com)</strong>: when you create an account (from the paid launch), your email address, display name, the sign-in method you use and sign-in times, so you can sign in and keep your progress. We don't store passwords.</li>
-          <li><strong>Learning data</strong>: Your progress, streaks and XP are kept in your browser (local storage) on this device. When you create an account (from the paid launch), they are also saved to your account so you can continue on another device. We use them to show your progress in the course.</li>
+          <li><strong>Account data (planned for the paid launch)</strong>: your email address, optional display name, Google account identifier if used, sign-in method, sign-in records and session details, so you can use your account. We don't store passwords.</li>
+          <li><strong>Learning data</strong>: your progress, streaks and XP are kept in your browser on this device. From the paid launch, progress sync across devices is planned for pass holders. We use saved progress to show course completion and assess refund eligibility. Learning activity events remain separate from accounts.</li>
           <li><strong>Email sign-up ("Get updates")</strong>: your email address, to send you news about our courses, about once a month. We ask you to confirm by email before we add you (double opt-in), and we note which of our sites you signed up on. Every email has an unsubscribe link.</li>
           <li><strong>For educators form</strong>: name, email, institution, role, number of students, course, start date and your message, so we can reply and help you use the courses with a class.</li>
           <li><strong>Payments</strong>: payments in India are processed by Razorpay. Payments outside India are processed by a merchant of record. We receive the order, amount, date, country and the email used at checkout. We never see or store full card numbers.</li>
@@ -63,12 +67,15 @@ import { operator, support } from '../../data/payment';
         </ul>
 
         <h2 class="t-h3">Who processes your data for us</h2>
-        <p>Netlify (hosts the site and the learning app, receives the For educators form and stores learning activity, app feedback and problem reports), Zoho Campaigns (stores the email list and sends our emails), Google Analytics (analytics, as above), Cloudflare (Turnstile spam checks), Sentry (app error reports when enabled), Google Fonts (the site's fonts load from Google's servers, which see your IP address), Razorpay (payments in India), our merchant of record (payments outside India), and (from the paid launch) the providers that host learning accounts. We don't sell or rent your data, and we don't share it with anyone else except where the law requires it.</p>
+        <p>Netlify hosts www and receives the For educators form. It currently also hosts the app and its data; Cloudflare Pages, Workers and D1 are the planned app host and data store. Cloudflare also provides Turnstile spam checks. Zoho Campaigns stores the marketing email list and sends updates; Zoho is the planned provider for account and service emails. Google sign-in is planned for paid accounts. Other providers are Google Analytics (analytics, as above), Sentry (app error reports when enabled), Google Fonts (the site's fonts load from Google's servers, which see your IP address), Razorpay (payments in India) and our merchant of record (payments outside India; provider to be announced). We don't sell or rent your data, and we don't share it with anyone else except where the law requires it.</p>
 
         <h2 class="t-h3">How long we keep it</h2>
         <ul>
           <li>Account data and saved progress (from the paid launch): while your account exists. If you delete the account, we delete or anonymize the data within 30 days, except records we must keep for tax or legal reasons.</li>
-          <li>Payment records: as long as tax and accounting law requires.</li>
+          <li>Payment and refund records: as long as tax and accounting law requires; the exact period is to be announced after accounting review. After account deletion, the email in these records will be replaced with a hash.</li>
+          <li>Planned account records: login tokens, 24 hours; sessions, 30 days after expiry; payment webhook events, 90 days; progress sync operations, 30 days; audit logs, 3 years.</li>
+          <li>App feedback and problem reports: 90 days.</li>
+          <li>AI helper logs, if the planned helper launches: 30 days.</li>
           <li>Sign-up emails: until you unsubscribe or ask us to delete them.</li>
           <li>Educator form messages: as long as we need them to reply and follow up.</li>
           <li>Support emails: as long as we need them to resolve the request and keep a record.</li>
@@ -78,13 +85,13 @@ import { operator, support } from '../../data/payment';
 
         <h2 class="t-h3">Your choices</h2>
         <ul>
-          <li>Unsubscribe from any marketing email. Once you have an account, emails about receipts, access and sign-in links are not marketing and are sent as part of the service.</li>
+          <li>Unsubscribe from any marketing email. Once you have an account, emails about sign-in codes and links, receipts, access, expiry reminders and price-rise notices are sent as part of the service.</li>
           <li>Turn off analytics (the button above).</li>
           <li>Email <a href={`mailto:${support.email}?subject=Privacy`}>{support.email}</a> with "Privacy" in the subject line to see, correct or delete the data we hold about you, including your account once you have one. We reply within 30 days.</li>
         </ul>
 
-        <h2 class="t-h3">Children</h2>
-        <p>The site is not directed at children under 13, and we don't knowingly collect their data.</p>
+        <h2 class="t-h3">Age and consent</h2>
+        <p>Accounts are for people 18 or older, or with a parent's consent (pending legal review).</p>
 
         <h2 class="t-h3">Changes</h2>
         <p>If we change this page, we update the date at the top. If a change is significant, we tell people on the email list.</p>
