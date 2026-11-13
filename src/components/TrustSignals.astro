@@ -31,12 +31,13 @@ const date = (value: string) => new Intl.DateTimeFormat('en-GB', {
       </article>
       <article class="trust-card">
         <h3 class="t-h3">{ebooks.length} public eBooks</h3>
-        <p class="t-muted">Free to read online, from your first R code to wrangling, charts and SQL.</p>
         <ul class="book-covers" aria-label="eBooks">
           {ebooks.map((book) => (
             <li><a href={book.web}><img src={book.cover} alt={`${book.title} eBook cover`} width="300" height="400" loading="lazy" /></a></li>
           ))}
         </ul>
+        <p class="t-small t-muted">Free to read online, from your first R code to wrangling, charts and SQL.</p>
+        <p class="t-small"><a href="/resources/">Browse the free eBooks</a></p>
       </article>
     </div>
   </div>
@@ -52,8 +53,18 @@ const date = (value: string) => new Intl.DateTimeFormat('en-GB', {
   .package-logos a, .book-covers a { display: block; border-radius: var(--radius-sm); }
   .package-logos a { width: 100%; max-width: 86px; }
   .book-covers a { width: 100%; max-width: 112px; }
+  /* These two hex files have less margin than the rest; scale them to match. */
+  .package-logos img[src*='yahoofinancer'], .package-logos img[src*='standby'] { transform: scale(0.94); }
   .package-logos img { display: block; width: 100%; height: auto; aspect-ratio: 86 / 100; object-fit: contain; }
   .book-covers img { display: block; width: 100%; max-width: 112px; height: auto; aspect-ratio: 3 / 4; border: 1px solid var(--line); border-radius: var(--radius-sm); }
   /* Packages and eBooks side by side on wide screens; stacked on phones and tablets. */
-  @media (min-width: 900px) { .trust-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 900px) {
+    .trust-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    /* Same row height in both cards, so the hex rows and cover rows line up. */
+    .package-logos, .book-covers { grid-auto-rows: 108px; align-items: center; justify-items: center; }
+    .package-logos { column-gap: var(--space-2); }
+    .package-logos a, .book-covers a { height: 100%; display: flex; align-items: center; justify-content: center; }
+    .package-logos img { height: 100%; max-height: 108px; }
+    .book-covers img { height: 108px; width: 81px; }
+  }
 </style>
