@@ -31,7 +31,7 @@ export const passes = {
 export const passChoiceNote = `Choose a ${passes.monthly.exact}, a ${passes.quarterly.exact} or a ${passes.annual.exact}.`;
 export const passLengthNote = 'Your first pass starts when payment is confirmed, as shown on your receipt.';
 export const stackingNote = 'Buying again before your pass ends adds the new period after the current end date, up to a maximum of 24 months of future access. No days are lost. There is no upgrade credit.';
-export const launchPricingNote = 'Launch pricing, one time only: courses as they are released, at a lower price, from 26 January 2027 until all three tracks are complete. Prices then rise for new purchases. Passes already bought run to their end date; your next purchase is at the then-current price. We announce any price rise at least 30 days ahead by email and on this website.';
+export const launchPricingNote = 'Launch prices are a one-time offer: from 26 January 2027 until all three tracks are complete, you get each course as it is released at the lower launch price. Prices then rise for new purchases. Passes already bought run to their end date; your next purchase is at the then-current price. We announce any price rise at least 30 days ahead by email and on this website.';
 export const reminderNote = 'We email before your pass ends: 5 and 1 days before for a 1-month pass; 14 and 3 days before for a 3-month pass; 30 and 7 days before for a 12-month pass. We also email when your pass expires.';
 export const morTermsNote = 'Outside India, payments are processed by our merchant of record, whose terms also apply.';
 
