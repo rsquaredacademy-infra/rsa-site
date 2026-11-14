@@ -68,6 +68,10 @@ test('home keeps the calm section rhythm and illustrations fill their cards', as
     const box = await card.boundingBox();
     const image = await card.locator('picture').boundingBox();
     expect(image!.width).toBeCloseTo(box!.width - 2, 0);
-    expect(image!.height).toBeCloseTo(image!.width, 0);
+    if (!(await card.getAttribute('class'))!.includes('inside-card-portrait')) {
+      expect(image!.height).toBeCloseTo(image!.width, 0);
+    } else {
+      expect(image!.height).toBeGreaterThan(image!.width);
+    }
   }
 });

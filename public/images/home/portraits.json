@@ -1,0 +1,22 @@
+{
+  "lesson": "https://app.rsquaredacademy.com/dplyr/filter-predict",
+  "capturedAt": "2026-11-14T18:53:42.946Z",
+  "captures": [
+    {
+      "theme": "light",
+      "width": 700,
+      "height": 1900,
+      "panelWidth": 560,
+      "panelHeight": 1520,
+      "frames": 2
+    },
+    {
+      "theme": "dark",
+      "width": 700,
+      "height": 1900,
+      "panelWidth": 560,
+      "panelHeight": 1520,
+      "frames": 2
+    }
+  ]
+}
