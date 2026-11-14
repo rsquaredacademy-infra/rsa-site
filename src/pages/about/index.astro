@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import Button from '../../components/Button.astro';
 import SignupBand from '../../components/SignupBand.astro';
+import TrustSignals from '../../components/TrustSignals.astro';
 import { contactEmail, links } from '../../data/site';
 import { operator } from '../../data/payment';
 ---
@@ -63,22 +64,7 @@ import { operator } from '../../data/payment';
     </div>
   </section>
 
-  <section class="sec" aria-labelledby="trust-h">
-    <div class="wrap trust-grid">
-      <div style="display: flex; flex-direction: column; gap: 16px; min-width: 0;">
-        <h2 id="trust-h" class="t-h2">The R packages olsrr, descriptr and rfm</h2>
-        <p class="t-muted" style="max-width: 560px;">Aravind Hebbali writes and maintains them. They are on CRAN, and their code is open on GitHub.</p>
-        <div style="display: flex; gap: 24px; flex-wrap: wrap;">
-          <Button variant="text" href="/open-source/">See our open-source work</Button>
-          <Button variant="text" href={links.ebooks}>Read the eBooks</Button>
-        </div>
-      </div>
-      <div style="display: flex; flex-direction: column; gap: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 32px; min-width: 0;">
-        <p style="margin: 0; font-family: var(--font-display); font-size: 30px; line-height: 38px; font-weight: 700; letter-spacing: -0.01em; text-wrap: balance;">Our open-source R packages have been downloaded more than 2.8 million times.</p>
-        <p class="t-small t-muted">Source: CRAN download logs, October 2026.</p>
-      </div>
-    </div>
-  </section>
+  <TrustSignals />
 
   <section class="sec" style="padding-top: 0;" aria-labelledby="contact-h">
     <div class="wrap">
@@ -115,12 +101,6 @@ import { operator } from '../../data/payment';
     gap: var(--space-12);
     align-items: start;
   }
-  .trust-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: var(--space-12);
-    align-items: start;
-  }
   .prose {
     display: flex;
     flex-direction: column;
@@ -135,8 +115,7 @@ import { operator } from '../../data/payment';
       padding-block: var(--space-12);
     }
     .three,
-    .story,
-    .trust-grid {
+    .story {
       grid-template-columns: minmax(0, 1fr);
     }
     .page-title {

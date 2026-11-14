@@ -6,6 +6,8 @@ import Button from '../components/Button.astro';
 import CourseCard from '../components/CourseCard.astro';
 import LearningLadder from '../components/LearningLadder.astro';
 import SignupBand from '../components/SignupBand.astro';
+import TrustSignals from '../components/TrustSignals.astro';
+import { freeCoursePages } from '../data/course-faqs';
 import { courses, foundationsBadges, links, startLessonHref, startLessonLabel } from '../data/site';
 ---
 
@@ -100,27 +102,15 @@ import { courses, foundationsBadges, links, startLessonHref, startLessonLabel } 
         <p class="t-lead">We're rebuilding our courses and learning platform from scratch, so you can learn R, Python and SQL in your browser with instant feedback. The first three free courses, in R, open soon.</p>
       </div>
       <div class="three rsa-card-grid">
-        {courses.map((course) => (
-          <CourseCard eyebrow={course.eyebrow} title={course.title} description={course.short} badges={foundationsBadges} />
+        {freeCoursePages.map((course) => (
+          <CourseCard eyebrow={course.eyebrow} title={course.title} description={course.short} badges={foundationsBadges} detailsHref={course.detailsHref} />
         ))}
       </div>
     </div>
   </section>
 
   <!-- Trust -->
-  <section class="sec bg-surface" aria-labelledby="trust">
-    <div class="wrap trust-grid">
-      <div class="flex flex-col gap-4 min-w-0">
-        <h2 id="trust" class="t-h2">Learn R from the author of the packages olsrr, descriptr and rfm</h2>
-        <p class="t-muted max-w-[560px]">The courses are built from our free eBooks, so you can read ahead or look back at any time.</p>
-        <div><Button variant="text" href="/open-source/">See our open-source work</Button></div>
-      </div>
-      <div class="flex flex-col gap-3 bg-bg border border-line rounded-lg p-8 min-w-0">
-        <p class="stat">Our open-source R packages have been downloaded more than 2.8 million times.</p>
-        <p class="t-small t-muted">Source: downloads from the Posit CRAN mirror (cranlogs), October 2026. Other mirrors are not counted.</p>
-      </div>
-    </div>
-  </section>
+  <TrustSignals />
 
   <!-- Free resources -->
   <section class="sec" aria-labelledby="free">
@@ -183,7 +173,6 @@ import { courses, foundationsBadges, links, startLessonHref, startLessonLabel } 
   .hero-figure { width: 100%; max-width: 1200px; }
   .hero-figure { margin: 0; display: flex; flex-direction: column; gap: var(--space-3); min-width: 0; }
   .hero-shot { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg); box-shadow: var(--shadow-card); }
-  .trust-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-12); align-items: start; }
   .three { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); }
   .four { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-6); }
   /* Resource cards: icon + name, description and link rows line up across a row of cards */
@@ -193,12 +182,10 @@ import { courses, foundationsBadges, links, startLessonHref, startLessonLabel } 
   .hero-sec { padding-top: 96px; }
   .flush { padding-top: 0; }
   .step-num { display: inline-flex; width: 36px; height: 36px; border-radius: var(--radius-pill); background: var(--brand); color: var(--on-brand); align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; }
-  .stat { margin: 0; font-family: var(--font-display); font-size: 30px; line-height: 38px; font-weight: 700; letter-spacing: -0.01em; text-wrap: balance; }
   @media (max-width: 1100px) {
     .four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
   @media (max-width: 860px) {
-    .trust-grid { grid-template-columns: minmax(0, 1fr); }
     .three { grid-template-columns: minmax(0, 1fr); }
   }
   @media (max-width: 600px) {

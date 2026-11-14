@@ -1,0 +1,49 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Badge from '../../../components/Badge.astro';
+import Button from '../../../components/Button.astro';
+import CourseFaqs from '../../../components/CourseFaqs.astro';
+import { freeCoursePages } from '../../../data/course-faqs';
+import { startLessonHref, startLessonLabel } from '../../../data/site';
+
+export function getStaticPaths() {
+  return freeCoursePages.map((course) => ({ params: { slug: course.slug }, props: { course } }));
+}
+const { course } = Astro.props;
+---
+
+<Base title={`${course.title}: free course and FAQs`} description={`${course.long} Free forever, in your browser. Find answers about setup, pace, prerequisites and certificates.`}>
+  <section class="sec" aria-labelledby="course-h">
+    <div class="wrap flex flex-col gap-6">
+      <a class="back-link" href="/courses/">All courses</a>
+      <div><Badge tone="free">Free forever</Badge></div>
+      <h1 id="course-h" class="t-h1 max-w-[760px]">{course.title}</h1>
+      <p class="t-lead max-w-[680px]">{course.long}</p>
+      <p class="t-muted">Run R in your browser with instant feedback. Nothing to install, no sign-up to start.</p>
+      <div class="flex flex-wrap gap-3">
+        <Button href={startLessonHref(course, `course-${course.id}`)}>{startLessonLabel}</Button>
+        <Button variant="secondary" href="#course-faq">Read the FAQs</Button>
+      </div>
+    </div>
+  </section>
+
+  <CourseFaqs faqs={course.faqs} />
+
+  <section class="sec" aria-labelledby="next-h">
+    <div class="wrap flex flex-col gap-5">
+      <h2 id="next-h" class="t-h2">Keep learning</h2>
+      <ul class="course-links">
+        {freeCoursePages.filter((other) => other.id !== course.id).map((other) => (
+          <li><a href={other.detailsHref}>{other.title}</a></li>
+        ))}
+        <li><a href="/resources/">Read our free eBooks</a></li>
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .back-link { display: flex; align-items: center; min-height: 44px; width: fit-content; text-decoration: underline; text-underline-offset: 3px; }
+  .course-links { display: flex; flex-direction: column; gap: var(--space-2); list-style: none; margin: 0; padding: 0; }
+  .course-links a { display: inline-flex; align-items: center; min-height: 44px; }
+</style>
