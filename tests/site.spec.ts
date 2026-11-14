@@ -7,6 +7,7 @@ const PAGES = [
   '/courses/intro-r/',
   '/courses/dplyr/',
   '/courses/ggplot2/',
+  '/pricing/',
   '/how-we-teach/',
   '/resources/',
   '/open-source/',
@@ -258,10 +259,10 @@ for (const path of PAGES) {
 }
 
 test.describe('Extra tests', () => {
-  test('payment pages return 200, footer links exist and /pricing/ is not built', async ({ page }, testInfo) => {
+  test('payment pages and public pricing return 200 with navigation links', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'desktop', 'Desktop project only');
 
-    const paymentPages = ['/contact/', '/support/', '/refund/', '/delivery/'];
+    const paymentPages = ['/contact/', '/support/', '/refund/', '/delivery/', '/pricing/'];
     const legalLinks = [
       ['Contact', '/contact/'],
       ['Support', '/support/'],
@@ -269,6 +270,7 @@ test.describe('Extra tests', () => {
       ['Delivery', '/delivery/'],
       ['Privacy', '/privacy/'],
       ['Terms', '/terms/'],
+      ['Pricing', '/pricing/'],
     ];
 
     for (const path of paymentPages) {
@@ -281,21 +283,25 @@ test.describe('Extra tests', () => {
       }
     }
 
-    // The unlisted pricing page must not be linked from any page.
+    // Pricing is discoverable from both navigation areas on every page.
     for (const path of [...PAGES, ...paymentPages]) {
       await page.goto(path);
-      const pricingLinks = await page.locator('a[href="/pricing/"]').count();
-      expect(pricingLinks, `${path} links to the unlisted /pricing/ page`).toBe(0);
+      await expect(page.locator('header a[href="/pricing/"]')).toHaveCount(1);
+      await expect(page.locator('footer a[href="/pricing/"]')).toHaveCount(1);
     }
 
-    // Prices are not approved: /pricing/ is not built at all, so no [TBD] page
-    // is reachable, and it is absent from the sitemap.
+    // Launch pricing is public and indexed, with INR and USD prices.
     const pricing = await page.request.get('/pricing/');
-    expect(pricing.status()).toBe(404);
-    expect(await pricing.text()).not.toContain('[TBD]');
+    expect(pricing.status()).toBe(200);
+    const html = await pricing.text();
+    for (const text of ['₹299', '₹629', '₹1,299', '30 days', '90 days', '365 days', 'US$12', 'US$29', 'US$79', 'less than 20% of the paid lessons', 'Prices go up when the full paid track is live']) {
+      expect(html).toContain(text);
+    }
+    expect(html).not.toContain('[TBD]');
+    expect(html).not.toContain('noindex');
     const sitemap = await page.request.get('/sitemap-0.xml');
     expect(sitemap.status()).toBe(200);
-    expect(await sitemap.text()).not.toContain('/pricing/');
+    expect(await sitemap.text()).toContain('/pricing/');
   });
 
   test('404 page returns 404 and shows "Page not found" h1', async ({ page }) => {

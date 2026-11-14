@@ -1,6 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { operator, support, passes, passLengthNote } from '../../data/payment';
+import { operator, support, passes, passChoiceNote, passLengthNote, stackingNote, launchPricingNote, morTermsNote } from '../../data/payment';
 ---
 
 <Base
@@ -11,16 +11,17 @@ import { operator, support, passes, passLengthNote } from '../../data/payment';
     <div class="wrap legal">
       <span class="eyebrow">Legal</span>
       <h1 id="refund-h" class="t-h1">Refund and cancellation policy</h1>
-      <p class="t-small t-muted">Last updated: 11 November 2026</p>
+      <p class="t-small t-muted">Last updated: 13 November 2026</p>
       <p>{operator.line}</p>
     </div>
   </section>
 
   <section class="sec flush" aria-labelledby="policy-h">
     <div class="wrap legal">
-      <h2 id="policy-h" class="t-h3">{passes.annual.exact}: refunds within 14 days</h2>
-      <p>For a {passes.annual.exact}, you can ask for a full refund within 14 days of purchase if you have completed less than 20% of the lessons in every paid track (no single track at 20% or more). Your account page shows your progress in each track.</p>
-      <p>After 14 days, or once you have completed 20% or more of the lessons in any paid track, we do not refund, except for duplicate charges, failed access we cannot fix within 7 days, or where the law in your country gives you a right to a refund.</p>
+      <h2 id="policy-h" class="t-h3">3-month and 12-month passes: refunds within 14 days</h2>
+      <p>For a {passes.quarterly.exact} or a {passes.annual.exact}, you can ask for a full refund within 14 days of purchase if you have completed less than 20% of the paid lessons. Your account page shows your progress in each track.</p>
+      <p>Completion is measured against all paid lessons released when you request a refund. Free-preview lessons are excluded from both the completed and total lesson counts.</p>
+      <p>After 14 days, or once you have completed 20% or more of the paid lessons, we do not refund, except for duplicate charges, failed access we cannot fix within 7 days, or where the law in your country gives you a right to a refund.</p>
 
       <h2 class="t-h3">{passes.monthly.exact}: no refunds</h2>
       <p>The {passes.monthly.exact} has no refunds, except a duplicate charge or a technical problem we can't fix. Lessons 0–2 of every course are free to try before you buy.</p>
@@ -30,14 +31,16 @@ import { operator, support, passes, passLengthNote } from '../../data/payment';
 
       <h2 class="t-h3">How we refund</h2>
       <p>Approved refunds go back to the original payment method through our payment provider. They normally reach you within 5 to 7 business days of approval, depending on your bank.</p>
-      <p>When we refund, paid access ends.</p>
+      <p>A refunded pass is removed from your access schedule. Any later stacked passes move earlier; paid access ends if no valid pass remains.</p>
+      <p>{morTermsNote}</p>
 
       <h2 class="t-h3">Duplicate charges and technical problems</h2>
-      <p>For either pass, we refund duplicate charges in full at any time. For a {passes.annual.exact}, we also refund in full at any time if we cannot give you access because of a fault on our side that we cannot fix within 7 days. For a {passes.monthly.exact}, we refund in full for a technical problem we can't fix.</p>
+      <p>For any pass, we refund duplicate charges in full at any time. For a {passes.quarterly.exact} or a {passes.annual.exact}, we also refund in full at any time if we cannot give you access because of a fault on our side that we cannot fix within 7 days. For a {passes.monthly.exact}, we refund in full for a technical problem we can't fix.</p>
 
       <h2 class="t-h3">Cancellation</h2>
-      <p>Both the {passes.annual.exact} and the {passes.monthly.exact} are prepaid, one-time payments with no automatic renewal, so there is no subscription to cancel. If you do not buy another pass, paid access ends on your pass's end date. {passLengthNote}</p>
-      <p>Buying again before your pass ends adds the new period after the current end date. No days are lost. There is no upgrade credit.</p>
+      <p>{passChoiceNote} All three are prepaid, one-time payments with no automatic renewal, so there is no subscription to cancel. If you do not buy another pass, paid access ends on your pass's end date. {passLengthNote}</p>
+      <p>{stackingNote}</p>
+      <p>{launchPricingNote}</p>
 
       <h2 class="t-h3">Your legal rights</h2>
       <p>Nothing on this page limits rights you have under the law where you live.</p>

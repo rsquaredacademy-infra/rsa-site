@@ -1,6 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { offer, support, passes, passLengthNote } from '../../data/payment';
+import { support, passes, passChoiceNote, passLengthNote, stackingNote, launchPricingNote, reminderNote, morTermsNote } from '../../data/payment';
 ---
 
 <Base
@@ -29,13 +29,13 @@ import { offer, support, passes, passLengthNote } from '../../data/payment';
       <ul>
         <li><strong>I can't sign in.</strong> Accounts open with the paid courses. If a sign-in email doesn't arrive within 15 minutes, check spam, then write to us.</li>
         <li><strong>I paid but my course is locked.</strong> Access normally starts within a few minutes of payment. If it is not active after 30 minutes, email us with your receipt. See <a href="/delivery/">Delivery and access</a>.</li>
-        <li><strong>Which pass can I buy?</strong> The {passes.annual.exact} is our main plan. The {passes.monthly.exact} gives the same access to all paid tracks for {passes.monthly.days} days. Both are prepaid, one-time payments with no automatic renewal, available through Razorpay in India and our merchant of record outside India. {passLengthNote}</li>
-        <li><strong>Can I buy again before my pass ends?</strong> Yes. The new period starts after your current end date, so no days are lost. There is no upgrade credit.</li>
-        <li><strong>Do founding members keep their price?</strong> The founding offer is for the {passes.annual.exact} only, limited to {offer.foundingSeats} seats. You keep your founding price for each 12-month renewal bought before your pass ends or within {offer.renewalWindowDays} days after it ends. After a longer gap, the list price applies.</li>
-        <li><strong>Will you remind me?</strong> We email before your pass ends: 30 and 7 days before for a {passes.annual.exact}; 5 and 1 days before for a {passes.monthly.exact}.</li>
-        <li><strong>My access has ended.</strong> You can buy either pass again. Your progress is kept. Free courses stay free, and lessons 0–2 of every course stay free to try.</li>
+        <li><strong>Which pass can I buy?</strong> {passChoiceNote} All three cover all paid tracks. Each is a prepaid, one-time payment with no automatic renewal. Payments in India are processed by Razorpay. {morTermsNote} {passLengthNote} See <a href="/pricing/">Pricing</a>.</li>
+        <li><strong>Can I buy again before my pass ends?</strong> Yes. {stackingNote}</li>
+        <li><strong>How does launch pricing work?</strong> {launchPricingNote}</li>
+        <li><strong>Will you remind me?</strong> {reminderNote}</li>
+        <li><strong>My access has ended.</strong> You can buy any of the three passes again. Your progress is kept. Free courses stay free, and lessons 0–2 of every course stay free to try.</li>
         <li><strong>The code editor does not run.</strong> The editor runs R in your browser. Use a current version of Chrome, Edge, Firefox or Safari, and let the page finish loading the first time.</li>
-        <li><strong>I want a refund.</strong> For a {passes.annual.exact}, you can ask within 14 days of purchase if you have completed less than 20% of the lessons in every paid track (no single track at 20% or more). The {passes.monthly.exact} has no refunds, except a duplicate charge or a technical problem we can't fix. Try lessons 0–2 of every course free before you buy. See the <a href="/refund/">Refund and cancellation policy</a>.</li>
+        <li><strong>I want a refund.</strong> For a {passes.quarterly.exact} or a {passes.annual.exact}, you can ask within 14 days of purchase if you have completed less than 20% of the paid lessons. The {passes.monthly.exact} has no refunds, except a duplicate charge or a technical problem we can't fix. Try lessons 0–2 of every course free before you buy. See the <a href="/refund/">Refund and cancellation policy</a>.</li>
         <li><strong>I want my data deleted.</strong> Email us with "Privacy" in the subject line. See the <a href="/privacy/">Privacy</a> page.</li>
       </ul>
 

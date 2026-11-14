@@ -4,8 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 import { pricingPublished } from './src/data/payment.ts';
 
-// /pricing/ is registered only once prices are approved. The page source lives
-// in src/routes/pricing.astro; until then the build emits no /pricing/ at all.
+// The public pricing page source lives in src/routes/pricing.astro.
 /** @type {import('astro').AstroIntegration} */
 const pricingRoute = {
   name: 'pricing-route',
