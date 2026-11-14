@@ -45,7 +45,7 @@ test.describe('production build', () => {
     test.skip(testInfo.project.name !== 'desktop', 'Desktop project only');
     expect(existsSync(join(OUT_DIR, 'pricing', 'index.html'))).toBe(true);
     const pricing = readFileSync(join(OUT_DIR, 'pricing', 'index.html'), 'utf8');
-    for (const price of ['₹299', '₹629', '₹1,299', 'to be announced']) {
+    for (const price of ['₹299', '₹629', '₹1,299', 'US$12', 'US$29', 'US$79']) {
       expect(pricing).toContain(price);
     }
     expect(pricing).not.toContain('noindex');

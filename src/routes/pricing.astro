@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import Badge from '../components/Badge.astro';
 import Button from '../components/Button.astro';
 import { paidTracks } from '../data/site';
-import { passes, passChoiceNote, passLengthNote, stackingNote, launchPricingNote, reminderNote, morTermsNote, internationalPrice, pricingPublished } from '../data/payment';
+import { passes, passChoiceNote, passLengthNote, stackingNote, priceRiseNote, reminderNote, morTermsNote, internationalPrice, pricingPublished } from '../data/payment';
 ---
 
 <Base
@@ -22,7 +22,7 @@ import { passes, passChoiceNote, passLengthNote, stackingNote, launchPricingNote
 
   <section class="sec flush" aria-labelledby="plan-h">
     <div class="wrap">
-      <h2 id="plan-h" class="t-h2 mb-6">India launch prices</h2>
+      <h2 id="plan-h" class="t-h2 mb-6">Launch prices</h2>
       <div class="three">
         {Object.values(passes).map((pass) => (
           <article class="plan flex flex-col gap-4 min-w-0">
@@ -30,11 +30,11 @@ import { passes, passChoiceNote, passLengthNote, stackingNote, launchPricingNote
             <p class="price">₹{pass.priceINR.toLocaleString('en-IN')}</p>
             <p>{pass.days} days of access.</p>
             <p class="t-muted">Prepaid. No automatic renewal.</p>
-            <p class="t-small t-muted">Outside India: {internationalPrice}.</p>
+            <p class="t-small t-muted">Outside India: {internationalPrice(pass)}.</p>
           </article>
         ))}
       </div>
-      <p class="t-small t-muted mt-6">Prices apply from 26 January 2027. These are the amounts you pay in India.</p>
+      <p class="t-small t-muted mt-6">Prices apply from 26 January 2027. These are the amounts you pay in India. Outside India, one price in US dollars applies in every country.</p>
       <div class="mt-6"><Button href="/#signup">Hear when the tracks open</Button></div>
     </div>
   </section>
@@ -42,7 +42,7 @@ import { passes, passChoiceNote, passLengthNote, stackingNote, launchPricingNote
   <section class="sec bg-surface" aria-labelledby="launch-h">
     <div class="wrap flex flex-col gap-4">
       <h2 id="launch-h" class="t-h2">Launch pricing, one time only</h2>
-      <p class="t-muted max-w-[680px]">{launchPricingNote}</p>
+      <p class="t-muted max-w-[680px]">{priceRiseNote}</p>
       <p class="t-muted max-w-[680px]">{passLengthNote} {stackingNote}</p>
       <p class="t-muted max-w-[680px]">Payments in India are processed by Razorpay. {morTermsNote}</p>
     </div>
@@ -54,7 +54,7 @@ import { passes, passChoiceNote, passLengthNote, stackingNote, launchPricingNote
         <h2 id="tracks-h" class="t-h2">Paid tracks</h2>
         <p class="t-muted">One business dataset, the ShopVibe online shop, runs through every course. You build the skills analysts use, in your browser, with instant feedback. Paid tracks open from 26 January 2027, with courses released in stages.</p>
         <ul class="checklist">
-          <li>All three paid tracks: Data Analyst with R, Data Analyst with Python and SQL for Data Analysts.</li>
+          <li>All three paid tracks as they are released: Data Analyst with R from 26 January 2027, then SQL for Data Analysts and Data Analyst with Python.</li>
           <li>Every released lesson and exercise, with instant feedback in your browser.</li>
           <li>Updates and courses released while your pass is active.</li>
           <li>Email support.</li>
@@ -63,7 +63,7 @@ import { passes, passChoiceNote, passLengthNote, stackingNote, launchPricingNote
       <div class="three rsa-card-grid rsa-card-grid--tracks">
         {paidTracks.map((track) => (
           <article class="rsa-card" id={track.id}>
-            <div class="rsa-card-badges"><Badge tone="soon">Opens from 26 January 2027</Badge></div>
+            <div class="rsa-card-badges"><Badge tone="soon">{track.id === 'data-analyst-with-r' ? 'Opens 26 January 2027' : 'Follows in 2027'}</Badge></div>
             <h3 class="rsa-card-title">{track.title}</h3>
             <p class="rsa-card-text">{track.summary}</p>
             <ul class="t-small t-muted track-list">
@@ -97,7 +97,7 @@ import { passes, passChoiceNote, passLengthNote, stackingNote, launchPricingNote
       <ul>
         <li>{reminderNote}</li>
         <li>Your progress is kept after your pass ends. Free courses and free lessons stay free. See <a href="/delivery/">Delivery and access</a>.</li>
-        <li>{passes.quarterly.exact} and {passes.annual.exact}: a full refund within 14 days of purchase if you have completed less than 20% of the lessons in every paid track (no single track at 20% or more).</li>
+        <li>{passes.quarterly.exact} and {passes.annual.exact}: a full refund within 14 days of purchase if you have completed less than 20% of the paid lessons.</li>
         <li>{passes.monthly.exact}: no refunds, except a duplicate charge or a technical problem we can't fix. See the <a href="/refund/">Refund and cancellation policy</a>.</li>
         <li>We never see your card details. See <a href="/privacy/">Privacy</a>.</li>
         <li>Questions about an order or a track? See <a href="/contact/">Contact</a> or <a href="/support/">Support</a>.</li>

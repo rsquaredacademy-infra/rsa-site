@@ -290,11 +290,11 @@ test.describe('Extra tests', () => {
       await expect(page.locator('footer a[href="/pricing/"]')).toHaveCount(1);
     }
 
-    // Launch pricing is public and indexed; undecided international prices are explicit.
+    // Launch pricing is public and indexed, with INR and USD prices.
     const pricing = await page.request.get('/pricing/');
     expect(pricing.status()).toBe(200);
     const html = await pricing.text();
-    for (const text of ['₹299', '₹629', '₹1,299', '30 days', '90 days', '365 days', 'to be announced']) {
+    for (const text of ['₹299', '₹629', '₹1,299', '30 days', '90 days', '365 days', 'US$12', 'US$29', 'US$79', 'less than 20% of the paid lessons', 'Prices go up when the full paid track is live']) {
       expect(html).toContain(text);
     }
     expect(html).not.toContain('[TBD]');
