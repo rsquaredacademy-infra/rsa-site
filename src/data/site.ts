@@ -67,17 +67,36 @@ export const foundationsBadges: { text: string; tone: BadgeTone }[] = [
 export const courses = [
   { id: 'intro', eyebrow: 'Course 1', title: 'Introduction to R', visual: 1,
     href: 'https://app.rsquaredacademy.com/intro-r',
+    firstLessonSlug: 'why-r',
     short: 'Write your first R code: values, vectors, data frames and functions.',
     long: 'Write your first R code: values, vectors, data frames and functions. No experience needed.' },
   { id: 'dplyr', eyebrow: 'Course 2', title: 'Data Wrangling with dplyr', visual: 2,
     href: 'https://app.rsquaredacademy.com/dplyr',
+    firstLessonSlug: 'why-wrangle',
     short: 'Filter, sort, summarise and join data with the dplyr verbs and the pipe.',
     long: 'Filter, sort, summarise and join data with the dplyr verbs and the pipe.' },
   { id: 'ggplot2', eyebrow: 'Course 3', title: 'Data Viz with ggplot2', visual: 3,
     href: 'https://app.rsquaredacademy.com/ggplot2',
+    firstLessonSlug: 'why-visualise',
     short: 'Build clear charts layer by layer with ggplot2.',
     long: 'Build clear charts layer by layer with ggplot2, from a first scatter plot to a finished figure.' },
 ];
+
+export const startLessonLabel = 'Start lesson 1 now — no sign-up';
+
+export function startLessonHref(
+  course: { href: string; firstLessonSlug: string },
+  placement: 'hero' | `course-${string}`,
+): string {
+  const url = new URL(`${course.href}/${course.firstLessonSlug}`);
+  url.search = new URLSearchParams({
+    utm_source: 'www',
+    utm_medium: 'cta',
+    utm_campaign: 'start-lesson-1',
+    utm_content: placement,
+  }).toString();
+  return url.href;
+}
 
 // "See how a lesson works": real screenshots of the live lesson player.
 // `image` is the file stem under public/images/lessons/ (WebP + PNG fallback).
