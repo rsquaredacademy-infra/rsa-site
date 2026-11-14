@@ -1,6 +1,6 @@
-# Mockup illustration exports
+# Home illustration exports
 
-Used only by `/mock-a/` and `/mock-b/`. These are deterministic re-exports of
+Used by the home page. These are deterministic re-exports of
 existing artwork, with canvases matched to the site's `surface-tint` token in
 each theme. The PNG masters and production derivatives are unchanged.
 
@@ -17,4 +17,4 @@ each theme. The PNG masters and production derivatives are unchanged.
 - All files use WebP quality 88. Run `node scripts/mock-illustrations.mjs`
   from the repository root to reproduce them with Astro's existing Sharp.
 
-The frame, border, padding and section bands are supplied by the mockup CSS.
+The frame, border, padding and section bands are supplied by the home CSS.

@@ -65,13 +65,18 @@ test.describe('production build', () => {
     expect(html).not.toMatch(/small, real\b/i);
   });
 
-  test('home mockups are noindex and excluded from the sitemap', async ({}, testInfo) => {
+  test('refreshed home is indexed and retired mock routes are absent', async ({}, testInfo) => {
     test.skip(testInfo.project.name !== 'desktop', 'Desktop project only');
     const sitemap = files(OUT_DIR).filter((file) => /sitemap.*\.xml$/.test(file))
       .map((file) => readFileSync(file, 'utf8')).join('\n');
+    const home = readFileSync(join(OUT_DIR, 'index.html'), 'utf8');
+    expect(home).not.toContain('noindex');
+    expect(home).toContain('<title>Rsquared Academy</title>');
+    expect(home).toContain('https://www.rsquaredacademy.com/');
+    expect(home).toContain('Interactive courses in R, Python and SQL for data analysis, with instant feedback. Nothing to install.');
+    expect(sitemap).toContain('<loc>https://www.rsquaredacademy.com/</loc>');
     for (const direction of ['a', 'b']) {
-      const html = readFileSync(join(OUT_DIR, `mock-${direction}`, 'index.html'), 'utf8');
-      expect(html).toContain('<meta name="robots" content="noindex">');
+      expect(existsSync(join(OUT_DIR, `mock-${direction}`, 'index.html'))).toBe(false);
       expect(sitemap).not.toContain(`/mock-${direction}/`);
     }
   });

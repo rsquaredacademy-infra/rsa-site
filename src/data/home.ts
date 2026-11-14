@@ -1,4 +1,4 @@
-// Learner-facing copy for the two static home directions. Course copy, links,
+// Learner-facing copy for the home page. Course copy, links,
 // illustrations and trust data continue to come from the existing site.
 export const inside = [
   { image: 'lesson-run', title: 'R runs in your browser', line: 'Write and run R beside the lesson. Nothing to install.', label: '01 / In the browser' },

@@ -5,7 +5,7 @@ import { mkdir, readFile, stat } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
-const output = `${root}public/images/mock/illustrations`;
+const output = `${root}public/images/home`;
 await mkdir(output, { recursive: true });
 const tokens = await readFile(`${root}src/styles/tokens.css`, 'utf8');
 const tints = [...tokens.matchAll(/--surface-tint:\s*#([0-9a-f]{6})/g)].slice(0, 2)

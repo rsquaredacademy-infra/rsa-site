@@ -1,0 +1,139 @@
+---
+// One real lesson, recorded at 2x in both responsive layouts and themes.
+const media = '/media/hero';
+---
+<figure class="hero-demo" aria-labelledby="hero-demo-caption">
+  <div class="demo-heading"><span class="demo-dot" aria-hidden="true"></span><span>Inside a lesson · dplyr</span><span class="demo-domain">app.rsquaredacademy.com</span></div>
+  <div data-hero-loop>
+   <div class="hero-media">
+    <picture class="hero-poster">
+      <source media="(max-width: 760px) and (prefers-color-scheme: dark)" srcset={`${media}/phone-dark.webp`} width="698" height="1146" />
+      <source media="(max-width: 760px)" srcset={`${media}/phone-light.webp`} width="698" height="1146" />
+      <source media="(prefers-color-scheme: dark)" srcset={`${media}/desktop-dark.webp`} />
+      <img src={`${media}/desktop-light.webp`} width="1312" height="1164" loading="lazy" fetchpriority="high" decoding="async" alt="A real dplyr lesson: filter keeps the Large sales while the other rows fade away." />
+    </picture>
+    <video autoplay muted loop playsinline preload="none" width="1312" height="1164" aria-label="Step-through of filter in a live dplyr lesson" aria-describedby="hero-demo-caption" tabindex="-1">
+      <!-- Sources are attached only when motion is allowed and the pane is visible. -->
+    </video>
+   </div>
+   <div class="demo-controls"><button class="demo-toggle" type="button" hidden>Play lesson preview</button></div>
+  </div>
+  <figcaption id="hero-demo-caption" class="t-small t-muted">Watch <code>filter()</code> keep the rows that match. <a href="https://app.rsquaredacademy.com/dplyr/filter-predict">Open this lesson</a>.</figcaption>
+  <noscript><p class="t-small t-muted">Open the lesson to play the step-through.</p></noscript>
+</figure>
+
+<script>
+  const element = document.querySelector<HTMLElement>('[data-hero-loop]');
+  if (element) {
+    const pane = element;
+    const video = pane.querySelector('video')!;
+    const poster = pane.querySelector<HTMLImageElement>('img')!;
+    const toggle = pane.querySelector<HTMLButtonElement>('button')!;
+    const motion = matchMedia('(prefers-reduced-motion: reduce)');
+    const phone = matchMedia('(max-width: 760px)');
+    const dark = matchMedia('(prefers-color-scheme: dark)');
+    let visible = false;
+    let pausedByUser = false;
+    let selected = '';
+    let generation = 0;
+
+    function posterPath() {
+      return `/media/hero/${phone.matches ? 'phone' : 'desktop'}-${dark.matches ? 'dark' : 'light'}`;
+    }
+    function showPoster() {
+      video.pause();
+      pane.dataset.playing = 'false';
+      toggle.textContent = 'Play lesson preview';
+    }
+    async function play() {
+      const current = ++generation;
+      const stem = posterPath();
+      video.muted = true;
+      video.poster = `${stem}.webp`;
+      if (selected !== stem) {
+        video.replaceChildren();
+        for (const [extension, type] of [['webm', 'video/webm'], ['mp4', 'video/mp4']]) {
+          const source = document.createElement('source');
+          source.src = `${stem}.${extension}`;
+          source.type = type;
+          video.append(source);
+        }
+        selected = stem;
+        video.load();
+      }
+      try {
+        await video.play();
+        if (current !== generation) return;
+        pane.dataset.playing = 'true';
+        toggle.textContent = 'Pause lesson preview';
+      } catch { if (current === generation) showPoster(); }
+    }
+    function update() {
+      generation++;
+      showPoster();
+      if (!phone.matches || visible) video.poster = `${posterPath()}.webp`;
+      video.autoplay = !motion.matches;
+      // Native lazy image loading also leaves a useful still without JS.
+      poster.loading = phone.matches ? 'lazy' : 'eager';
+      toggle.hidden = false;
+      if (motion.matches) {
+        video.removeAttribute('src');
+        video.replaceChildren();
+        video.load();
+        selected = '';
+      } else if (visible && !pausedByUser && !document.hidden) void play();
+    }
+    toggle.addEventListener('click', () => {
+      if (video.paused) {
+        pausedByUser = false;
+        void play();
+      } else {
+        generation++;
+        pausedByUser = true;
+        showPoster();
+      }
+    });
+    const observer = new IntersectionObserver(([entry]) => {
+      // Phones begin on the still; wait until the reader scrolls far enough
+      // to see at least half of the below-hero preview before fetching video.
+      visible = entry.isIntersecting && entry.intersectionRatio >= (phone.matches ? 0.5 : 0.1);
+      if (visible) video.poster = `${posterPath()}.webp`;
+      if (!visible) { generation++; showPoster(); }
+      else if (!motion.matches && !pausedByUser && !document.hidden) void play();
+    }, { threshold: [0, 0.1, 0.5] });
+    // Load the poster first; video must never compete with its initial paint.
+    const observe = () => { update(); observer.observe(pane); };
+    if (poster.complete) observe();
+    else { poster.addEventListener('load', observe, { once: true }); poster.addEventListener('error', observe, { once: true }); }
+    for (const query of [motion, phone, dark]) query.addEventListener('change', update);
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) { generation++; showPoster(); }
+      else if (visible && !motion.matches && !pausedByUser) void play();
+    });
+  }
+</script>
+
+<style>
+  .hero-demo { max-width: 720px; margin: var(--home-content-gap) auto 0; }
+  .demo-heading { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border: 1px solid var(--line-strong); border-radius: var(--radius-lg) var(--radius-lg) 0 0; background: var(--surface); font-size: 13px; color: var(--ink-muted); }
+  .demo-domain { margin-left: auto; }
+  .demo-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--course-2); }
+  .hero-media { position: relative; width: 100%; aspect-ratio: 1312 / 1164; overflow: hidden; background: var(--bg); border: 1px solid var(--line-strong); border-top: 0; border-radius: 0 0 var(--radius-lg) var(--radius-lg); box-shadow: var(--shadow-card); }
+  .hero-poster, video { display: block; position: absolute; inset: 0; width: 100%; height: 100%; }
+  .hero-poster img { display: block; width: 100%; height: 100%; object-fit: contain; }
+  /* Keep the eager still the largest painted content, including after the
+     first video frame. The 2px inset also preserves its rounded crop edge. */
+  video { inset: 2px; width: calc(100% - 4px); height: calc(100% - 4px); object-fit: contain; opacity: 0; }
+  [data-playing="true"] video { opacity: 1; }
+  .demo-controls { display: flex; justify-content: center; min-height: 44px; margin-top: 12px; }
+  .demo-toggle { min-height: 44px; padding: 8px 16px; border: 1px solid var(--line-strong); border-radius: var(--radius-md); background: var(--bg); color: var(--ink); font: inherit; font-size: 15px; cursor: pointer; }
+  .demo-toggle[hidden] { display: none; }
+  figcaption { margin-top: 14px; text-align: center; }
+  figcaption a { text-decoration: underline; text-underline-offset: 3px; }
+  @media (max-width: 760px) {
+    .hero-demo { max-width: 380px; }
+    .hero-media { aspect-ratio: 698 / 1146; }
+    .demo-heading { padding-inline: 10px; }
+    .demo-domain { display: none; }
+  }
+</style>
