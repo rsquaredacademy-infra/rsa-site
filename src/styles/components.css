@@ -40,6 +40,7 @@ a.rsa-card:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px;
 .rsa-card--visual { padding-top: 0; }
 .rsa-card-visual { margin-inline: calc(var(--space-6) * -1); border-radius: calc(var(--radius-lg) - 1px) calc(var(--radius-lg) - 1px) 0 0; overflow: hidden; }
 .rsa-card-grid > .rsa-card.rsa-card--visual { grid-row: span 4; }
+.rsa-card-grid > .rsa-card.rsa-card--visual:has(> .rsa-card-foot) { grid-row: span 5; }
 
 /* Navbar */
 .rsa-nav { background: var(--bg); border-bottom: 1px solid var(--line); }

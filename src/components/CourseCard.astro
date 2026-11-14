@@ -1,6 +1,8 @@
 ---
 import Badge from './Badge.astro';
+import Button from './Button.astro';
 import CourseVisual from './CourseVisual.astro';
+import { startLessonLabel } from '../data/site';
 import type { BadgeTone } from '../data/site';
 interface Props {
   title: string;
@@ -9,20 +11,31 @@ interface Props {
   badges?: { text: string; tone: BadgeTone }[];
   footer?: string;
   href?: string;
+  detailsHref?: string;
+  startLessonHref?: string;
   /** 1, 2 or 3: the course's picture from the app home (Courses page). */
   visual?: number;
 }
-const { title, description, eyebrow, badges = [], footer, href, visual } = Astro.props;
-const Tag = href ? 'a' : 'article';
+const { title, description, eyebrow, badges = [], footer, href, detailsHref, visual, startLessonHref } = Astro.props;
+const Tag = href && !startLessonHref ? 'a' : 'article';
 const cardClass = visual ? 'rsa-card rsa-card--visual' : 'rsa-card';
 ---
-<Tag class={cardClass} href={href}>
+<Tag class={cardClass} href={Tag === 'a' ? href : undefined}>
   {visual && <div class="rsa-card-visual"><CourseVisual order={visual} /></div>}
   <div class="rsa-card-badges">{badges.map((b) => <Badge tone={b.tone}>{b.text}</Badge>)}</div>
   <div>
     {eyebrow && <div class="rsa-card-eyebrow">{eyebrow}</div>}
-    <h3 class="rsa-card-title">{title}</h3>
+    <h3 class="rsa-card-title">{detailsHref || (startLessonHref && href) ? <a class="course-title-link" href={detailsHref || href}>{title}</a> : title}</h3>
   </div>
   <p class="rsa-card-text">{description}</p>
-  {footer && <div class="rsa-card-foot">{footer}</div>}
+  {(footer || startLessonHref) && <div class="rsa-card-foot">
+    {footer}
+    {startLessonHref && <Button href={startLessonHref}>{startLessonLabel}<span class="sr-only"> — {title}</span></Button>}
+  </div>}
 </Tag>
+
+<style>
+  .course-title-link { display: flex; align-items: center; min-height: 44px; color: inherit; text-decoration: none; }
+  .course-title-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .course-title-link:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+</style>
