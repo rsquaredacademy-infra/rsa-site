@@ -4,6 +4,7 @@ import Badge from '../components/Badge.astro';
 import Button from '../components/Button.astro';
 import { paidTracks } from '../data/site';
 import { passes, passChoiceNote, passLengthNote, stackingNote, priceRiseNote, reminderNote, morTermsNote, internationalPrice, pricingPublished } from '../data/payment';
+import { refundQuestionId } from '../data/help-faq';
 ---
 
 <Base
@@ -99,6 +100,7 @@ import { passes, passChoiceNote, passLengthNote, stackingNote, priceRiseNote, re
         <li>Your progress is kept after your pass ends. Free courses and free lessons stay free. See <a href="/delivery/">Delivery and access</a>.</li>
         <li>{passes.quarterly.exact} and {passes.annual.exact}: a full refund within 14 days of purchase if you have completed less than 20% of the paid lessons.</li>
         <li>{passes.monthly.exact}: no refunds, except a duplicate charge or a technical problem we can't fix. See the <a href="/refund/">Refund and cancellation policy</a>.</li>
+        <li><a href={`/help/#${refundQuestionId}`}>See the refund questions</a> in the Help centre.</li>
         <li>We never see your card details. See <a href="/privacy/">Privacy</a>.</li>
         <li>Questions about an order or a track? See <a href="/contact/">Contact</a> or <a href="/support/">Support</a>.</li>
       </ul>

@@ -1,0 +1,171 @@
+---
+import Base from '../../layouts/Base.astro';
+import { helpSections } from '../../data/help-faq';
+
+const email = 'support@rsquaredacademy.com';
+
+// The copy is plain text in the data file; turn the email and the two urls it
+// names into links without changing a word.
+const withLinks = (text: string) =>
+  text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replaceAll(email, `<a href="mailto:${email}">${email}</a>`)
+    .replaceAll(
+      'status.rsquaredacademy.com',
+      '<a href="https://status.rsquaredacademy.com">status.rsquaredacademy.com</a>',
+    )
+    .replaceAll(
+      'rsquaredacademy.com/privacy/',
+      '<a href="/privacy/">rsquaredacademy.com/privacy/</a>',
+    );
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: helpSections.flatMap((section) => section.questions).map(({ question, answer }) => ({
+    '@type': 'Question',
+    name: question,
+    acceptedAnswer: { '@type': 'Answer', text: answer },
+  })),
+};
+---
+
+<Base
+  title="Help centre"
+  description="Short answers about starting a course, passes, payments, refunds and privacy at Rsquared Academy."
+>
+  <section class="sec page-head" aria-labelledby="help-h">
+    <div class="wrap help">
+      <span class="eyebrow">Help centre</span>
+      <h1 id="help-h" class="t-h1">Help centre</h1>
+      <p class="t-lead">Short answers about starting a course, passes, payments, refunds and privacy.</p>
+    </div>
+  </section>
+
+  <section class="sec flush index-sec" aria-labelledby="index-h">
+    <div class="wrap help">
+      <nav class="help-index" aria-labelledby="index-h">
+        <h2 id="index-h" class="t-small">On this page</h2>
+        <ul>
+          {helpSections.map((section) => (
+            <li><a href={`#${section.id}`}>{section.title}</a></li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  </section>
+
+  {helpSections.map((section) => (
+    <section class="help-section" id={section.id} aria-labelledby={`${section.id}-h`}>
+      <div class="wrap help">
+        <h2 id={`${section.id}-h`} class="t-h2">{section.title}</h2>
+        <div class="qa">
+          {section.questions.map(({ id, question, answer }) => (
+            <div class="qa-item">
+              <h3 id={id} class="t-h3">{question}</h3>
+              <p set:html={withLinks(answer)} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(schema).replace(/</g, '\\u003c')} />
+</Base>
+
+<style>
+  .page-head {
+    padding-top: 96px;
+    padding-bottom: 64px;
+  }
+  .help {
+    max-width: 760px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+  .help p {
+    margin: 0;
+  }
+  .index-sec {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .help-index {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  .help-index h2 {
+    margin: 0;
+    color: var(--ink-muted);
+  }
+  .help-index ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  .help-index a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 var(--space-4);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-pill);
+    background: var(--surface);
+    font-size: 15px;
+    line-height: 22px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .help-index a:hover {
+    border-color: var(--line-strong);
+  }
+  .help-section {
+    padding-block: var(--space-12);
+    scroll-margin-top: var(--space-6);
+  }
+  .help-section:last-of-type {
+    padding-bottom: var(--space-20);
+  }
+  .qa {
+    display: flex;
+    flex-direction: column;
+  }
+  .qa-item {
+    padding-block: var(--space-6);
+    border-top: 1px solid var(--line);
+  }
+  .qa-item:first-child {
+    padding-top: 0;
+    border-top: 0;
+  }
+  .qa-item h3 {
+    margin: 0 0 var(--space-2);
+    scroll-margin-top: var(--space-6);
+  }
+  .qa-item p {
+    margin: 0;
+    color: var(--ink-muted);
+  }
+  @media (max-width: 860px) {
+    .page-head {
+      padding-block: var(--space-12);
+    }
+    .index-sec {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+    .help-section {
+      padding-block: var(--space-8);
+    }
+    .help-section:last-of-type {
+      padding-bottom: var(--space-12);
+    }
+  }
+</style>
