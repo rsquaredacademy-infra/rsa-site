@@ -15,6 +15,7 @@ export const cta = { label: 'Get updates', href: '/#signup' };
 export const contactEmail = 'support@rsquaredacademy.com';
 
 export const links = {
+  status: 'https://stats.uptimerobot.com/gPYRybpiSb',
   github: 'https://github.com/rsquaredacademy',
   youtube: 'https://www.youtube.com/user/rsquaredin',
   linkedin: 'https://in.linkedin.com/company/rsquared-academy',
@@ -36,6 +37,7 @@ export const footerColumns = [
     { label: 'About', href: '/about/' },
     { label: 'Open source', href: '/open-source/' },
     { label: 'GitHub', href: links.github },
+    { label: 'Service status', href: links.status },
   ] },
   { title: 'Follow', links: [
     { label: 'YouTube', href: links.youtube },
