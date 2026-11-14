@@ -1,3 +1,6 @@
+# status.rsquaredacademy.com -> UptimeRobot status page (302: replaced by our own status page later; Aravind 2026-11-14)
+https://status.rsquaredacademy.com/*      https://stats.uptimerobot.com/gPYRybpiSb   302!
+
 # Old site URLs (pre-2026 rebuild) -> new pages
 /index.html                              /             301
 /about.html                              /about/       301
