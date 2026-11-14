@@ -44,7 +44,7 @@ export const freeCoursePages = courses.map((course) => {
     },
     {
       question: 'Can I use it on my phone?',
-      answer: 'You can open the course in your phone browser. For writing and editing code, we recommend a laptop or desktop with a keyboard and more screen space.',
+      answer: 'Yes. The lessons work in any modern browser, including on a phone. They work best on a tablet, laptop or desktop, where there is room to read and edit code.',
     },
     {
       question: 'Do I need to sign up to start?',
