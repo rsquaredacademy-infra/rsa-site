@@ -63,6 +63,26 @@ const statusId = `${id}-status`;
   </noscript>
 </section>
 
+<style>
+  /* Copy and controls share the card's inset at every viewport size. Keep
+     this layout with the component so all placements use the same edges. */
+  .rsa-signup {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-6);
+    padding: var(--space-8);
+  }
+  .rsa-signup-copy { padding-inline: 0; }
+  .rsa-signup-form { gap: 0; }
+  /* The lazy spam check and live status occupy space only when populated.
+     A challenge can grow below the controls without moving the input row. */
+  .rsa-signup-turnstile { min-height: 0; }
+  .rsa-signup-turnstile:empty, [data-signup-status]:empty { display: none; }
+  [data-signup-status]:not(:empty) { margin-top: var(--space-3); }
+  @media (max-width: 767px) {
+    .rsa-signup { padding: var(--space-6); }
+  }
+</style>
+
 <script>
   // Cloudflare Turnstile: the script is loaded on first focus, not on page
   // load, so a visitor who never signs up makes no request to Cloudflare.
