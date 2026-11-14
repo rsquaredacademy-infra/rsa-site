@@ -27,11 +27,10 @@ import Illustration from './Illustration.astro';
   </div>
 </section>
 <style>
-  .courses-section { padding-block: 88px; }
-  .section-heading { display: flex; align-items: center; justify-content: space-between; gap: 48px; margin-bottom: 36px; }
+  .section-heading { display: flex; align-items: center; justify-content: space-between; gap: 48px; margin-bottom: var(--mock-content-gap); }
   .course-intro { max-width: 680px; }
   .eyebrow { margin: 0 0 12px; }
-  .t-lead { margin-top: 16px; }
+  .t-lead { margin-top: var(--space-6); }
   .foundations-art { width: 220px; flex: none; }
   .course-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 24px; list-style: none; margin: 0; padding: 0; }
   .course-card { display: grid; grid-template-rows: subgrid; grid-row: span 5; row-gap: 16px; padding: 0 22px 22px; border: 1px solid var(--line); border-radius: var(--radius-lg); min-width: 0; background: var(--bg); }
@@ -46,5 +45,4 @@ import Illustration from './Illustration.astro';
   .course-note { margin-top: 24px; }
   @media (max-width: 1000px) { .course-action { flex-direction: column; align-items: stretch; gap: 4px; } .course-action .details { justify-content: center; } }
   @media (max-width: 860px) { .course-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; } .course-card { grid-template-rows: auto; grid-row: auto; } .course-action { flex-direction: row; } .foundations-art { display: none; } }
-  @media (max-width: 600px) { .courses-section { padding-block: 56px; } }
 </style>

@@ -1,6 +1,9 @@
 /* Static mockups only. Course accents copied from the app's index.css;
    the site's shared tokens and production pages are untouched. */
 .mock-home {
+  --mock-section-gap: 72px;
+  --mock-section-inset: calc(var(--mock-section-gap) / 2);
+  --mock-content-gap: 28px;
   --course-1: #2563eb; --course-1-bg: #dbeafe; --course-1-ink: #1e40af;
   --course-2: #0d9488; --course-2-bg: #ccfbf1; --course-2-ink: #115e59;
   --course-3: #d97706; --course-3-bg: #fef3c7; --course-3-ink: #92400e;
@@ -18,7 +21,9 @@
   --course-3: #f59e0b; --course-3-bg: #3a2a0c; --course-3-ink: #fcd34d;
 }
 .mock-home .eyebrow { margin: 0 0 14px; letter-spacing: .12em; }
-.mock-home .mock-hero { padding-block: 76px 64px; background: var(--surface-tint); }
+/* Each band owns half the gap, so adjacent padding never doubles it. */
+.mock-home > section { margin-block: 0; padding-block: var(--mock-section-inset); }
+.mock-home .mock-hero { padding-top: 76px; background: var(--surface-tint); }
 /* Illustrated bands alternate the existing theme surfaces; text-only bands
    return to the page background. These rules apply only to the mockups. */
 .mock-home .courses-section, .mock-home .teaching-section, .mock-home .next-section { background: var(--surface); }
@@ -34,32 +39,29 @@
 .mock-home .hero-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 28px; }
 .mock-home .hero-note { margin-top: 16px; }
 .mock-home .hero-note span { margin-inline: 5px; }
-.mock-home .editorial-hero-art { max-width: 740px; margin: 44px auto 0; text-align: center; }
+.mock-home .editorial-hero-art { max-width: 740px; margin: var(--mock-content-gap) auto 0; text-align: center; }
 .mock-home .editorial-hero-art img { aspect-ratio: 2.7; object-fit: cover; }
 .mock-home .editorial-hero-art p { margin-top: 16px; }
-.mock-home .mock-section { padding-block: 88px; }
-.mock-home .teaching-section { border-top: 1px solid var(--line); }
-.mock-home .teaching-intro { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 80px; margin-bottom: 64px; }
-.mock-home .teaching-copy { display: flex; flex-direction: column; gap: 20px; }
+.mock-home .teaching-intro { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 80px; margin-bottom: var(--mock-content-gap); }
+.mock-home .teaching-copy { display: flex; flex-direction: column; gap: var(--mock-content-gap); }
 .mock-home .teaching-copy .eyebrow { margin: 0; }
 .mock-home .teaching-copy h2 { font-size: 40px; line-height: 1.15; }
-.mock-home .ladder-heading { display: flex; flex-direction: column; gap: 12px; max-width: 660px; margin-bottom: 44px; }
-.mock-home .teaching-footer { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-top: 32px; }
-.mock-home .resources-heading { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-bottom: 36px; }
-.mock-home .resources-heading .t-lead { margin-top: 16px; }
+.mock-home .ladder-heading { display: flex; flex-direction: column; gap: var(--space-6); max-width: 660px; margin-bottom: var(--mock-content-gap); }
+.mock-home .teaching-footer { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-top: var(--mock-content-gap); }
+.mock-home #trust-signals > .wrap { gap: var(--mock-content-gap); }
+.mock-home .resources-heading { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-bottom: var(--mock-content-gap); }
+.mock-home .resources-heading .t-lead { margin-top: var(--space-6); }
 .mock-home .resource-art { width: 230px; }
 .mock-home .mock-resource-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
 .mock-home .mock-resource-card { display: grid; grid-template-rows: subgrid; grid-row: span 3; row-gap: 12px; border-top: 1px solid var(--line-strong); padding-top: 20px; color: var(--ink); text-decoration: none; }
 .mock-home .mock-resource-card:hover h3 { color: var(--link); }
 .mock-home .resource-action { display: flex; align-items: center; justify-content: space-between; min-height: 44px; font-weight: 600; color: var(--link); }
-.mock-home .next-section { padding-top: 88px; }
 .mock-home .next-layout { display: grid; grid-template-columns: 1fr 1.4fr; gap: 64px; align-items: center; }
-.mock-home .next-copy { display: flex; flex-direction: column; align-items: start; gap: 20px; }
-.mock-home .signup-section { padding-top: 88px; }
-.mock-home.direction-b .mock-hero { padding-top: 56px; padding-bottom: 64px; }
-.mock-home.direction-b h1 { font-size: 52px; max-width: 18ch; margin-bottom: 20px; }
+.mock-home .next-copy { display: flex; flex-direction: column; align-items: start; gap: var(--mock-content-gap); }
+.mock-home.direction-b .mock-hero { padding-top: 56px; }
+.mock-home.direction-b h1 { font-size: 52px; max-width: 18ch; margin-bottom: var(--space-6); }
 .mock-home.direction-b .hero-copy { max-width: 760px; }
-.mock-home .product-figure { margin: 36px 0 0; }
+.mock-home .product-figure { margin: var(--mock-content-gap) 0 0; }
 .mock-home .product-frame { overflow: hidden; border: 1px solid var(--line-strong); border-radius: 14px; box-shadow: var(--shadow-card); }
 .mock-home .product-caption { display: flex; align-items: center; gap: 10px; padding: 8px 16px; background: var(--surface); font-size: 13px; color: var(--ink-muted); border-bottom: 1px solid var(--line); }
 .mock-home .product-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--course-2); }
@@ -73,25 +75,20 @@
   .mock-home .teaching-footer { flex-direction: column; align-items: start; gap: 12px; }
 }
 @media (max-width: 600px) {
+  .mock-home { --mock-section-gap: 44px; --mock-content-gap: 24px; }
   .mock-home .mock-hero, .mock-home.direction-b .mock-hero { padding-top: 48px; }
-  .mock-home h1, .mock-home.direction-b h1 { font-size: 38px; line-height: 1.1; max-width: 17ch; margin-bottom: 20px; }
+  .mock-home h1, .mock-home.direction-b h1 { font-size: 38px; line-height: 1.1; max-width: 17ch; margin-bottom: var(--space-6); }
   .mock-home .hero-copy > .eyebrow { font-size: 11px; letter-spacing: .09em; }
   .mock-home .hero-copy > .t-lead { font-size: 18px; line-height: 27px; }
   .mock-home .hero-actions { flex-direction: column; margin-top: 24px; }
   .mock-home .hero-note { max-width: 31ch; margin-inline: auto; }
-  .mock-home .editorial-hero-art { margin-top: 32px; }
   .mock-home .editorial-hero-art img { aspect-ratio: 1.8; }
-  .mock-home .mock-section { padding-block: 56px; }
   .mock-home .teaching-intro, .mock-home .next-layout { grid-template-columns: minmax(0, 1fr); gap: 28px; }
-  .mock-home .teaching-intro { margin-bottom: 40px; }
   .mock-home .teaching-copy h2 { font-size: 32px; }
   .mock-home .teaching-art { order: -1; }
   .mock-home .resource-art { display: none; }
   .mock-home .mock-resource-grid { grid-template-columns: minmax(0, 1fr); gap: 28px; }
   .mock-home .mock-resource-card { grid-template-rows: auto; grid-row: auto; }
-  .mock-home .next-section, .mock-home .signup-section { padding-top: 56px; }
-  .mock-home.direction-b .mock-hero { padding-bottom: 40px; }
-  .mock-home .product-figure { margin-top: 28px; }
   .mock-home .product-caption { padding: 6px 10px; font-size: 12px; }
   .mock-home .product-domain { display: none; }
 }
