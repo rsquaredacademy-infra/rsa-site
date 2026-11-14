@@ -65,6 +65,17 @@ test.describe('production build', () => {
     expect(html).not.toMatch(/small, real\b/i);
   });
 
+  test('home mockups are noindex and excluded from the sitemap', async ({}, testInfo) => {
+    test.skip(testInfo.project.name !== 'desktop', 'Desktop project only');
+    const sitemap = files(OUT_DIR).filter((file) => /sitemap.*\.xml$/.test(file))
+      .map((file) => readFileSync(file, 'utf8')).join('\n');
+    for (const direction of ['a', 'b']) {
+      const html = readFileSync(join(OUT_DIR, `mock-${direction}`, 'index.html'), 'utf8');
+      expect(html).toContain('<meta name="robots" content="noindex">');
+      expect(sitemap).not.toContain(`/mock-${direction}/`);
+    }
+  });
+
   test('W17-13: the store-table visual names as many stores as it draws', async ({}, testInfo) => {
     test.skip(testInfo.project.name !== 'desktop', 'Desktop project only');
     const html = readFileSync(join(OUT_DIR, 'courses', 'index.html'), 'utf8');

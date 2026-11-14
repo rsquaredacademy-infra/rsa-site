@@ -1,0 +1,8 @@
+---
+interface Props { name: string; eager?: boolean }
+const { name, eager = false } = Astro.props;
+---
+<img class="illustration" src={`/images/illustrations/${name}-web.webp`} width="1200" height="800" alt="" loading={eager ? 'eager' : 'lazy'} decoding="async" />
+<style>
+  .illustration { display: block; width: 100%; height: auto; border-radius: var(--radius-lg); }
+</style>

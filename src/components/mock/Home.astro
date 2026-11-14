@@ -1,0 +1,79 @@
+---
+import Base from '../../layouts/Base.astro';
+import Badge from '../Badge.astro';
+import Button from '../Button.astro';
+import LearningLadder from '../LearningLadder.astro';
+import TrustSignals from '../TrustSignals.astro';
+import SignupBand from '../SignupBand.astro';
+import { courses, links, startLessonHref, startLessonLabel } from '../../data/site';
+import Illustration from './Illustration.astro';
+import Courses from './Courses.astro';
+import Inside from './Inside.astro';
+import '../../styles/mock-home.css';
+interface Props { direction: 'a' | 'b' }
+const { direction } = Astro.props;
+const editorial = direction === 'a';
+const resources = [
+  { title: 'eBooks', text: 'Free online books on R, from your first lines of code to wrangling and plotting.', action: 'Read the eBooks', href: links.ebooks },
+  { title: 'Open courses', text: 'Free course material for learning R, to read at your own pace. Open source on GitHub.', action: 'Read the open courses', href: links.openCourses },
+  { title: 'Blog', text: 'Tutorials and worked examples of data analysis in R.', action: 'Read the blog', href: links.blog },
+  { title: 'YouTube', text: 'Short videos that walk through R code step by step.', action: 'Watch on YouTube', href: links.youtube },
+];
+---
+<Base title={`Home direction ${direction.toUpperCase()}`} description="Free interactive courses with instant feedback. Learn data analysis by doing, in your browser." noindex>
+  <div class={`mock-home direction-${direction}`}>
+    <section class="mock-hero" aria-labelledby="hero-h">
+      <div class="wrap">
+        <div class="hero-copy">
+          <p class="eyebrow">Foundations with R <span aria-hidden="true">·</span> three free courses</p>
+          <h1 id="hero-h">Learn data analysis by doing, in your browser.</h1>
+          <p class="t-lead">Follow one realistic dataset from a raw table to a finished chart, across three short courses. Nothing to install.</p>
+          <div class="hero-actions"><Button href={startLessonHref(courses[0], 'hero')}>{startLessonLabel}</Button><Button variant="secondary" href="#courses">See the courses</Button></div>
+          <p class="hero-note t-small t-muted">Free to start <span aria-hidden="true">·</span> no account needed <span aria-hidden="true">·</span> progress saved in this browser</p>
+        </div>
+        {editorial ? (
+          <div class="editorial-hero-art"><Illustration name="how-it-works" eager /><p class="t-small t-muted">Read a short lesson. Write R. Get instant feedback.</p></div>
+        ) : (
+          <figure class="product-figure">
+            <div class="product-frame"><div class="product-caption"><span class="product-dot" aria-hidden="true"></span><span>Inside a lesson</span><span class="product-domain">app.rsquaredacademy.com</span></div><picture><source srcset="/images/mock/lesson-dark.png" media="(prefers-color-scheme: dark)" /><img src="/images/mock/lesson-light.png" width="1440" height="900" loading="eager" decoding="async" alt="The live Rsquared Academy lesson player, with the lesson beside an R editor and chart" /></picture></div>
+            <figcaption class="t-small t-muted">The live lesson player. Real R, written and run in the lesson.</figcaption>
+          </figure>
+        )}
+      </div>
+    </section>
+
+    {editorial ? <Courses /> : <Inside />}
+    {editorial ? <Inside /> : <Courses />}
+
+    <section class="mock-section teaching-section" aria-labelledby="how-h">
+      <div class="wrap">
+        <div class="teaching-intro">
+          <div class="teaching-copy"><p class="eyebrow">How it works</p><h2 id="how-h" class="t-h2">A little reading.<br />A lot of doing.</h2><p class="t-lead">Read a short lesson, write R in your browser and get instant feedback.</p><p class="t-muted">Each idea comes with a small, realistic dataset, explained in plain words. Find out straight away whether your answer is right, and what to fix if it isn't.</p></div>
+          <div class="teaching-art"><Illustration name="learning-steps" /></div>
+        </div>
+        <div class="ladder-heading"><h2 id="ladder-h" class="t-h2">How you'll learn</h2><p class="t-muted">Each lesson takes one idea and climbs four steps, from watching it done to doing it yourself.</p></div>
+        <div aria-labelledby="ladder-h"><LearningLadder /></div>
+        <div class="teaching-footer"><Button variant="text" href="/how-we-teach/">How we teach <span aria-hidden="true">↗</span></Button><p class="t-small t-muted">It runs in any modern browser and works best on a tablet, laptop or desktop.</p></div>
+      </div>
+    </section>
+
+    <TrustSignals />
+
+    <section class="mock-section" aria-labelledby="free-h">
+      <div class="wrap">
+        <div class="resources-heading"><div><p class="eyebrow">Keep learning</p><h2 id="free-h" class="t-h2">Free resources</h2><p class="t-lead">Read, watch and practise at your own pace.</p></div><div class="resource-art"><Illustration name="free-resources" /></div></div>
+        <div class="mock-resource-grid">
+          {resources.map((resource) => <a class="mock-resource-card" href={resource.href}><h3 class="t-h3">{resource.title}</h3><p class="t-muted">{resource.text}</p><span class="resource-action">{resource.action} <span aria-hidden="true">↗</span></span></a>)}
+        </div>
+      </div>
+    </section>
+
+    <section class="mock-section next-section" aria-labelledby="next-h">
+      <div class="wrap next-layout">
+        <div class="next-art"><Illustration name="learning-roadmap" /></div>
+        <div class="next-copy"><Badge tone="soon">Coming 2027</Badge><h2 id="next-h" class="t-h2">Paid tracks coming in 2027</h2><p class="t-muted">Data Analyst with R, Data Analyst with Python and SQL for Data Analysts. Each track builds on one realistic business dataset. See the <a href="/courses/#paid-h">full descriptions</a>.</p><div><Button variant="secondary" href="#signup">Hear when they open</Button></div></div>
+      </div>
+    </section>
+    <section class="mock-section signup-section" aria-label="Course updates"><div class="wrap"><SignupBand id={`mock-${direction}-email`} site="www.rsquaredacademy.com" /></div></section>
+  </div>
+</Base>

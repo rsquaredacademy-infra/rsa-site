@@ -1,0 +1,55 @@
+---
+import { inside } from '../../data/mock-home';
+import { lessonTiles } from '../../data/site';
+---
+<section class="inside-section" aria-labelledby="inside-h" id="inside">
+  <div class="wrap">
+    <div class="section-heading">
+      <div><p class="eyebrow">The learning experience</p><h2 id="inside-h" class="t-h2">What's inside</h2></div>
+      <p class="t-lead">Read a little. Try it. See what happens.</p>
+    </div>
+    <ul class="inside-grid">
+      {inside.map((feature) => (
+        <li class="inside-card">
+          <picture>
+            <source srcset={`/images/lessons/${feature.image}.webp`} type="image/webp" />
+            <img src={`/images/lessons/${feature.image}.png`} width="800" height="800" loading="lazy" decoding="async" alt={lessonTiles.find((tile) => tile.image === feature.image)?.alt ?? ''} />
+          </picture>
+          <p class="feature-label eyebrow">{feature.label}</p>
+          <h3 class="t-h3">{feature.title}</h3>
+          <p class="t-muted">{feature.line}</p>
+        </li>
+      ))}
+    </ul>
+    <div class="resume-line">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11a9 9 0 1 1 2.5 7"/><path d="M3 4v7h7"/><path d="M12 7v5l3 2"/></svg>
+      <p><strong>Pick up where you left off.</strong> Progress is saved in this browser.</p>
+    </div>
+  </div>
+</section>
+<style>
+  .inside-section { padding-block: 80px; }
+  .section-heading { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 32px; }
+  .section-heading .eyebrow { margin: 0 0 12px; }
+  .inside-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px 24px; list-style: none; padding: 0; margin: 0; }
+  .inside-card { display: grid; grid-template-rows: subgrid; grid-row: span 4; row-gap: 10px; min-width: 0; }
+  .inside-card picture { display: block; border-radius: 12px; overflow: hidden; }
+  .inside-card img { display: block; width: 100%; height: auto; aspect-ratio: 1; }
+  .feature-label { margin: 10px 0 0; }
+  .resume-line { display: flex; align-items: center; justify-content: center; gap: 12px; padding-block: 24px; margin-top: 40px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); color: var(--ink-muted); }
+  .resume-line svg { flex: none; color: var(--brand); }
+  .resume-line p { margin: 0; }
+  .resume-line strong { color: var(--ink); font-weight: 600; }
+  :global(.direction-b) .inside-section { background: var(--surface); }
+  :global(.direction-b) .inside-card { padding: 18px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg); }
+  :global(.direction-b) .inside-card img { aspect-ratio: 16 / 10; object-fit: contain; background: var(--surface); }
+  :global(.direction-b) .feature-label { display: none; }
+  :global(.direction-b) .inside-card { grid-row: span 3; }
+  @media (max-width: 860px) { .inside-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .section-heading { align-items: start; flex-direction: column; gap: 12px; } }
+  @media (max-width: 600px) {
+    .inside-section { padding-block: 56px; }
+    .inside-grid { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+    .inside-card, :global(.direction-b) .inside-card { display: grid; grid-template-rows: auto; grid-row: auto; }
+    .resume-line { align-items: start; justify-content: start; }
+  }
+</style>

@@ -27,6 +27,7 @@ export default defineConfig({
     pricingRoute,
     sitemap({
       filter: (page) =>
+        !/\/mock-[ab](?:\/|$)/.test(new URL(page).pathname) &&
         !page.includes('/stay-subscribed/') &&
         (pricingPublished || !page.includes('/pricing/')),
     }),
