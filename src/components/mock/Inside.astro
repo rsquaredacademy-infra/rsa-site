@@ -11,9 +11,9 @@ import { lessonTiles } from '../../data/site';
     <ul class="inside-grid">
       {inside.map((feature) => (
         <li class="inside-card">
-          <picture>
-            <source srcset={`/images/lessons/${feature.image}.webp`} type="image/webp" />
-            <img src={`/images/lessons/${feature.image}.png`} width="800" height="800" loading="lazy" decoding="async" alt={lessonTiles.find((tile) => tile.image === feature.image)?.alt ?? ''} />
+          <picture class="illustration-frame">
+            <source srcset={`/images/mock/illustrations/${feature.image}-dark.webp`} media="(prefers-color-scheme: dark)" />
+            <img src={`/images/mock/illustrations/${feature.image}.webp`} width="800" height="800" loading="lazy" decoding="async" alt={lessonTiles.find((tile) => tile.image === feature.image)?.alt ?? ''} />
           </picture>
           <p class="feature-label eyebrow">{feature.label}</p>
           <h3 class="t-h3">{feature.title}</h3>
@@ -33,16 +33,14 @@ import { lessonTiles } from '../../data/site';
   .section-heading .eyebrow { margin: 0 0 12px; }
   .inside-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px 24px; list-style: none; padding: 0; margin: 0; }
   .inside-card { display: grid; grid-template-rows: subgrid; grid-row: span 4; row-gap: 10px; min-width: 0; }
-  .inside-card picture { display: block; border-radius: 12px; overflow: hidden; }
   .inside-card img { display: block; width: 100%; height: auto; aspect-ratio: 1; }
   .feature-label { margin: 10px 0 0; }
   .resume-line { display: flex; align-items: center; justify-content: center; gap: 12px; padding-block: 24px; margin-top: 40px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); color: var(--ink-muted); }
   .resume-line svg { flex: none; color: var(--brand); }
   .resume-line p { margin: 0; }
   .resume-line strong { color: var(--ink); font-weight: 600; }
-  :global(.direction-b) .inside-section { background: var(--surface); }
   :global(.direction-b) .inside-card { padding: 18px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg); }
-  :global(.direction-b) .inside-card img { aspect-ratio: 16 / 10; object-fit: contain; background: var(--surface); }
+  :global(.direction-b) .inside-card img { aspect-ratio: 16 / 10; object-fit: contain; }
   :global(.direction-b) .feature-label { display: none; }
   :global(.direction-b) .inside-card { grid-row: span 3; }
   @media (max-width: 860px) { .inside-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .section-heading { align-items: start; flex-direction: column; gap: 12px; } }
