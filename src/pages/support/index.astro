@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { support, passes, passChoiceNote, passLengthNote, stackingNote, launchPricingNote, reminderNote, morTermsNote } from '../../data/payment';
+import { links } from '../../data/site';
 ---
 
 <Base
@@ -41,6 +42,7 @@ import { support, passes, passChoiceNote, passLengthNote, stackingNote, launchPr
 
       <h2 class="t-h3">More help</h2>
       <p>For contact details and the postal address, see the <a href="/contact/">Contact</a> page.</p>
+      <p>Is the app down for everyone? Check <a href={links.status}>Service status</a>; it shows whether the app, the lessons, R packages and this website are up.</p>
     </div>
   </section>
 </Base>
