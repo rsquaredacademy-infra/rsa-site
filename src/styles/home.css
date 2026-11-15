@@ -40,7 +40,7 @@
 .home .teaching-copy { display: flex; flex-direction: column; gap: var(--home-content-gap); }
 .home .teaching-copy .eyebrow { margin: 0; }
 .home .teaching-copy h2 { font-size: 40px; line-height: 1.15; }
-.home .ladder-heading { display: flex; flex-direction: column; gap: var(--space-6); max-width: 660px; margin-bottom: var(--home-content-gap); }
+.home .ladder-heading { display: flex; flex-direction: column; gap: var(--space-3); max-width: 880px; margin: 0 auto var(--home-content-gap); text-align: center; }
 .home .learning-content { display: grid; gap: var(--home-content-gap); }
 .home .teaching-footer { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-top: var(--home-content-gap); }
 .home #trust-signals > .wrap { gap: var(--home-content-gap); }

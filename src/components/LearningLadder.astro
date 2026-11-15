@@ -1,7 +1,7 @@
 ---
 // The four steps of a lesson. Used on Home, Courses and How we teach.
-interface Props { detail?: boolean }
-const { detail = false } = Astro.props;
+interface Props { detail?: boolean; aligned?: boolean }
+const { detail = false, aligned = false } = Astro.props;
 const steps = [
   { n: 1, title: 'See it worked', short: 'A short worked example shows the idea on the course data, with its answer.',
     long: 'A short worked example shows the idea on the course data, with its answer and a quick check of what you took from it.' },
@@ -13,7 +13,7 @@ const steps = [
     long: 'Start from a blank script and answer a question with your own code, using what the earlier steps built up.' },
 ];
 ---
-<ol class="ladder list-none m-0 p-0">
+<ol class:list={['ladder list-none m-0 p-0', { 'ladder-aligned': aligned }]}>
   {steps.map((s) => (
     <li class="ladder-step">
       <span class="step-num">{s.n}</span>
@@ -29,8 +29,14 @@ const steps = [
   .ladder-step:nth-child(3) { margin-top: -12px; }
   .ladder-step:nth-child(4) { margin-top: -18px; border-top-color: var(--brand); }
   .step-num { display: inline-flex; width: 36px; height: 36px; border-radius: var(--radius-pill); background: var(--brand); color: var(--on-brand); align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; }
+  .ladder-aligned { row-gap: var(--space-3); }
+  .ladder-aligned .ladder-step:nth-child(n) { display: grid; grid-template-rows: subgrid; grid-row: span 3; margin-top: 0; }
   @media (max-width: 860px) {
     .ladder { grid-template-columns: minmax(0, 1fr); }
+    .ladder-aligned { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: var(--space-6); }
     .ladder-step, .ladder-step:nth-child(n) { margin-top: 0; }
+  }
+  @media (max-width: 600px) {
+    .ladder-aligned { grid-template-columns: minmax(0, 1fr); }
   }
 </style>

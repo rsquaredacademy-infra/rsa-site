@@ -2,28 +2,30 @@
 import Button from './Button.astro';
 ---
 <figure id="learning-explainer" class="learning-explainer">
-  <a class="explainer-poster" href="/media/explainer/how-learning-works.mp4" aria-label="Play: how learning works here (1 min) — Watch · 1 min" hidden>
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="/media/explainer/how-learning-works-poster-dark.webp" />
-      <img src="/media/explainer/how-learning-works-poster.webp" width="1920" height="1080" alt="" loading="lazy" decoding="async" />
-    </picture>
-    <span class="explainer-watch" aria-hidden="true">
-      <span class="explainer-play" data-theme="light"><svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor"><path d="M9 5 20 12 9 19Z" /></svg></span>
-      <span class="explainer-watch-label">Watch · 1 min</span>
-    </span>
-  </a>
-  <video
-    controls
-    preload="none"
-    playsinline
-    width="1920"
-    height="1080"
-    poster="/media/explainer/how-learning-works-poster.webp"
-    aria-label="How learning works here (57 s)"
-  >
-    <source src="/media/explainer/how-learning-works.mp4" type="video/mp4" />
-    <track kind="captions" src="/media/explainer/how-learning-works.vtt" srclang="en" label="English" />
-  </video>
+  <div class="explainer-inline">
+    <a class="explainer-poster" href="/media/explainer/how-learning-works.mp4" aria-label="Play: how learning works here (1 min) — Watch · 1 min" hidden>
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="/media/explainer/how-learning-works-poster-dark.webp" />
+        <img src="/media/explainer/how-learning-works-poster.webp" width="1920" height="1080" alt="" loading="lazy" decoding="async" />
+      </picture>
+      <span class="explainer-watch" aria-hidden="true">
+        <span class="explainer-play" data-theme="light"><svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor"><path d="M9 5 20 12 9 19Z" /></svg></span>
+        <span class="explainer-watch-label">Watch · 1 min</span>
+      </span>
+    </a>
+    <video
+      controls
+      preload="none"
+      playsinline
+      width="1920"
+      height="1080"
+      poster="/media/explainer/how-learning-works-poster.webp"
+      aria-label="How learning works here (57 s)"
+    >
+      <source src="/media/explainer/how-learning-works.mp4" type="video/mp4" />
+      <track kind="captions" src="/media/explainer/how-learning-works.vtt" srclang="en" label="English" />
+    </video>
+  </div>
   <dialog id="learning-explainer-dialog" aria-labelledby="explainer-title">
     <span class="explainer-focus-guard" data-focus-start tabindex="0"></span>
     <div class="explainer-header">
@@ -45,6 +47,7 @@ import Button from './Button.astro';
   const poster = figure?.querySelector<HTMLAnchorElement>('.explainer-poster');
   const close = dialog?.querySelector<HTMLButtonElement>('.explainer-close');
   const player = dialog?.querySelector<HTMLElement>('.explainer-player');
+  const inlinePlayer = figure?.querySelector<HTMLElement>('.explainer-inline');
 
   if (video) {
     const dark = matchMedia('(prefers-color-scheme: dark)');
@@ -55,21 +58,40 @@ import Button from './Button.astro';
     dark.addEventListener('change', updatePoster);
   }
 
-  if (figure && dialog && video && poster && close && player && typeof dialog.showModal === 'function') {
-    let trigger: HTMLAnchorElement | null = null;
-    let placement: 'hero' | 'section' = 'section';
-    // Keep the native player in the section unless the modal enhancement is available.
-    player.append(video);
+  if (video && poster && inlinePlayer) {
+    video.hidden = true;
     poster.hidden = false;
+    poster.setAttribute('role', 'button');
+    poster.addEventListener('click', (event) => {
+      event.preventDefault();
+      poster.hidden = true;
+      video.hidden = false;
+      video.focus({ preventScroll: true });
+      void video.play().catch(() => { /* Native controls remain available if playback is blocked. */ });
+    });
+    poster.addEventListener('keydown', (event) => {
+      if (event.key === ' ') { event.preventDefault(); poster.click(); }
+    });
+    video.addEventListener('play', () => {
+      const placement = dialog?.open ? 'hero' : 'section';
+      trackEvent('video_start', { placement, page: window.location.pathname });
+    });
+  }
 
-    function enhance(link: HTMLAnchorElement, source: 'hero' | 'section') {
+  if (figure && dialog && video && poster && close && player && inlinePlayer && typeof dialog.showModal === 'function') {
+    let trigger: HTMLAnchorElement | null = null;
+
+    function enhance(link: HTMLAnchorElement) {
       link.setAttribute('role', 'button');
       link.setAttribute('aria-haspopup', 'dialog');
       link.setAttribute('aria-controls', dialog!.id);
       link.addEventListener('click', (event) => {
         event.preventDefault();
         trigger = link;
-        placement = source;
+        video!.pause();
+        player!.append(video!);
+        video!.hidden = false;
+        poster!.hidden = false;
         const scrollbar = window.innerWidth - document.documentElement.clientWidth;
         document.documentElement.style.setProperty('--explainer-scrollbar', `${scrollbar}px`);
         dialog!.showModal();
@@ -83,8 +105,7 @@ import Button from './Button.astro';
       });
     }
 
-    document.querySelectorAll<HTMLAnchorElement>('.learning-explainer-trigger').forEach(link => enhance(link, 'hero'));
-    enhance(poster, 'section');
+    document.querySelectorAll<HTMLAnchorElement>('.learning-explainer-trigger').forEach(enhance);
     // showModal makes the page inert. Guards keep Tab inside the player while
     // preserving every keyboard stop in the browser's native media controls.
     dialog.querySelector('[data-focus-start]')?.addEventListener('focus', () => video.focus());
@@ -96,17 +117,19 @@ import Button from './Button.astro';
     });
     dialog.addEventListener('close', () => {
       video.pause();
+      inlinePlayer.append(video);
+      video.hidden = true;
+      poster.hidden = false;
       document.documentElement.style.removeProperty('--explainer-scrollbar');
       trigger?.focus();
-    });
-    video.addEventListener('play', () => {
-      trackEvent('video_start', { placement, page: window.location.pathname });
     });
   }
 </script>
 
 <style>
-  .learning-explainer { display: grid; gap: var(--space-3); width: 100%; max-width: 760px; margin: 0; }
+  .learning-explainer { display: grid; gap: var(--space-3); width: 100%; max-width: 880px; margin: 0 auto; }
+  .explainer-inline { aspect-ratio: 16 / 9; }
+  figcaption { text-align: center; }
   .explainer-poster { position: relative; display: block; aspect-ratio: 16 / 9; border: 1px solid var(--line); border-radius: var(--radius-md); overflow: hidden; }
   .explainer-poster[hidden] { display: none; }
   .explainer-poster img { display: block; width: 100%; height: 100%; object-fit: cover; }
@@ -122,6 +145,7 @@ import Button from './Button.astro';
   .explainer-focus-guard { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
   :global(html:has(#learning-explainer-dialog[open])) { overflow: hidden; padding-right: var(--explainer-scrollbar, 0px); }
   video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: var(--surface); border-radius: var(--radius-md); }
+  video[hidden] { display: none; }
   video:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
   @media (max-width: 600px) {
     .explainer-play { width: 64px; height: 64px; }

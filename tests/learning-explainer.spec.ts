@@ -21,13 +21,13 @@ async function starts(page: Page) {
 }
 
 for (const path of ['/', '/courses/']) {
-  test(`hero and section open an accessible player with optional captions on ${path}`, async ({ page, request }) => {
+  test(`hero modal and inline section play accessibly with optional captions on ${path}`, async ({ page, request }) => {
     await stubAnalytics(page);
     const videoRequests: string[] = [];
     page.on('request', req => { if (req.url().endsWith(mediaPath)) videoRequests.push(req.url()); });
     await page.goto(path);
     const dialog = page.getByRole('dialog', { name: 'How learning works here (1 min)' });
-    const video = page.locator('#learning-explainer-dialog video');
+    const video = page.locator('#learning-explainer video');
     const hero = page.getByRole('button', { name: heroName, exact: true });
     const section = page.getByRole('button', { name: sectionName, exact: true });
     await expect(hero).toHaveClass(/rsa-btn-secondary/);
@@ -75,6 +75,7 @@ for (const path of ['/', '/courses/']) {
     await hero.focus();
     await hero.press('Enter');
     await expect(dialog).toBeVisible();
+    await expect(dialog.locator('video')).toHaveCount(1);
     await expect(video).toHaveAccessibleName('How learning works here (57 s)');
     const close = dialog.getByRole('button', { name: 'Close', exact: true });
     await expect(close).toBeFocused();
@@ -94,26 +95,39 @@ for (const path of ['/', '/courses/']) {
     await expect(hero).toBeFocused();
     expect(await video.evaluate((el: HTMLVideoElement) => el.paused)).toBe(true);
 
-    const before = (await section.boundingBox())!;
+    const inlinePlayer = page.locator('.explainer-inline');
+    await section.scrollIntoViewIfNeeded();
+    const before = (await inlinePlayer.boundingBox())!;
+    const stepsBefore = (await page.locator('.ladder').boundingBox())!;
     await section.focus();
     await section.press('Space');
-    await expect(dialog).toBeVisible();
+    await expect(dialog).not.toBeVisible();
+    await expect(inlinePlayer.locator('video')).toBeVisible();
+    await expect(dialog.locator('video')).toHaveCount(0);
+    await expect(section).not.toBeVisible();
+    await expect(video).toBeFocused();
+    await expect.poll(() => video.evaluate((el: HTMLVideoElement) => !el.paused && el.currentTime > 0)).toBe(true);
     await expect.poll(async () => (await starts(page)).length).toBe(2);
     expect((await starts(page))[1]).toEqual(['event', 'video_start', { placement: 'section', page: path }]);
-    expect((await new AxeBuilder({ page }).include('#learning-explainer-dialog').analyze()).violations).toEqual([]);
-    await close.click();
-    await expect(section).toBeFocused();
-    expect(await video.evaluate((el: HTMLVideoElement) => el.paused)).toBe(true);
-    const after = (await section.boundingBox())!;
+    expect((await new AxeBuilder({ page }).include('#learning-explainer').analyze()).violations).toEqual([]);
+    const after = (await inlinePlayer.boundingBox())!;
+    const stepsAfter = (await page.locator('.ladder').boundingBox())!;
+    expect(after.y).toBeCloseTo(before.y, 1);
     expect(after.width).toBeCloseTo(before.width, 1);
     expect(after.height).toBeCloseTo(before.height, 1);
+    expect(stepsAfter.y).toBeCloseTo(stepsBefore.y, 1);
     // Each actual resume counts once, rather than counting both click and play.
-    await hero.click();
-    await expect.poll(async () => (await starts(page)).length).toBe(3);
     await video.evaluate((el: HTMLVideoElement) => el.pause());
     await video.evaluate((el: HTMLVideoElement) => el.play());
+    await expect.poll(async () => (await starts(page)).length).toBe(3);
+    expect((await starts(page))[2][2]).toEqual({ placement: 'section', page: path });
+    await hero.click();
     await expect.poll(async () => (await starts(page)).length).toBe(4);
+    expect((await starts(page))[3][2]).toEqual({ placement: 'hero', page: path });
     await close.click();
+    await expect(hero).toBeFocused();
+    await expect(section).toBeVisible();
+    expect(await video.evaluate((el: HTMLVideoElement) => el.paused)).toBe(true);
   });
 
   test(`no-JS hero link reaches the section's native player on ${path}`, async ({ browser, baseURL }, testInfo) => {
@@ -145,11 +159,17 @@ for (const choice of [null, 'denied', 'granted'] as const) {
       expect((await starts(page)).length).toBe(choice === 'granted' ? 1 : 0);
       await page.keyboard.press('Escape');
       await expect(page.getByRole('button', { name: heroName, exact: true })).toBeFocused();
+      await page.getByRole('button', { name: sectionName, exact: true }).click();
+      const inlineVideo = page.locator('.explainer-inline video');
+      await expect.poll(() => inlineVideo.evaluate((el: HTMLVideoElement) => !el.paused && el.currentTime > 0)).toBe(true);
+      await expect(page.locator('#learning-explainer-dialog')).not.toBeVisible();
+      expect((await starts(page)).length).toBe(choice === 'granted' ? 2 : 0);
+      await inlineVideo.evaluate((el: HTMLVideoElement) => el.pause());
       if (choice === null) {
         await expect(page.locator('#rsa-consent-banner')).toBeVisible();
         await page.locator('#rsa-consent-accept').click();
         expect(await starts(page)).toEqual([]);
-        await page.getByRole('button', { name: sectionName, exact: true }).click();
+        await inlineVideo.evaluate((el: HTMLVideoElement) => el.play());
         await expect.poll(async () => (await starts(page)).length).toBe(1);
         expect((await starts(page))[0][2]).toEqual({ placement: 'section', page: '/' });
       }
@@ -191,9 +211,38 @@ for (const width of [1440, 820, 390]) for (const theme of ['light', 'dark'] as c
       await poster.scrollIntoViewIfNeeded();
       const box = (await poster.boundingBox())!;
       const column = await figure.evaluate(el => el.closest('.wrap')!.getBoundingClientRect().width - parseFloat(getComputedStyle(el.closest('.wrap')!).paddingLeft) - parseFloat(getComputedStyle(el.closest('.wrap')!).paddingRight));
-      expect(box.width).toBeLessThanOrEqual(760);
+      expect(box.width).toBeCloseTo(Math.min(880, column), 0);
       expect(box.width).toBeLessThanOrEqual(column);
       expect(box.width / box.height).toBeCloseTo(16 / 9, 2);
+      const section = path === '/' ? page.locator('.teaching-section') : page.locator('section[aria-labelledby="ladder-h"]');
+      const sectionBox = (await section.boundingBox())!;
+      const heading = page.locator('.ladder-heading');
+      const headingBox = (await heading.boundingBox())!;
+      const sectionCenter = sectionBox.x + sectionBox.width / 2;
+      expect(Math.abs(box.x + box.width / 2 - sectionCenter)).toBeLessThanOrEqual(2);
+      expect(Math.abs(headingBox.x + headingBox.width / 2 - sectionCenter)).toBeLessThanOrEqual(2);
+      expect(await heading.evaluate(el => getComputedStyle(el).textAlign)).toBe('center');
+      expect(headingBox.y + headingBox.height).toBeLessThan(box.y);
+      const steps = await page.locator('.ladder-step').evaluateAll(elements => elements.map(el => {
+        const box = el.getBoundingClientRect();
+        const title = el.querySelector('h3')!.getBoundingClientRect();
+        const copy = el.querySelector('p')!.getBoundingClientRect();
+        return { top: box.top, bottom: box.bottom, height: box.height, title: title.top, copy: copy.top, tail: box.bottom - copy.bottom };
+      }));
+      expect(steps).toHaveLength(4);
+      expect(steps[0].top).toBeGreaterThan(box.y + box.height);
+      const columns = width > 860 ? 4 : width > 600 ? 2 : 1;
+      const rows = new Map<number, typeof steps>();
+      for (const step of steps) rows.set(Math.round(step.top), [...(rows.get(Math.round(step.top)) ?? []), step]);
+      expect(rows.size).toBe(4 / columns);
+      for (const row of rows.values()) {
+        expect(row).toHaveLength(columns);
+        for (const part of ['top', 'bottom', 'height', 'title', 'copy'] as const) {
+          const values = row.map(step => step[part]);
+          expect(Math.max(...values) - Math.min(...values)).toBeLessThanOrEqual(1);
+        }
+        row.forEach(step => expect(Math.abs(step.tail)).toBeLessThanOrEqual(1));
+      }
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
       const overlay = (await poster.locator('.explainer-play').boundingBox())!;
       expect(overlay.width).toBeGreaterThanOrEqual(width > 600 ? 88 : 64);
@@ -213,6 +262,11 @@ for (const width of [1440, 820, 390]) for (const theme of ['light', 'dark'] as c
         expect(heroBox.y).toBeGreaterThanOrEqual(start.y + start.height);
       }
       const name = `${path === '/' ? 'home' : 'courses'}-${width}-${theme}`;
+      const centeredDirectory = process.env.HYLCENTER_SHOTS_DIR;
+      if (centeredDirectory) {
+        mkdirSync(centeredDirectory, { recursive: true });
+        await section.screenshot({ path: join(centeredDirectory, `${name}-section.png`) });
+      }
       const posterDirectory = process.env.A12POSTER_SHOTS_DIR;
       if (posterDirectory && width !== 820) {
         mkdirSync(posterDirectory, { recursive: true });
