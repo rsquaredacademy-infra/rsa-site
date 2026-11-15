@@ -340,7 +340,7 @@ test.describe('Extra tests', () => {
       await expect(page.locator(`[id="${id}"]`), `Missing anchor #${id}`).toHaveCount(1);
     }
 
-    // Linked from Support, Contact, the footer (Academy column) and Pricing.
+    // Linked from Support, Contact, the footer (Help column) and Pricing.
     const linkChecks = [
       ['/support/', '.page-head a[href="/help/"]', 'Help centre'],
       ['/contact/', '.page-head a[href="/help/"]', 'Help centre'],
