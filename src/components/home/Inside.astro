@@ -1,8 +1,6 @@
 ---
 import { inside } from '../../data/home';
 import { lessonTiles } from '../../data/site';
-import portraits from '../../../public/images/home/portraits.json';
-const portraitSize = portraits.captures[0];
 ---
 <section class="inside-section" aria-labelledby="inside-h" id="inside">
   <div class="wrap">
@@ -12,18 +10,18 @@ const portraitSize = portraits.captures[0];
     </div>
     <ul class="inside-grid">
       {inside.map((feature) => {
-        const portrait = ['lesson-diagram', 'lesson-datasets'].includes(feature.image);
-        const image = `${feature.image}${portrait ? '-portrait' : ''}`;
+        const liveCapture = ['lesson-diagram', 'lesson-datasets'].includes(feature.image);
+        const image = `${feature.image}${liveCapture ? '-card' : ''}`;
         const alt = feature.image === 'lesson-diagram'
           ? 'Two steps from the live dplyr lesson: six sales rows, then the two Large sales kept by filter().'
           : feature.image === 'lesson-datasets'
             ? 'The live Datasets drawer showing sales.csv and stores.csv, their columns, types and first rows.'
             : lessonTiles.find((tile) => tile.image === feature.image)?.alt ?? '';
         return (
-        <li class:list={['inside-card', { 'inside-card-portrait': portrait }]} style={portrait ? `--portrait-ratio: ${portraitSize.width} / ${portraitSize.height}` : undefined}>
+        <li class="inside-card">
           <picture class="illustration-frame">
             <source srcset={`/images/home/${image}-dark.webp`} media="(prefers-color-scheme: dark)" />
-            <img src={`/images/home/${image}.webp`} width={portrait ? portraitSize.width : 800} height={portrait ? portraitSize.height : 800} loading="lazy" decoding="async" alt={alt} />
+            <img src={`/images/home/${image}.webp`} width={liveCapture ? 1000 : 800} height={liveCapture ? 1000 : 800} loading="lazy" decoding="async" alt={alt} />
           </picture>
           <p class="feature-label eyebrow">{feature.label}</p>
           <h3 class="t-h3">{feature.title}</h3>
@@ -40,15 +38,10 @@ const portraitSize = portraits.captures[0];
 <style>
   .section-heading { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: var(--home-content-gap); }
   .section-heading .eyebrow { margin: 0 0 12px; }
-  .inside-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; list-style: none; padding: 0; margin: 0; }
+  .inside-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; list-style: none; padding: 0; margin: 0; }
   .inside-card { display: grid; grid-template-rows: subgrid; grid-row: span 3; row-gap: 10px; min-width: 0; overflow: hidden; padding-bottom: 18px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg); }
-  .inside-card:nth-child(3), .inside-card:nth-child(4) { grid-row: 4 / span 3; }
-  .inside-card:nth-child(5) { grid-column: 3; grid-row: 1 / span 6; }
-  .inside-card:nth-child(6) { grid-column: 4; grid-row: 1 / span 6; }
   .inside-card .illustration-frame { aspect-ratio: 1; }
-  .inside-card-portrait .illustration-frame { grid-row: span 4; aspect-ratio: auto; min-height: 0; position: relative; }
-  .inside-card-portrait img { position: absolute; inset: 0; }
-  .inside-card img { display: block; width: 100%; height: 100%; object-fit: contain; }
+  .inside-card img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .feature-label { margin: 10px 0 0; }
   .resume-line { display: flex; align-items: center; justify-content: center; gap: 12px; padding-block: 24px; margin-top: var(--home-content-gap); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); color: var(--ink-muted); }
   .resume-line svg { flex: none; color: var(--brand); }
@@ -61,14 +54,11 @@ const portraitSize = portraits.captures[0];
   :global(.home) .feature-label { display: none; }
   @media (max-width: 1100px) {
     .inside-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .inside-card:nth-child(n) { grid-column: auto; grid-row: span 3; }
-    .inside-card-portrait .illustration-frame { grid-row: auto; aspect-ratio: var(--portrait-ratio); }
   }
   @media (max-width: 860px) { .section-heading { align-items: start; flex-direction: column; gap: 12px; } }
   @media (max-width: 600px) {
     .inside-grid { grid-template-columns: minmax(0, 1fr); gap: 32px; }
     .inside-card:nth-child(n) { grid-template-rows: auto; grid-row: auto; }
-    .inside-card-portrait .illustration-frame { aspect-ratio: auto; height: min(180vw, 640px); }
     .resume-line { align-items: start; justify-content: start; }
   }
 </style>

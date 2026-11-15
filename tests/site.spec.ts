@@ -392,10 +392,7 @@ test.describe('Extra tests', () => {
       test.skip(testInfo.project.name === 'phone', 'Cards stack in one column on phones');
       await page.goto(path);
       const misaligned = await page.evaluate(({ grid, parts, evenLists }) => {
-        // The bento's tall cards share the lower row's captions; its dedicated
-        // responsive test checks those spans and all six cards' internal gaps.
-        const cards = (Array.from(document.querySelector(grid)!.children) as HTMLElement[])
-          .filter(card => grid !== '.inside-grid' || !card.classList.contains('inside-card-portrait'));
+        const cards = Array.from(document.querySelector(grid)!.children) as HTMLElement[];
         // group cards by row (same top edge)
         const rows = new Map<number, HTMLElement[]>();
         for (const c of cards) {

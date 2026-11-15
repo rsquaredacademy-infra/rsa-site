@@ -1,0 +1,26 @@
+{
+  "lesson": "https://app.rsquaredacademy.com/dplyr/filter-predict",
+  "capturedAt": "2026-11-15T04:45:36.756Z",
+  "captures": [
+    {
+      "theme": "light",
+      "width": 1000,
+      "height": 1000,
+      "diagramFrames": 2,
+      "datasets": [
+        "sales.csv",
+        "stores.csv"
+      ]
+    },
+    {
+      "theme": "dark",
+      "width": 1000,
+      "height": 1000,
+      "diagramFrames": 2,
+      "datasets": [
+        "sales.csv",
+        "stores.csv"
+      ]
+    }
+  ]
+}
