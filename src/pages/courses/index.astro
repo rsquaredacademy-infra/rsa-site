@@ -5,7 +5,9 @@ import Badge from '../../components/Badge.astro';
 import Button from '../../components/Button.astro';
 import CourseCard from '../../components/CourseCard.astro';
 import LearningLadder from '../../components/LearningLadder.astro';
-import { foundationsBadges, lessonTiles, paidTracks, startLessonHref } from '../../data/site';
+import LearningExplainer from '../../components/LearningExplainer.astro';
+import LearningExplainerTrigger from '../../components/LearningExplainerTrigger.astro';
+import { courses, foundationsBadges, lessonTiles, paidTracks, startLessonHref, startLessonLabel } from '../../data/site';
 import { freeCoursePages } from '../../data/course-faqs';
 import { passes } from '../../data/payment';
 ---
@@ -20,6 +22,7 @@ import { passes } from '../../data/payment';
       <span class="eyebrow">Courses</span>
       <h1 class="t-h1 max-w-[760px]">Interactive courses in R, Python and SQL for data analysis</h1>
       <p class="t-lead max-w-[680px]">We're rebuilding our courses and learning platform from scratch, so you can learn R, Python and SQL in your browser with instant feedback. Start with three free Foundations courses in R, opening soon.</p>
+      <div class="hero-actions"><Button href={startLessonHref(courses[0], 'hero')}>{startLessonLabel}</Button><LearningExplainerTrigger /></div>
     </div>
   </section>
 
@@ -47,11 +50,13 @@ import { passes } from '../../data/payment';
   <!-- How you'll learn -->
   <section class="sec flush" aria-labelledby="ladder-h">
     <div class="wrap flex flex-col gap-8">
-      <div class="flex flex-col gap-2 max-w-[680px]">
+      <div class="ladder-heading flex flex-col gap-3 text-center w-full max-w-[880px] mx-auto">
         <h2 id="ladder-h" class="t-h2">How you'll learn</h2>
-        <p class="t-muted">Lessons in the Foundations courses follow the same four steps. When you get stuck, hints appear one at a time and feedback says what to look at, without giving the answer away.</p>
+        <p class="t-muted">Lessons in the Foundations courses follow the same four steps.</p>
       </div>
-      <LearningLadder />
+      <LearningExplainer />
+      <LearningLadder aligned />
+      <p class="t-muted">When you get stuck, hints appear one at a time and feedback says what to look at, without giving the answer away.</p>
       <div><Button variant="text" href="/how-we-teach/">How we teach</Button></div>
     </div>
   </section>
@@ -130,6 +135,7 @@ import { passes } from '../../data/payment';
 
 <style>
   .page-sec { padding-top: 96px; padding-bottom: 64px; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
   .three { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); }
   .track-list { margin: 0; padding-left: 20px; list-style: disc; display: flex; flex-direction: column; gap: 4px; }
   .lesson-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); }
@@ -144,6 +150,7 @@ import { passes } from '../../data/payment';
     .three { grid-template-columns: minmax(0, 1fr); }
   }
   @media (max-width: 600px) {
+    .hero-actions { flex-direction: column; align-items: stretch; }
     .lesson-grid { grid-template-columns: minmax(0, 1fr); }
   }
 </style>

@@ -431,10 +431,11 @@ test.describe('Extra tests', () => {
 
   // Cards in the same row must line up section by section (badges, title, description, link)
   const alignmentCases = [
-    { path: '/', grid: '.rsa-card-grid', parts: ['.rsa-card-title', '.rsa-card-text'] },
+    { path: '/', grid: '.course-grid', parts: ['.course-meta', 'h3', '.t-muted', '.course-action'] },
+    { path: '/', grid: '.inside-grid', parts: ['.illustration-frame', 'h3', '.t-muted'] },
     { path: '/courses/', grid: 'section[aria-labelledby="found-h"] .rsa-card-grid', parts: ['.rsa-card-title', '.rsa-card-text'] },
     { path: '/educators/', grid: '.rsa-card-grid', parts: ['.rsa-card-title', '.rsa-card-text'] },
-    { path: '/', grid: '.res-grid', parts: [':scope > :nth-child(2)', ':scope > :nth-child(3)'] },
+    { path: '/', grid: '.home-resource-grid', parts: ['h3', '.t-muted', '.resource-action'] },
     // Paid tracks: title, summary, curriculum list and note line up, with no empty space at the end.
     {
       path: '/courses/',

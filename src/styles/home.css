@@ -1,0 +1,76 @@
+/* Home layout and course accents, retained from the approved Direction B. */
+.home {
+  --home-section-gap: 72px;
+  --home-section-inset: calc(var(--home-section-gap) / 2);
+  --home-content-gap: 28px;
+  --course-1: #2563eb; --course-1-bg: #dbeafe; --course-1-ink: #1e40af;
+  --course-2: #0d9488; --course-2-bg: #ccfbf1; --course-2-ink: #115e59;
+  --course-3: #d97706; --course-3-bg: #fef3c7; --course-3-ink: #92400e;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .home {
+    --course-1: #60a5fa; --course-1-bg: #172a4a; --course-1-ink: #bfdbfe;
+    --course-2: #2dd4bf; --course-2-bg: #0b3330; --course-2-ink: #99f6e4;
+    --course-3: #f59e0b; --course-3-bg: #3a2a0c; --course-3-ink: #fcd34d;
+  }
+}
+[data-theme="dark"] .home {
+  --course-1: #60a5fa; --course-1-bg: #172a4a; --course-1-ink: #bfdbfe;
+  --course-2: #2dd4bf; --course-2-bg: #0b3330; --course-2-ink: #99f6e4;
+  --course-3: #f59e0b; --course-3-bg: #3a2a0c; --course-3-ink: #fcd34d;
+}
+.home .eyebrow { margin: 0 0 14px; letter-spacing: .12em; }
+/* Each band owns half the gap, so adjacent padding never doubles it. */
+.home > section { margin-block: 0; padding-block: var(--home-section-inset); }
+.home .home-hero { padding-top: 56px; background: var(--surface-tint); }
+/* Illustrated bands alternate the existing theme surfaces; text-only bands
+   return to the page background. These rules are scoped to the home. */
+.home .inside-section, .home .teaching-section, .home .next-section { background: var(--surface); }
+.home .courses-section, .home .resources-section { background: var(--surface-tint); }
+.home #trust-signals, .home .signup-section { background: var(--bg); }
+.home .illustration-frame { display: block; overflow: hidden; padding: clamp(20px, 3vw, 36px); background: var(--surface-tint); border: 1px solid var(--line-strong); border-color: color-mix(in srgb, var(--line-strong) 30%, var(--surface-tint)); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); }
+.home .inside-card .illustration-frame { padding: 0; }
+.home .hero-copy { max-width: 760px; margin-inline: auto; text-align: center; }
+.home h1 { max-width: 18ch; margin: 0 auto var(--space-6); font-family: var(--font-display); font-size: 52px; line-height: 1.06; font-weight: 700; letter-spacing: -.035em; }
+.home .hero-copy > .t-lead { max-width: 54ch; margin-inline: auto; }
+.home .hero-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 28px; }
+.home .hero-note { margin-top: 16px; }
+.home .hero-note span { margin-inline: 5px; }
+.home .teaching-intro { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 80px; margin-bottom: var(--home-content-gap); }
+.home .teaching-copy { display: flex; flex-direction: column; gap: var(--home-content-gap); }
+.home .teaching-copy .eyebrow { margin: 0; }
+.home .teaching-copy h2 { font-size: 40px; line-height: 1.15; }
+.home .ladder-heading { display: flex; flex-direction: column; gap: var(--space-3); max-width: 880px; margin: 0 auto var(--home-content-gap); text-align: center; }
+.home .learning-content { display: grid; gap: var(--home-content-gap); }
+.home .teaching-footer { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-top: var(--home-content-gap); }
+.home #trust-signals > .wrap { gap: var(--home-content-gap); }
+.home .resources-heading { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-bottom: var(--home-content-gap); }
+.home .resources-heading .t-lead { margin-top: var(--space-6); }
+.home .resource-art { width: 230px; }
+.home .home-resource-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
+.home .home-resource-card { display: grid; grid-template-rows: subgrid; grid-row: span 3; row-gap: 12px; border-top: 1px solid var(--line-strong); padding-top: 20px; color: var(--ink); text-decoration: none; }
+.home .home-resource-card:hover h3 { color: var(--link); }
+.home .resource-action { display: flex; align-items: center; justify-content: space-between; min-height: 44px; font-weight: 600; color: var(--link); }
+.home .next-layout { display: grid; grid-template-columns: 1fr 1.4fr; gap: 64px; align-items: center; }
+.home .next-copy { display: flex; flex-direction: column; align-items: start; gap: var(--home-content-gap); }
+@media (max-width: 1000px) { .home .home-resource-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; } }
+@media (max-width: 860px) {
+  .home .teaching-intro { gap: 32px; }
+  .home .next-layout { gap: 32px; }
+  .home .teaching-footer { flex-direction: column; align-items: start; gap: 12px; }
+}
+@media (max-width: 600px) {
+  .home { --home-section-gap: 44px; --home-content-gap: 24px; }
+  .home .home-hero { padding-top: 48px; }
+  .home h1 { font-size: 38px; line-height: 1.1; max-width: 17ch; margin-bottom: var(--space-6); }
+  .home .hero-copy > .eyebrow { font-size: 11px; letter-spacing: .09em; }
+  .home .hero-copy > .t-lead { font-size: 18px; line-height: 27px; }
+  .home .hero-actions { flex-direction: column; margin-top: 24px; }
+  .home .hero-note { max-width: 31ch; margin-inline: auto; }
+  .home .teaching-intro, .home .next-layout { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .home .teaching-copy h2 { font-size: 32px; }
+  .home .teaching-art { order: -1; }
+  .home .resource-art { display: none; }
+  .home .home-resource-grid { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .home .home-resource-card { grid-template-rows: auto; grid-row: auto; }
+}

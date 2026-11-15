@@ -1,0 +1,48 @@
+---
+import Badge from '../Badge.astro';
+import Button from '../Button.astro';
+import CourseVisual from '../CourseVisual.astro';
+import { freeCoursePages } from '../../data/course-faqs';
+import { startLessonHref } from '../../data/site';
+import Illustration from './Illustration.astro';
+---
+<section class="courses-section" id="courses" aria-labelledby="courses-h">
+  <div class="wrap">
+    <div class="section-heading">
+      <div class="course-intro"><p class="eyebrow">Foundations with R</p><h2 id="courses-h" class="t-h2">One dataset. Three ways to work with it.</h2><p class="t-lead">Start with your first line of R. Then turn the same Bean &amp; Barrel data into clean tables and clear charts.</p></div>
+      <div class="foundations-art"><Illustration name="foundations" /></div>
+    </div>
+    <ol class="course-grid">
+      {freeCoursePages.map((course, index) => (
+        <li class="course-card" style={`--accent: var(--course-${index + 1}); --accent-bg: var(--course-${index + 1}-bg); --accent-ink: var(--course-${index + 1}-ink)`}>
+          <div class="course-picture"><CourseVisual order={course.visual} /></div>
+          <div class="course-meta"><span class="course-order">{course.eyebrow}</span><Badge tone="free">Free</Badge></div>
+          <h3 class="t-h3"><a href={course.detailsHref}>{course.title}</a></h3>
+          <p class="t-muted">{course.short}</p>
+          <div class="course-action"><Button variant="secondary" href={startLessonHref(course, `course-${course.id}`)}>Start lesson 1<span class="sr-only"> — {course.title}, no sign-up</span></Button><a class="details" href={course.detailsHref}>Course details <span aria-hidden="true">↗</span></a></div>
+        </li>
+      ))}
+    </ol>
+    <p class="course-note t-small t-muted">Free Intro to SQL and Intro to Python courses are coming soon. <a href="/courses/">See all courses</a></p>
+  </div>
+</section>
+<style>
+  .section-heading { display: flex; align-items: center; justify-content: space-between; gap: 48px; margin-bottom: var(--home-content-gap); }
+  .course-intro { max-width: 680px; }
+  .eyebrow { margin: 0 0 12px; }
+  .t-lead { margin-top: var(--space-6); }
+  .foundations-art { width: 220px; flex: none; }
+  .course-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 24px; list-style: none; margin: 0; padding: 0; }
+  .course-card { display: grid; grid-template-rows: subgrid; grid-row: span 5; row-gap: 16px; padding: 0 22px 22px; border: 1px solid var(--line); border-radius: var(--radius-lg); min-width: 0; background: var(--bg); }
+  .course-picture { background: var(--accent-bg); margin-inline: -22px; padding: 12px; border-radius: 15px 15px 0 0; border-top: 3px solid var(--accent); }
+  .course-picture :global(.course-visual) { background: transparent; }
+  .course-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+  .course-order { width: 100%; font-size: 13px; text-transform: uppercase; letter-spacing: .07em; font-weight: 600; color: var(--accent-ink); margin-bottom: 2px; }
+  h3 a { color: var(--ink); text-decoration: none; display: flex; align-items: center; min-height: 44px; }
+  h3 a:hover { text-decoration: underline; }
+  .course-action { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; }
+  .details { font-size: 15px; font-weight: 600; display: inline-flex; align-items: center; min-height: 44px; }
+  .course-note { margin-top: 24px; }
+  @media (max-width: 1000px) { .course-action { flex-direction: column; align-items: stretch; gap: 4px; } .course-action .details { justify-content: center; } }
+  @media (max-width: 860px) { .course-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; } .course-card { grid-template-rows: auto; grid-row: auto; } .course-action { flex-direction: row; } .foundations-art { display: none; } }
+</style>
