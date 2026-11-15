@@ -107,7 +107,7 @@ a.rsa-card:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px;
 .rsa-footer a:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
 .rsa-footer-about p { margin: var(--space-2) 0 0; max-width: 36ch; }
 .rsa-footer-base { grid-column: 1 / -1; border-top: 1px solid var(--line); padding-top: var(--space-6); display: flex; flex-wrap: wrap; gap: var(--space-4); justify-content: space-between; }
-@media (max-width: 720px) { .rsa-footer-inner { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .rsa-footer-about { grid-column: 1 / -1; } }
+@media (max-width: 1024px) { .rsa-footer-inner { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .rsa-footer-about { grid-column: 1 / -1; } }
 
 @media (prefers-reduced-motion: reduce) { .rsa-btn, .rsa-card { transition: none; } }
 
