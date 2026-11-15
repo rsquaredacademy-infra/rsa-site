@@ -12,56 +12,106 @@ import { contactEmail } from '../data/site';
 interface Props { title?: string; text?: string; id?: string; site: string }
 const {
   title = 'Get updates',
-  text = 'Hear when the free courses open. We email about once a month.',
+  text = 'Hear about new courses and features. We email about once a month.',
   id = 'signup-email',
   site,
 } = Astro.props;
 const statusId = `${id}-status`;
 ---
 
-<section class="rsa-signup" id="signup">
-  <div class="rsa-signup-copy">
-    <h2>{title}</h2>
-    <p>{text}</p>
-    <p class="rsa-signup-note">No spam. Unsubscribe any time. <a href="/privacy/">Privacy</a></p>
-  </div>
-  {/* Hidden until the script runs: without JavaScript there is nothing to submit,
-       so the address can never end up in a URL (see the noscript note). The
-       app endpoint accepts JSON only, so there is no plain-form fallback.
-       method="post" keeps a stray submit from ever using GET. */}
-  <form class="rsa-signup-form" data-signup-form data-signup-site={site} method="post" action="#signup" hidden novalidate>
-    <div class="rsa-signup-row">
-      <div class="rsa-signup-field">
-        <label for={id}>Email address</label>
+<section class="rsa-signup-band" id="signup" aria-labelledby={`${id}-heading`}>
+  <div class="rsa-signup">
+    <div class="rsa-signup-copy">
+      <h2 id={`${id}-heading`}>{title}</h2>
+      <p>{text}</p>
+      <p class="rsa-signup-note">No spam. Unsubscribe any time. <a href="/privacy/">Privacy</a></p>
+    </div>
+    {/* Hidden until the script runs: without JavaScript there is nothing to submit,
+         so the address can never end up in a URL (see the noscript note). The
+         app endpoint accepts JSON only, so there is no plain-form fallback.
+         method="post" keeps a stray submit from ever using GET. */}
+    <form class="rsa-signup-form" data-signup-form data-signup-site={site} method="post" action="#signup" hidden novalidate>
+      <div class="rsa-signup-row">
+        <div class="rsa-signup-field">
+          <label for={id}>Email address</label>
+          <input
+            id={id}
+            class="rsa-input"
+            name="email"
+            type="email"
+            autocomplete="email"
+            required
+            aria-describedby={statusId}
+          />
+        </div>
+        <Button type="submit">Get updates</Button>
+      </div>
+      <div class="rsa-signup-hp" aria-hidden="true">
+        <label for={`${id}-website`}>Website</label>
         <input
-          id={id}
-          class="rsa-input"
-          name="email"
-          type="email"
-          autocomplete="email"
-          required
-          aria-describedby={statusId}
+          id={`${id}-website`}
+          name="website"
+          type="text"
+          tabindex="-1"
+          autocomplete="off"
         />
       </div>
-      <Button type="submit">Get updates</Button>
-    </div>
-    <div class="rsa-signup-hp" aria-hidden="true">
-      <label for={`${id}-website`}>Website</label>
-      <input
-        id={`${id}-website`}
-        name="website"
-        type="text"
-        tabindex="-1"
-        autocomplete="off"
-      />
-    </div>
-    <div class="rsa-signup-turnstile" data-signup-turnstile></div>
-    <p id={statusId} class="rsa-help" data-signup-status role="status" aria-live="polite"></p>
-  </form>
-  <noscript>
-    <p class="rsa-signup-note">Sign-up needs JavaScript. Turn it on and reload, or email <a href={`mailto:${contactEmail}`}>{contactEmail}</a> and we'll add you.</p>
-  </noscript>
+      <div class="rsa-signup-turnstile" data-signup-turnstile></div>
+      <p id={statusId} class="rsa-help" data-signup-status role="status" aria-live="polite"></p>
+    </form>
+    <noscript>
+      <p class="rsa-signup-note">Sign-up needs JavaScript. Turn it on and reload, or email <a href={`mailto:${contactEmail}`}>{contactEmail}</a> and we'll add you.</p>
+    </noscript>
+  </div>
 </section>
+
+<style>
+  .rsa-signup-band {
+    max-width: var(--content-max);
+    margin-inline: auto;
+    background: var(--surface-tint);
+    border-radius: var(--radius-lg);
+  }
+  .rsa-signup {
+    background: transparent;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-6);
+    padding: var(--space-8);
+  }
+  .rsa-signup-copy { padding-inline: 0; }
+  .rsa-signup-copy .rsa-signup-note { margin-top: var(--space-3); }
+  .rsa-signup-form { gap: 0; width: 100%; max-width: max-content; }
+  .rsa-signup-row { grid-template-columns: minmax(0, 22rem) auto; }
+  .rsa-signup-field { width: 22rem; max-width: 100%; }
+  .rsa-signup-form .rsa-btn { width: auto; }
+  .rsa-signup-form .rsa-input:focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+  }
+  .rsa-signup-note a:focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+  }
+  @media (min-width: 1100px) {
+    .rsa-signup {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+  }
+  /* The lazy spam check and live status occupy space only when populated.
+     A challenge can grow below the controls without moving the input row. */
+  .rsa-signup-turnstile { min-height: 0; }
+  .rsa-signup-turnstile:empty, [data-signup-status]:empty { display: none; }
+  [data-signup-status]:not(:empty) { margin-top: var(--space-3); }
+  @media (max-width: 767px) {
+    .rsa-signup { padding: var(--space-6); }
+  }
+  @media (max-width: 599px) {
+    .rsa-signup-form { max-width: none; }
+    .rsa-signup-row { grid-template-columns: minmax(0, 1fr); }
+    .rsa-signup-field { width: 100%; max-width: 22rem; }
+    .rsa-signup-form .rsa-btn { width: 100%; max-width: 22rem; }
+  }
+</style>
 
 <script>
   // Cloudflare Turnstile: the script is loaded on first focus, not on page
