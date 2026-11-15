@@ -15,7 +15,7 @@ export const cta = { label: 'Get updates', href: '/#signup' };
 export const contactEmail = 'support@rsquaredacademy.com';
 
 export const links = {
-  status: 'https://stats.uptimerobot.com/gPYRybpiSb',
+  status: 'https://status.rsquaredacademy.com', // branded redirect to the UptimeRobot page
   github: 'https://github.com/rsquaredacademy',
   youtube: 'https://www.youtube.com/user/rsquaredin',
   linkedin: 'https://in.linkedin.com/company/rsquared-academy',
@@ -35,9 +35,13 @@ export const footerColumns = [
   ] },
   { title: 'Academy', links: [
     { label: 'About', href: '/about/' },
-    { label: 'Help centre', href: '/help/' },
     { label: 'Open source', href: '/open-source/' },
     { label: 'GitHub', href: links.github },
+  ] },
+  { title: 'Help', links: [
+    { label: 'Help centre', href: '/help/' },
+    { label: 'Support', href: '/support/' },
+    { label: 'Contact', href: '/contact/' },
     { label: 'Service status', href: links.status },
   ] },
   { title: 'Follow', links: [
@@ -48,8 +52,6 @@ export const footerColumns = [
 ];
 
 export const footerLegalLinks = [
-  { label: 'Contact', href: '/contact/' },
-  { label: 'Support', href: '/support/' },
   { label: 'Refund', href: '/refund/' },
   { label: 'Delivery', href: '/delivery/' },
   { label: 'Privacy', href: '/privacy/' },
