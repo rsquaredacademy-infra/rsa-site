@@ -5,7 +5,7 @@ import { join } from 'node:path';
 
 const mediaPath = '/media/explainer/how-learning-works.mp4';
 const heroName = 'Watch how it works · 1 min';
-const sectionName = 'Play: how learning works here (1 min)';
+const sectionName = 'Play: how learning works here (1 min) — Watch · 1 min';
 
 async function stubAnalytics(page: Page, choice: 'granted' | 'denied' | null = 'granted') {
   await page.route(/googletagmanager|google-analytics/, route => route.abort());
@@ -196,8 +196,14 @@ for (const width of [1440, 820, 390]) for (const theme of ['light', 'dark'] as c
       expect(box.width / box.height).toBeCloseTo(16 / 9, 2);
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
       const overlay = (await poster.locator('.explainer-play').boundingBox())!;
-      expect(overlay.width).toBeGreaterThanOrEqual(64);
-      expect(overlay.height).toBeGreaterThanOrEqual(64);
+      expect(overlay.width).toBeGreaterThanOrEqual(width > 600 ? 88 : 64);
+      expect(overlay.height).toBeGreaterThanOrEqual(width > 600 ? 88 : 64);
+      await expect(poster.getByText('Watch · 1 min', { exact: true })).toBeVisible();
+      const posterPath = `/media/explainer/how-learning-works-poster${theme === 'dark' ? '-dark' : ''}.webp`;
+      expect(await poster.locator('img').evaluate((image: HTMLImageElement) => ({
+        path: new URL(image.currentSrc).pathname, width: image.naturalWidth, height: image.naturalHeight,
+      }))).toEqual({ path: posterPath, width: 1920, height: 1080 });
+      await expect(figure.locator('video')).toHaveAttribute('poster', posterPath);
       const hero = page.getByRole('button', { name: heroName, exact: true });
       const heroBox = (await hero.boundingBox())!;
       expect(heroBox.height).toBeGreaterThanOrEqual(44);
@@ -207,6 +213,12 @@ for (const width of [1440, 820, 390]) for (const theme of ['light', 'dark'] as c
         expect(heroBox.y).toBeGreaterThanOrEqual(start.y + start.height);
       }
       const name = `${path === '/' ? 'home' : 'courses'}-${width}-${theme}`;
+      const posterDirectory = process.env.A12POSTER_SHOTS_DIR;
+      if (posterDirectory && width !== 820) {
+        mkdirSync(posterDirectory, { recursive: true });
+        const section = path === '/' ? page.locator('.teaching-section') : page.locator('section[aria-labelledby="ladder-h"]');
+        await section.screenshot({ path: join(posterDirectory, `${name}-section.png`) });
+      }
       const directory = process.env.A12MODAL_SHOTS_DIR;
       if (directory) {
         mkdirSync(directory, { recursive: true });
