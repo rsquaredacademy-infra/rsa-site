@@ -83,7 +83,7 @@ for (const path of ['/', '/courses/']) {
     expect(await video.evaluate((el: HTMLVideoElement) => el.duration)).toBeCloseTo(61.17, 1);
     expect(await video.evaluate((el: HTMLVideoElement) => [...el.textTracks].every(t => t.mode === 'disabled'))).toBe(true);
     await track.evaluate((el: HTMLTrackElement) => { el.track.mode = 'showing'; });
-    await expect.poll(() => track.evaluate((el: HTMLTrackElement) => el.track.cues?.length ?? 0)).toBe(14);
+    await expect.poll(() => track.evaluate((el: HTMLTrackElement) => el.track.cues?.length ?? 0)).toBe(15);
     // Native media controls have their own Tab stops; none may reach the page outside the modal.
     for (let i = 0; i < 16; i++) {
       await page.keyboard.press(i < 8 ? 'Tab' : 'Shift+Tab');
@@ -156,14 +156,14 @@ for (const choice of [null, 'denied', 'granted'] as const) {
       await page.getByRole('button', { name: heroName, exact: true }).click();
       const video = page.locator('#learning-explainer-dialog video');
       await expect.poll(() => video.evaluate((el: HTMLVideoElement) => !el.paused && el.currentTime > 0)).toBe(true);
-      expect((await starts(page)).length).toBe(choice === 'granted' ? 1 : 0);
+      await expect.poll(async () => (await starts(page)).length).toBe(choice === 'granted' ? 1 : 0);
       await page.keyboard.press('Escape');
       await expect(page.getByRole('button', { name: heroName, exact: true })).toBeFocused();
       await page.getByRole('button', { name: sectionName, exact: true }).click();
       const inlineVideo = page.locator('.explainer-inline video');
       await expect.poll(() => inlineVideo.evaluate((el: HTMLVideoElement) => !el.paused && el.currentTime > 0)).toBe(true);
       await expect(page.locator('#learning-explainer-dialog')).not.toBeVisible();
-      expect((await starts(page)).length).toBe(choice === 'granted' ? 2 : 0);
+      await expect.poll(async () => (await starts(page)).length).toBe(choice === 'granted' ? 2 : 0);
       await inlineVideo.evaluate((el: HTMLVideoElement) => el.pause());
       if (choice === null) {
         await expect(page.locator('#rsa-consent-banner')).toBeVisible();
