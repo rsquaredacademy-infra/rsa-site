@@ -34,7 +34,7 @@ for (const path of ['/', '/courses/']) {
     await expect(hero.locator('svg')).toHaveAttribute('aria-hidden', 'true');
     await expect(dialog).not.toBeVisible();
     await expect(video).toHaveCount(1);
-    await expect(video).toHaveAttribute('aria-label', 'How learning works here (57 s)');
+    await expect(video).toHaveAttribute('aria-label', 'How learning works here (61 s)');
     await expect(video).toHaveAttribute('controls', '');
     await expect(video).toHaveAttribute('preload', 'none');
     await expect(video).toHaveAttribute('playsinline', '');
@@ -76,11 +76,11 @@ for (const path of ['/', '/courses/']) {
     await hero.press('Enter');
     await expect(dialog).toBeVisible();
     await expect(dialog.locator('video')).toHaveCount(1);
-    await expect(video).toHaveAccessibleName('How learning works here (57 s)');
+    await expect(video).toHaveAccessibleName('How learning works here (61 s)');
     const close = dialog.getByRole('button', { name: 'Close', exact: true });
     await expect(close).toBeFocused();
     await expect.poll(() => video.evaluate((el: HTMLVideoElement) => !el.paused && el.currentTime > 0)).toBe(true);
-    expect(await video.evaluate((el: HTMLVideoElement) => el.duration)).toBeCloseTo(57.33, 1);
+    expect(await video.evaluate((el: HTMLVideoElement) => el.duration)).toBeCloseTo(61.17, 1);
     expect(await video.evaluate((el: HTMLVideoElement) => [...el.textTracks].every(t => t.mode === 'disabled'))).toBe(true);
     await track.evaluate((el: HTMLTrackElement) => { el.track.mode = 'showing'; });
     await expect.poll(() => track.evaluate((el: HTMLTrackElement) => el.track.cues?.length ?? 0)).toBe(14);
