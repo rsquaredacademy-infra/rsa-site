@@ -5,6 +5,7 @@ import Badge from '../../components/Badge.astro';
 import Button from '../../components/Button.astro';
 import CourseCard from '../../components/CourseCard.astro';
 import LearningLadder from '../../components/LearningLadder.astro';
+import LearningExplainer from '../../components/LearningExplainer.astro';
 import { foundationsBadges, lessonTiles, paidTracks, startLessonHref } from '../../data/site';
 import { freeCoursePages } from '../../data/course-faqs';
 import { passes } from '../../data/payment';
@@ -52,6 +53,7 @@ import { passes } from '../../data/payment';
         <p class="t-muted">Lessons in the Foundations courses follow the same four steps. When you get stuck, hints appear one at a time and feedback says what to look at, without giving the answer away.</p>
       </div>
       <LearningLadder />
+      <LearningExplainer />
       <div><Button variant="text" href="/how-we-teach/">How we teach</Button></div>
     </div>
   </section>
