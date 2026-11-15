@@ -4,6 +4,7 @@ import Badge from '../components/Badge.astro';
 import Button from '../components/Button.astro';
 import LearningLadder from '../components/LearningLadder.astro';
 import LearningExplainer from '../components/LearningExplainer.astro';
+import LearningExplainerTrigger from '../components/LearningExplainerTrigger.astro';
 import TrustSignals from '../components/TrustSignals.astro';
 import SignupBand from '../components/SignupBand.astro';
 import { courses, links, startLessonHref, startLessonLabel } from '../data/site';
@@ -27,7 +28,7 @@ const resources = [
           <p class="eyebrow">Foundations with R <span aria-hidden="true">·</span> three free courses</p>
           <h1 id="hero-h">Learn data analysis by doing, in your browser.</h1>
           <p class="t-lead">Follow one realistic dataset from a raw table to a finished chart, across three short courses. Nothing to install.</p>
-          <div class="hero-actions"><Button href={startLessonHref(courses[0], 'hero')}>{startLessonLabel}</Button><Button variant="secondary" href="#courses">See the courses</Button></div>
+          <div class="hero-actions"><Button href={startLessonHref(courses[0], 'hero')}>{startLessonLabel}</Button><LearningExplainerTrigger /></div>
           <p class="hero-note t-small t-muted">Free to start <span aria-hidden="true">·</span> no account needed <span aria-hidden="true">·</span> progress saved in this browser</p>
         </div>
         <HeroLoop />
@@ -44,7 +45,7 @@ const resources = [
           <div class="teaching-art"><Illustration name="learning-steps" /></div>
         </div>
         <div class="ladder-heading"><h2 id="ladder-h" class="t-h2">How you'll learn</h2><p class="t-muted">Each lesson takes one idea and climbs four steps, from watching it done to doing it yourself.</p></div>
-        <div class="learning-content" aria-labelledby="ladder-h"><LearningLadder /><LearningExplainer /></div>
+        <div class="learning-content" aria-labelledby="ladder-h"><LearningExplainer /><LearningLadder /></div>
         <div class="teaching-footer"><Button variant="text" href="/how-we-teach/">How we teach <span aria-hidden="true">↗</span></Button><p class="t-small t-muted">It runs in any modern browser and works best on a tablet, laptop or desktop.</p></div>
       </div>
     </section>
