@@ -59,7 +59,6 @@ export type BadgeTone = 'free' | 'soon' | 'neutral';
 
 export const foundationsBadges: { text: string; tone: BadgeTone }[] = [
   { text: 'Free', tone: 'free' },
-  { text: 'Launching soon', tone: 'soon' },
 ];
 
 // `short` is used on Home and For educators; `long` on Courses.
