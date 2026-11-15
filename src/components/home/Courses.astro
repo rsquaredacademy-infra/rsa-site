@@ -16,7 +16,7 @@ import Illustration from './Illustration.astro';
       {freeCoursePages.map((course, index) => (
         <li class="course-card" style={`--accent: var(--course-${index + 1}); --accent-bg: var(--course-${index + 1}-bg); --accent-ink: var(--course-${index + 1}-ink)`}>
           <div class="course-picture"><CourseVisual order={course.visual} /></div>
-          <div class="course-meta"><span class="course-order">{course.eyebrow}</span><Badge tone="free">Free</Badge><Badge tone="soon">Launching soon</Badge></div>
+          <div class="course-meta"><span class="course-order">{course.eyebrow}</span><Badge tone="free">Free</Badge></div>
           <h3 class="t-h3"><a href={course.detailsHref}>{course.title}</a></h3>
           <p class="t-muted">{course.short}</p>
           <div class="course-action"><Button variant="secondary" href={startLessonHref(course, `course-${course.id}`)}>Start lesson 1<span class="sr-only"> — {course.title}, no sign-up</span></Button><a class="details" href={course.detailsHref}>Course details <span aria-hidden="true">↗</span></a></div>
