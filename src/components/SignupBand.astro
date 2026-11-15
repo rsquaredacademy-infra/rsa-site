@@ -19,12 +19,7 @@ const {
 const statusId = `${id}-status`;
 ---
 
-<section class="rsa-signup-band" id="signup" data-signup-layout="a" aria-labelledby={`${id}-heading`}>
-  <script is:inline>
-    // Read the presentation flag in the browser so both options work in a static build.
-    document.currentScript.parentElement.dataset.signupLayout =
-      new URLSearchParams(window.location.search).get('signup') === 'b' ? 'b' : 'a';
-  </script>
+<section class="rsa-signup-band" id="signup" aria-labelledby={`${id}-heading`}>
   <div class="rsa-signup">
     <div class="rsa-signup-copy">
       <h2 id={`${id}-heading`}>{title}</h2>
@@ -97,15 +92,8 @@ const statusId = `${id}-status`;
     outline: 2px solid var(--brand);
     outline-offset: 2px;
   }
-  [data-signup-layout='b'] { padding: var(--space-8); }
-  [data-signup-layout='b'] .rsa-signup {
-    max-width: 36rem;
-    margin-inline: auto;
-    background: var(--bg);
-    border: 1px solid var(--line);
-  }
   @media (min-width: 1100px) {
-    [data-signup-layout='a'] .rsa-signup {
+    .rsa-signup {
       grid-template-columns: minmax(0, 1fr) auto;
     }
   }
@@ -116,7 +104,6 @@ const statusId = `${id}-status`;
   [data-signup-status]:not(:empty) { margin-top: var(--space-3); }
   @media (max-width: 767px) {
     .rsa-signup { padding: var(--space-6); }
-    [data-signup-layout='b'] { padding: var(--space-6) var(--space-4); }
   }
   @media (max-width: 599px) {
     .rsa-signup-form { max-width: none; }
