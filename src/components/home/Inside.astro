@@ -10,18 +10,17 @@ import { lessonTiles } from '../../data/site';
     </div>
     <ul class="inside-grid">
       {inside.map((feature) => {
-        const liveCapture = ['lesson-diagram', 'lesson-datasets'].includes(feature.image);
-        const image = `${feature.image}${liveCapture ? '-card' : ''}`;
-        const alt = feature.image === 'lesson-diagram'
-          ? 'Two steps from the live dplyr lesson: six sales rows, then the two Large sales kept by filter().'
-          : feature.image === 'lesson-datasets'
-            ? 'The live Datasets drawer showing sales.csv and stores.csv, their columns, types and first rows.'
+        const image = feature.image;
+        const alt = feature.image === 'lesson-stepthrough'
+          ? 'A step-through in three steps: a small table of products and sizes, the two Large rows highlighted by filter(size == "Large"), then only those two rows kept.'
+          : feature.image === 'lesson-datasets-panel'
+            ? 'The Datasets panel: sales.csv (160 rows, 7 columns) expanded to its first rows, with stores.csv (9 rows, 6 columns) below.'
             : lessonTiles.find((tile) => tile.image === feature.image)?.alt ?? '';
         return (
         <li class="inside-card">
           <picture class="illustration-frame">
             <source srcset={`/images/home/${image}-dark.webp`} media="(prefers-color-scheme: dark)" />
-            <img src={`/images/home/${image}.webp`} width={liveCapture ? 1000 : 800} height={liveCapture ? 1000 : 800} loading="lazy" decoding="async" alt={alt} />
+            <img src={`/images/home/${image}.webp`} width={800} height={800} loading="lazy" decoding="async" alt={alt} />
           </picture>
           <p class="feature-label eyebrow">{feature.label}</p>
           <h3 class="t-h3">{feature.title}</h3>

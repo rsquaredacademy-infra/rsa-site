@@ -11,7 +11,7 @@ const tokens = await readFile(`${root}src/styles/tokens.css`, 'utf8');
 const tints = [...tokens.matchAll(/--surface-tint:\s*#([0-9a-f]{6})/g)].slice(0, 2)
   .map(match => [0, 2, 4].map(i => parseInt(match[1].slice(i, i + 2), 16)));
 const sections = ['how-it-works', 'foundations', 'learning-steps', 'free-resources', 'learning-roadmap'];
-const lessons = ['lesson-run', 'lesson-practice', 'lesson-feedback', 'lesson-hints', 'lesson-diagram', 'lesson-datasets'];
+const lessons = ['lesson-run', 'lesson-practice', 'lesson-feedback', 'lesson-hints', 'lesson-diagram', 'lesson-datasets', 'lesson-stepthrough', 'lesson-datasets-panel'];
 const hue180 = [[-.574, 1.43, .144], [.426, .43, .144], [.426, 1.43, -.856]];
 const clamp = value => Math.max(0, Math.min(255, Math.round(value)));
 

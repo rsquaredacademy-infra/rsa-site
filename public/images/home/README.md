@@ -19,7 +19,17 @@ each theme. The PNG masters and production derivatives are unchanged.
 
 The frame, border, padding and section bands are supplied by the home CSS.
 
-## Live square card captures
+## Step-through and Datasets cards (2026-11-15)
+
+Aravind picked illustrations in the same style as the other cards (option C of three):
+`lesson-stepthrough` and `lesson-datasets-panel`, generated with gpt-image-2 using the
+same style prompt as the other lesson tiles (masters in `public/images/lessons/`), then
+exported here by `scripts/mock-illustrations.mjs` like the rest. Text and values come
+from the dplyr lesson data (sales.csv: S-0001 Latte Large 3 … S-0005 Cappuccino Large 1;
+160 rows · 7 columns; stores.csv 9 rows · 6 columns). The live captures below are kept
+for reference but no longer used on the home page.
+
+## Live square card captures (superseded 2026-11-15)
 
 The home uses `lesson-diagram-card{,-dark}.webp` and
 `lesson-datasets-card{,-dark}.webp`, captured from the actual app in both
