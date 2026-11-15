@@ -35,6 +35,7 @@ export const footerColumns = [
   ] },
   { title: 'Academy', links: [
     { label: 'About', href: '/about/' },
+    { label: 'Help centre', href: '/help/' },
     { label: 'Open source', href: '/open-source/' },
     { label: 'GitHub', href: links.github },
     { label: 'Service status', href: links.status },

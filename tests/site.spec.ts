@@ -15,6 +15,7 @@ const PAGES = [
   '/about/',
   '/contact/',
   '/support/',
+  '/help/',
   '/refund/',
   '/delivery/',
   '/privacy/',
@@ -302,6 +303,62 @@ test.describe('Extra tests', () => {
     const sitemap = await page.request.get('/sitemap-0.xml');
     expect(sitemap.status()).toBe(200);
     expect(await sitemap.text()).toContain('/pricing/');
+  });
+
+  test('help centre: 200, anchors, inbound links and sitemap', async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== 'desktop', 'Desktop project only');
+
+    const response = await page.goto('/help/');
+    expect(response?.status(), 'Expected status 200 for /help/').toBe(200);
+    await expect(page.locator('h1')).toHaveText('Help centre');
+
+    // Every section index link points at an element that exists.
+    const indexHrefs = await page
+      .locator('.help-index a')
+      .evaluateAll((links) => links.map((link) => link.getAttribute('href') ?? ''));
+    expect(indexHrefs.length).toBeGreaterThan(0);
+    for (const href of indexHrefs) {
+      expect(href.startsWith('#'), `Unexpected index link ${href}`).toBe(true);
+      const id = href.slice(1);
+      await expect(page.locator(`[id="${id}"]`), `Missing target for ${href}`).toHaveCount(1);
+    }
+
+    // Every question is an h3 with its own stable anchor; the refund anchor
+    // is the one Pricing links to.
+    const questionIds = await page
+      .locator('.qa-item h3[id]')
+      .evaluateAll((headings) => headings.map((heading) => heading.id));
+    expect(questionIds.length).toBeGreaterThan(0);
+    expect(new Set(questionIds).size, 'Question anchors must be unique').toBe(questionIds.length);
+    expect(questionIds).toContain('can-i-get-a-refund');
+
+    // Deep links resolve.
+    for (const id of ['getting-started', 'can-i-get-a-refund']) {
+      await page.goto('/');
+      const deep = await page.goto(`/help/#${id}`);
+      expect(deep?.status(), `Expected status 200 for /help/#${id}`).toBe(200);
+      await expect(page.locator(`[id="${id}"]`), `Missing anchor #${id}`).toHaveCount(1);
+    }
+
+    // Linked from Support, Contact, the footer (Academy column) and Pricing.
+    const linkChecks = [
+      ['/support/', '.page-head a[href="/help/"]', 'Help centre'],
+      ['/contact/', '.page-head a[href="/help/"]', 'Help centre'],
+      ['/', 'footer a[href="/help/"]', 'Help centre'],
+      ['/pricing/', 'a[href="/help/#can-i-get-a-refund"]', 'See the refund questions'],
+    ];
+    for (const [path, selector, label] of linkChecks) {
+      await page.goto(path);
+      const link = page.locator(selector);
+      await expect(link, `Missing "${label}" link on ${path}`).toHaveCount(1);
+      await expect(link).toHaveText(label);
+      expect(await link.getAttribute('href'), `Wrong href for "${label}" on ${path}`).toBeTruthy();
+    }
+
+    // In the sitemap.
+    const sitemap = await page.request.get('/sitemap-0.xml');
+    expect(sitemap.status()).toBe(200);
+    expect(await sitemap.text()).toContain('/help/');
   });
 
   test('404 page returns 404 and shows "Page not found" h1', async ({ page }) => {
