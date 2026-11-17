@@ -9,6 +9,7 @@ https://status.rsquaredacademy.com/*      https://stats.uptimerobot.com/gPYRybpi
 /go/e1-x   https://www.rsquaredacademy.com/courses/?utm_source=x&utm_medium=social&utm_campaign=e1-step-through   302
 /go/e1-bs   https://www.rsquaredacademy.com/courses/?utm_source=bluesky&utm_medium=social&utm_campaign=e1-step-through   302
 /go/e1-yt   https://www.rsquaredacademy.com/courses/?utm_source=youtube&utm_medium=social&utm_campaign=e1-step-through   302
+/go/e1-ig   https://www.rsquaredacademy.com/courses/?utm_source=instagram&utm_medium=social&utm_campaign=e1-step-through   302
 
 # Old site URLs (pre-2026 rebuild) -> new pages
 /index.html                              /             301
