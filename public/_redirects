@@ -15,6 +15,11 @@ https://status.rsquaredacademy.com/*      https://stats.uptimerobot.com/gPYRybpi
 /go/back-x   https://www.rsquaredacademy.com/?utm_source=x&utm_medium=social&utm_campaign=comeback   302
 /go/back-bs   https://www.rsquaredacademy.com/?utm_source=bluesky&utm_medium=social&utm_campaign=comeback   302
 /go/back-ig   https://www.rsquaredacademy.com/?utm_source=instagram&utm_medium=social&utm_campaign=comeback   302
+/go/yahoofinancer-li   https://yahoofinancer.rsquaredacademy.com/news/index.html?utm_source=linkedin&utm_medium=social&utm_campaign=post-16   302
+/go/yahoofinancer-x   https://yahoofinancer.rsquaredacademy.com/news/index.html?utm_source=x&utm_medium=social&utm_campaign=post-16   302
+/go/yahoofinancer-bs   https://yahoofinancer.rsquaredacademy.com/news/index.html?utm_source=bluesky&utm_medium=social&utm_campaign=post-16   302
+/go/yahoofinancer-yt   https://yahoofinancer.rsquaredacademy.com/news/index.html?utm_source=youtube&utm_medium=social&utm_campaign=post-16   302
+/go/yahoofinancer-ig   https://yahoofinancer.rsquaredacademy.com/news/index.html?utm_source=instagram&utm_medium=social&utm_campaign=post-16   302
 
 # Old site URLs (pre-2026 rebuild) -> new pages
 /index.html                              /             301
