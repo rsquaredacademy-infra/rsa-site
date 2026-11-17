@@ -20,6 +20,16 @@ https://status.rsquaredacademy.com/*      https://stats.uptimerobot.com/gPYRybpi
 /go/yahoofinancer-bs   https://yahoofinancer.rsquaredacademy.com/news/index.html?utm_source=bluesky&utm_medium=social&utm_campaign=post-16   302
 /go/yahoofinancer-yt   https://yahoofinancer.rsquaredacademy.com/news/index.html?utm_source=youtube&utm_medium=social&utm_campaign=post-16   302
 /go/yahoofinancer-ig   https://yahoofinancer.rsquaredacademy.com/news/index.html?utm_source=instagram&utm_medium=social&utm_campaign=post-16   302
+/go/post23-li   https://viz-ggplot2.rsquaredacademy.com/ggplot2-facets?utm_source=linkedin&utm_medium=social&utm_campaign=post-23   302
+/go/post23-x   https://viz-ggplot2.rsquaredacademy.com/ggplot2-facets?utm_source=x&utm_medium=social&utm_campaign=post-23   302
+/go/post23-bs   https://viz-ggplot2.rsquaredacademy.com/ggplot2-facets?utm_source=bluesky&utm_medium=social&utm_campaign=post-23   302
+/go/post23-yt   https://viz-ggplot2.rsquaredacademy.com/ggplot2-facets?utm_source=youtube&utm_medium=social&utm_campaign=post-23   302
+/go/post23-ig   https://viz-ggplot2.rsquaredacademy.com/ggplot2-facets?utm_source=instagram&utm_medium=social&utm_campaign=post-23   302
+/go/post32-li   https://blog.rsquaredacademy.com/posts/working-with-databases-using-r/?utm_source=linkedin&utm_medium=social&utm_campaign=post-32   302
+/go/post32-x   https://blog.rsquaredacademy.com/posts/working-with-databases-using-r/?utm_source=x&utm_medium=social&utm_campaign=post-32   302
+/go/post32-bs   https://blog.rsquaredacademy.com/posts/working-with-databases-using-r/?utm_source=bluesky&utm_medium=social&utm_campaign=post-32   302
+/go/post32-yt   https://blog.rsquaredacademy.com/posts/working-with-databases-using-r/?utm_source=youtube&utm_medium=social&utm_campaign=post-32   302
+/go/post32-ig   https://blog.rsquaredacademy.com/posts/working-with-databases-using-r/?utm_source=instagram&utm_medium=social&utm_campaign=post-32   302
 
 # Old site URLs (pre-2026 rebuild) -> new pages
 /index.html                              /             301
