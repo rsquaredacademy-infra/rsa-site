@@ -5,6 +5,10 @@ https://status.rsquaredacademy.com/*      https://stats.uptimerobot.com/gPYRybpi
 # Used in emails and social posts (Aravind 2026-11-17: "The long link does not look good in the mail").
 /go/early   https://app.rsquaredacademy.com/?utm_source=invite&utm_medium=email&utm_campaign=early-access   302
 /go/courses   https://www.rsquaredacademy.com/courses/?utm_source=social&utm_medium=social&utm_campaign=soft-launch   302
+/go/e1-li   https://www.rsquaredacademy.com/courses/?utm_source=linkedin&utm_medium=social&utm_campaign=e1-step-through   302
+/go/e1-x   https://www.rsquaredacademy.com/courses/?utm_source=x&utm_medium=social&utm_campaign=e1-step-through   302
+/go/e1-bs   https://www.rsquaredacademy.com/courses/?utm_source=bluesky&utm_medium=social&utm_campaign=e1-step-through   302
+/go/e1-yt   https://www.rsquaredacademy.com/courses/?utm_source=youtube&utm_medium=social&utm_campaign=e1-step-through   302
 
 # Old site URLs (pre-2026 rebuild) -> new pages
 /index.html                              /             301
