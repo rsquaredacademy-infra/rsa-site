@@ -1,6 +1,10 @@
 # status.rsquaredacademy.com -> UptimeRobot status page (302: replaced by our own status page later; Aravind 2026-11-14)
 https://status.rsquaredacademy.com/*      https://stats.uptimerobot.com/gPYRybpiSb   302!
 
+# Short links: /go/<name> -> full URL with UTM tags (302 so a target can change later). Add one line per link; keep names lowercase.
+# Used in emails and social posts (Aravind 2026-11-17: "The long link does not look good in the mail").
+/go/early   https://app.rsquaredacademy.com/?utm_source=invite&utm_medium=email&utm_campaign=early-access   302
+
 # Old site URLs (pre-2026 rebuild) -> new pages
 /index.html                              /             301
 /about.html                              /about/       301
