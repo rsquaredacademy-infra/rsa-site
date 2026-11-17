@@ -12,7 +12,7 @@ import { operator, support } from '../../data/payment';
       <article class="legal">
         <span class="eyebrow">Legal</span>
         <h1 id="legal-h" class="t-h1">Privacy</h1>
-        <p class="t-small t-muted">Last updated: 13 November 2026</p>
+        <p class="t-small t-muted">Last updated: 17 November 2026</p>
 
         <section class="flex flex-col gap-4" aria-labelledby="app-privacy-h">
           <h2 id="app-privacy-h" class="t-h3">The learning app (app.rsquaredacademy.com)</h2>
@@ -31,7 +31,7 @@ import { operator, support } from '../../data/payment';
 
           <h3 class="font-semibold">Learning activity</h3>
           <p>When analytics is on, we also send lesson activity to our own data store to improve the courses (currently Netlify Blobs; planned move to Cloudflare). Each event has a course, lesson and exercise ID and a time. Depending on the event, it includes the lesson type, attempt and hint numbers, whether a check passed, a short hash identifying the checker message, whether you viewed a solution before answering correctly, active time, and your optional difficulty rating (easy, about right or hard). We also record when the server received it.</p>
-          <p>This activity uses a random browser ID stored in localStorage, not your name, email or an account. The stored events contain no IP address, user agent, referrer, code, drafts, output or checker message text, and only the allowed fields are kept. This stream is separate from GA4 and follows the same analytics choice. We keep it for 12 months. Clearing site data resets the ID and breaks the link to future activity; it does not delete events already stored.</p>
+          <p>This activity uses a random browser ID stored in localStorage, not your name, email or an account. The stored events contain no IP address, user agent, referrer, code, drafts, output or checker message text, and only the allowed fields are kept. This stream is separate from GA4 and follows the same analytics choice. We keep it for 180 days, then a daily job deletes it. Clearing site data resets the ID and breaks the link to future activity; it does not delete events already stored.</p>
 
           <h3 class="font-semibold">Email sign-up (Zoho Campaigns)</h3>
           <p>If you sign up for course updates, we send Zoho Campaigns your email address, the site you signed up on and which sign-up form you used. The app currently asks for no optional profile details. Zoho sends a confirmation email (double opt-in). Every marketing email has an unsubscribe link.</p>
