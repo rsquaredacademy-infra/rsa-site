@@ -7,5 +7,5 @@ export const inside = [
   { image: 'lesson-hints', title: 'Hints, one at a time', line: 'Ask for the next hint when you need a little guidance.', label: '04 / A little help' },
   { image: 'lesson-stepthrough', title: 'Step-through diagrams', line: 'Follow each dplyr step as it changes the table.', label: '05 / See the idea' },
   { image: 'lesson-datasets-panel', title: 'Datasets panel', line: 'Keep the course datasets, columns and first rows beside your code.', label: '06 / Know your data' },
-  { image: 'course-report-cards', title: 'See what you’ll build', line: 'Each course home shows the report you’ll build, with real numbers from the course data.', label: '07 / Work towards a result', wide: true },
+  { image: 'course-report-cards', title: 'See what you’ll build', line: 'Each course home shows the report you’ll build for the shop owner, one lesson at a time.', label: '07 / Work towards a result', wide: true, points: ['Real numbers from the course data', 'The code you’ll write to get each one', 'Free courses in R, SQL and Python'] },
 ];

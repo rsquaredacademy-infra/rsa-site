@@ -32,12 +32,13 @@ import { lessonTiles } from '../../data/site';
       <div class="inside-wide">
         <picture class="illustration-frame">
           <source srcset={`/images/home/${feature.image}-dark.webp`} media="(prefers-color-scheme: dark)" />
-          <img src={`/images/home/${feature.image}.webp`} width={800} height={800} loading="lazy" decoding="async" alt="Intro to Python course home: report cards from the shop owner’s 2025 data, including 4,182 completed orders, ₹65.65 lakh revenue, a ₹1,570 average order and a labelled receipt for order ORD-03159." />
+          <img src={`/images/home/${feature.image}.webp`} width={1520} height={736} loading="lazy" decoding="async" alt="Two report cards from the Intro to Python course home, from the shop owner’s 2025 data: 4,182 completed orders, ₹65.65 lakh revenue and a ₹1,570 average order; and order ORD-03159 labelled with its total to pay, ₹10,994.00." />
         </picture>
         <div class="inside-wide-text">
           <p class="feature-label eyebrow">{feature.label}</p>
           <h3 class="t-h3">{feature.title}</h3>
           <p class="t-muted">{feature.line}</p>
+          {feature.points && <ul class="inside-wide-points">{feature.points.map((point) => <li>{point}</li>)}</ul>}
         </div>
       </div>
     ))}
@@ -55,15 +56,20 @@ import { lessonTiles } from '../../data/site';
   .inside-card .illustration-frame { aspect-ratio: 1; }
   .inside-card img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .feature-label { margin: 10px 0 0; }
-  .inside-wide { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: 40px; margin-top: 24px; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg); }
-  .inside-wide .illustration-frame { aspect-ratio: 1; }
-  .inside-wide img { display: block; width: 100%; height: 100%; object-fit: cover; }
-  .inside-wide-text { padding: 32px 40px 32px 0; }
-  .inside-wide-text h3 { font-size: 24px; line-height: 32px; margin: 0 0 12px; }
+  .inside-wide { display: grid; grid-template-columns: minmax(0, 640px) minmax(0, 1fr); align-items: center; gap: 40px; margin-top: 24px; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg); }
+  .inside-wide .illustration-frame { align-self: stretch; display: flex; align-items: center; padding: 16px; }
+  .inside-wide img { display: block; width: 100%; height: auto; }
+  .inside-wide-text { padding: 24px 40px 24px 0; }
+  .inside-wide-text h3 { font-size: 24px; line-height: 32px; margin: 0 0 8px; }
   .inside-wide-text .t-muted { font-size: 18px; line-height: 28px; margin: 0; }
+  .inside-wide-points { margin: 16px 0 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+  .inside-wide-points li { position: relative; padding-left: 28px; font-size: 16px; line-height: 24px; color: var(--ink); }
+  .inside-wide-points li::before { content: "✓"; position: absolute; left: 4px; top: 0; color: var(--brand); font-weight: 700; }
   :global(.home) .inside-wide .illustration-frame { border: 0; border-radius: 0; box-shadow: none; }
+  @media (max-width: 1100px) { .inside-wide { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 28px; } }
   @media (max-width: 860px) {
     .inside-wide { grid-template-columns: minmax(0, 1fr); gap: 0; }
+    .inside-wide .illustration-frame { padding: 12px 12px 0; }
     .inside-wide-text { padding: 20px 18px 24px; }
     .inside-wide-text h3 { font-size: 18px; line-height: 26px; }
     .inside-wide-text .t-muted { font-size: 16px; line-height: 24px; }
