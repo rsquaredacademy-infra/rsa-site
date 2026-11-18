@@ -1,0 +1,3 @@
+# Hidden media path (Instagram post images): never indexed. See public/s/ig/.gitkeep
+/s/*
+  X-Robots-Tag: noindex, nofollow
