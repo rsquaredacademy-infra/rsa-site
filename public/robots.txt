@@ -1,0 +1,9 @@
+# /s/ holds hidden media (Instagram post images): keep crawlers out, except Meta's
+# fetchers, which must be able to read /s/ig/ when publishing to Instagram.
+# noindex (X-Robots-Tag) and the sitemap exclusion are what keep it out of search.
+User-agent: *
+Disallow: /s/
+
+User-agent: facebookexternalhit
+User-agent: meta-externalagent
+Allow: /s/ig/

@@ -28,6 +28,7 @@ export default defineConfig({
     sitemap({
       filter: (page) =>
         !page.includes('/stay-subscribed/') &&
+        !page.includes('/s/ig/') &&
         (pricingPublished || !page.includes('/pricing/')),
     }),
   ],
