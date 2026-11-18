@@ -9,15 +9,13 @@ import { lessonTiles } from '../../data/site';
       <p class="t-lead">Read a little. Try it. See what happens.</p>
     </div>
     <ul class="inside-grid">
-      {inside.map((feature) => {
+      {inside.filter((feature) => !feature.wide).map((feature) => {
         const image = feature.image;
         const alt = feature.image === 'lesson-stepthrough'
           ? 'A step-through in three steps: a small table of products and sizes, the two Large rows highlighted by filter(size == "Large"), then only those two rows kept.'
           : feature.image === 'lesson-datasets-panel'
             ? 'The Datasets panel: sales.csv (160 rows, 7 columns) expanded to its first rows, with stores.csv (9 rows, 6 columns) below.'
-            : feature.image === 'course-report-cards'
-              ? 'Intro to Python course home: report cards from the shop owner’s 2025 data, including 4,182 completed orders, ₹65.65 lakh revenue, a ₹1,570 average order and a labelled receipt for order ORD-03159.'
-              : lessonTiles.find((tile) => tile.image === feature.image)?.alt ?? '';
+            : lessonTiles.find((tile) => tile.image === feature.image)?.alt ?? '';
         return (
         <li class="inside-card">
           <picture class="illustration-frame">
@@ -30,6 +28,19 @@ import { lessonTiles } from '../../data/site';
         </li>
       ); })}
     </ul>
+    {inside.filter((feature) => feature.wide).map((feature) => (
+      <div class="inside-wide">
+        <picture class="illustration-frame">
+          <source srcset={`/images/home/${feature.image}-dark.webp`} media="(prefers-color-scheme: dark)" />
+          <img src={`/images/home/${feature.image}.webp`} width={800} height={800} loading="lazy" decoding="async" alt="Intro to Python course home: report cards from the shop owner’s 2025 data, including 4,182 completed orders, ₹65.65 lakh revenue, a ₹1,570 average order and a labelled receipt for order ORD-03159." />
+        </picture>
+        <div class="inside-wide-text">
+          <p class="feature-label eyebrow">{feature.label}</p>
+          <h3 class="t-h3">{feature.title}</h3>
+          <p class="t-muted">{feature.line}</p>
+        </div>
+      </div>
+    ))}
     <div class="resume-line">
       <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11a9 9 0 1 1 2.5 7"/><path d="M3 4v7h7"/><path d="M12 7v5l3 2"/></svg>
       <p><strong>Pick up where you left off.</strong> Progress is saved in this browser.</p>
@@ -44,6 +55,19 @@ import { lessonTiles } from '../../data/site';
   .inside-card .illustration-frame { aspect-ratio: 1; }
   .inside-card img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .feature-label { margin: 10px 0 0; }
+  .inside-wide { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: 40px; margin-top: 24px; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg); }
+  .inside-wide .illustration-frame { aspect-ratio: 1; }
+  .inside-wide img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .inside-wide-text { padding: 32px 40px 32px 0; }
+  .inside-wide-text h3 { font-size: 24px; line-height: 32px; margin: 0 0 12px; }
+  .inside-wide-text .t-muted { font-size: 18px; line-height: 28px; margin: 0; }
+  :global(.home) .inside-wide .illustration-frame { border: 0; border-radius: 0; box-shadow: none; }
+  @media (max-width: 860px) {
+    .inside-wide { grid-template-columns: minmax(0, 1fr); gap: 0; }
+    .inside-wide-text { padding: 20px 18px 24px; }
+    .inside-wide-text h3 { font-size: 18px; line-height: 26px; }
+    .inside-wide-text .t-muted { font-size: 16px; line-height: 24px; }
+  }
   .resume-line { display: flex; align-items: center; justify-content: center; gap: 12px; padding-block: 24px; margin-top: var(--home-content-gap); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); color: var(--ink-muted); }
   .resume-line svg { flex: none; color: var(--brand); }
   .resume-line p { margin: 0; }
