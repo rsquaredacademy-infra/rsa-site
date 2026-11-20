@@ -9,7 +9,6 @@ const PAGES = [
   '/courses/ggplot2/',
   '/pricing/',
   '/how-we-teach/',
-  '/roadmap/',
   '/resources/',
   '/open-source/',
   '/educators/',

@@ -7,7 +7,6 @@ interface Props {
   title: string;
   description: string;
   noindex?: boolean;
-  showCopyrightYear?: boolean;
   /** Absolute path or URL to the share image. Defaults to the site card. */
   image?: string;
   imageAlt?: string;
@@ -16,7 +15,6 @@ const {
   title,
   description,
   noindex = false,
-  showCopyrightYear = true,
   image = '/og/og-default.png',
   imageAlt = 'Rsquared Academy — interactive courses in R, Python and SQL with instant feedback.',
 } = Astro.props;
@@ -65,6 +63,6 @@ const ogImage = new URL(image, Astro.site);
     <main>
       <slot />
     </main>
-    <Footer showYear={showCopyrightYear} />
+    <Footer />
   </body>
 </html>

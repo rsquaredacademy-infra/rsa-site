@@ -24,7 +24,6 @@ export const links = {
   openCourses: 'https://courses.rsquaredacademy.com/',
   openCoursesRepo: 'https://github.com/rsquaredacademy-infra/open-courses',
   blog: 'https://blog.rsquaredacademy.com',
-  feedback: 'https://app.rsquaredacademy.com/intro-r#feedback-title',
 };
 
 export const footerColumns = [
@@ -36,7 +35,6 @@ export const footerColumns = [
   ] },
   { title: 'Academy', links: [
     { label: 'About', href: '/about/' },
-    { label: 'Roadmap', href: '/roadmap/' },
     { label: 'Open source', href: '/open-source/' },
     { label: 'GitHub', href: links.github },
   ] },
