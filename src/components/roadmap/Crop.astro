@@ -1,0 +1,14 @@
+---
+import manifest from '../../../public/images/roadmap/captures.json';
+interface Props { name: string; alt: string; class?: string }
+const { name, alt, class: extra } = Astro.props;
+const asset = manifest.captures.find(c => c.file === `${name}.webp`)!;
+---
+<picture class={extra}>
+  <source srcset={`/images/roadmap/${name}-dark.webp`} media="(prefers-color-scheme: dark)" />
+  <img src={`/images/roadmap/${name}.webp`} width={asset.width} height={asset.height} alt={alt} loading="lazy" decoding="async" />
+</picture>
+<style>
+  picture { display: block; min-width: 0; }
+  img { display: block; width: 100%; height: auto; }
+</style>

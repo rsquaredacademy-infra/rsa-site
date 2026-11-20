@@ -1,0 +1,234 @@
+{
+  "capturedAt": "2026-11-20T11:16:21.582Z",
+  "command": "node scripts/capture-roadmap.mjs",
+  "captures": [
+    {
+      "file": "course-intro-r.webp",
+      "source": "https://app.rsquaredacademy.com/intro-r",
+      "theme": "light",
+      "width": 516,
+      "height": 490,
+      "deviceScaleFactor": 2,
+      "cssWidth": 258,
+      "smallestTextCssPx": 12
+    },
+    {
+      "file": "course-dplyr.webp",
+      "source": "https://app.rsquaredacademy.com/dplyr",
+      "theme": "light",
+      "width": 516,
+      "height": 382,
+      "deviceScaleFactor": 2,
+      "cssWidth": 258,
+      "smallestTextCssPx": 13
+    },
+    {
+      "file": "course-ggplot2.webp",
+      "source": "https://app.rsquaredacademy.com/ggplot2",
+      "theme": "light",
+      "width": 516,
+      "height": 488,
+      "deviceScaleFactor": 2,
+      "cssWidth": 258,
+      "smallestTextCssPx": 13
+    },
+    {
+      "file": "course-intro-sql.webp",
+      "source": "https://app.rsquaredacademy.com/intro-sql",
+      "theme": "light",
+      "width": 516,
+      "height": 490,
+      "deviceScaleFactor": 2,
+      "cssWidth": 258,
+      "smallestTextCssPx": 12
+    },
+    {
+      "file": "course-intro-python.webp",
+      "source": "https://app.rsquaredacademy.com/intro-python",
+      "theme": "light",
+      "width": 516,
+      "height": 490,
+      "deviceScaleFactor": 2,
+      "cssWidth": 258,
+      "smallestTextCssPx": 12
+    },
+    {
+      "file": "plan.webp",
+      "source": "https://app.rsquaredacademy.com/intro-sql/first-visits",
+      "theme": "light",
+      "width": 664,
+      "height": 480,
+      "deviceScaleFactor": 2,
+      "cssWidth": 300,
+      "smallestTextCssPx": 12
+    },
+    {
+      "file": "hints.webp",
+      "source": "https://app.rsquaredacademy.com/intro-sql/first-visits",
+      "theme": "light",
+      "width": 664,
+      "height": 480,
+      "deviceScaleFactor": 2,
+      "cssWidth": 300,
+      "smallestTextCssPx": 12
+    },
+    {
+      "file": "run.webp",
+      "source": "https://app.rsquaredacademy.com/intro-sql/first-visits",
+      "theme": "light",
+      "width": 664,
+      "height": 480,
+      "deviceScaleFactor": 2,
+      "cssWidth": 332,
+      "smallestTextCssPx": 14,
+      "composition": "Native editor line, Run button and resulting table; no resampling"
+    },
+    {
+      "file": "recap.webp",
+      "source": "https://app.rsquaredacademy.com/intro-sql/first-visits",
+      "theme": "light",
+      "width": 664,
+      "height": 480,
+      "deviceScaleFactor": 2,
+      "cssWidth": 332,
+      "smallestTextCssPx": 12
+    },
+    {
+      "file": "stepthrough.webp",
+      "source": "https://app.rsquaredacademy.com/dplyr/filter-predict",
+      "theme": "light",
+      "width": 664,
+      "height": 480,
+      "deviceScaleFactor": 2,
+      "cssWidth": 332,
+      "smallestTextCssPx": 12,
+      "composition": "2 native crops on a shared canvas; no resampling"
+    },
+    {
+      "file": "datasets.webp",
+      "source": "https://app.rsquaredacademy.com/dplyr/filter-predict",
+      "theme": "light",
+      "width": 664,
+      "height": 480,
+      "deviceScaleFactor": 2,
+      "cssWidth": 332,
+      "smallestTextCssPx": 12,
+      "composition": "2 native crops on a shared canvas; no resampling",
+      "cropHeightPx": 290
+    },
+    {
+      "file": "course-intro-r-dark.webp",
+      "source": "https://app.rsquaredacademy.com/intro-r",
+      "theme": "dark",
+      "width": 516,
+      "height": 490,
+      "deviceScaleFactor": 2,
+      "cssWidth": 258,
+      "smallestTextCssPx": 12
+    },
+    {
+      "file": "course-dplyr-dark.webp",
+      "source": "https://app.rsquaredacademy.com/dplyr",
+      "theme": "dark",
+      "width": 516,
+      "height": 382,
+      "deviceScaleFactor": 2,
+      "cssWidth": 258,
+      "smallestTextCssPx": 13
+    },
+    {
+      "file": "course-ggplot2-dark.webp",
+      "source": "https://app.rsquaredacademy.com/ggplot2",
+      "theme": "dark",
+      "width": 516,
+      "height": 488,
+      "deviceScaleFactor": 2,
+      "cssWidth": 258,
+      "smallestTextCssPx": 13
+    },
+    {
+      "file": "course-intro-sql-dark.webp",
+      "source": "https://app.rsquaredacademy.com/intro-sql",
+      "theme": "dark",
+      "width": 516,
+      "height": 490,
+      "deviceScaleFactor": 2,
+      "cssWidth": 258,
+      "smallestTextCssPx": 12
+    },
+    {
+      "file": "course-intro-python-dark.webp",
+      "source": "https://app.rsquaredacademy.com/intro-python",
+      "theme": "dark",
+      "width": 516,
+      "height": 490,
+      "deviceScaleFactor": 2,
+      "cssWidth": 258,
+      "smallestTextCssPx": 12
+    },
+    {
+      "file": "plan-dark.webp",
+      "source": "https://app.rsquaredacademy.com/intro-sql/first-visits",
+      "theme": "dark",
+      "width": 664,
+      "height": 480,
+      "deviceScaleFactor": 2,
+      "cssWidth": 300,
+      "smallestTextCssPx": 12
+    },
+    {
+      "file": "hints-dark.webp",
+      "source": "https://app.rsquaredacademy.com/intro-sql/first-visits",
+      "theme": "dark",
+      "width": 664,
+      "height": 480,
+      "deviceScaleFactor": 2,
+      "cssWidth": 300,
+      "smallestTextCssPx": 12
+    },
+    {
+      "file": "run-dark.webp",
+      "source": "https://app.rsquaredacademy.com/intro-sql/first-visits",
+      "theme": "dark",
+      "width": 664,
+      "height": 480,
+      "deviceScaleFactor": 2,
+      "cssWidth": 332,
+      "smallestTextCssPx": 14,
+      "composition": "Native editor line, Run button and resulting table; no resampling"
+    },
+    {
+      "file": "recap-dark.webp",
+      "source": "https://app.rsquaredacademy.com/intro-sql/first-visits",
+      "theme": "dark",
+      "width": 664,
+      "height": 480,
+      "deviceScaleFactor": 2,
+      "cssWidth": 332,
+      "smallestTextCssPx": 12
+    },
+    {
+      "file": "stepthrough-dark.webp",
+      "source": "https://app.rsquaredacademy.com/dplyr/filter-predict",
+      "theme": "dark",
+      "width": 664,
+      "height": 480,
+      "deviceScaleFactor": 2,
+      "cssWidth": 332,
+      "smallestTextCssPx": 12,
+      "composition": "2 native crops on a shared canvas; no resampling"
+    },
+    {
+      "file": "datasets-dark.webp",
+      "source": "https://app.rsquaredacademy.com/dplyr/filter-predict",
+      "theme": "dark",
+      "width": 664,
+      "height": 480,
+      "deviceScaleFactor": 2,
+      "cssWidth": 332,
+      "smallestTextCssPx": 12,
+      "composition": "2 native crops on a shared canvas; no resampling",
+      "cropHeightPx": 290
+    }
+  ]
+}
