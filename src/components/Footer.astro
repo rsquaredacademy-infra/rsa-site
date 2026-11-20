@@ -2,6 +2,8 @@
 import Wordmark from './Wordmark.astro';
 import { footerColumns, footerLegalLinks, contactEmail } from '../data/site';
 import { pricingPublished } from '../data/payment';
+interface Props { showYear?: boolean }
+const { showYear = true } = Astro.props;
 const year = new Date().getFullYear();
 const legalLinks = pricingPublished
   ? [...footerLegalLinks, { label: 'Pricing', href: '/pricing/' }]
@@ -21,7 +23,7 @@ const legalLinks = pricingPublished
       </div>
     ))}
     <div class="rsa-footer-base">
-      <span>© {year} Rsquared Academy</span>
+      <span>© {showYear && `${year} `}Rsquared Academy</span>
       <span>{legalLinks.map((l, i) => <>{i > 0 && ' · '}<a href={l.href}>{l.label}</a></>)}</span>
     </div>
   </div>

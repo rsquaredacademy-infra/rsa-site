@@ -1,0 +1,204 @@
+---
+import Base from '../../layouts/Base.astro';
+import Button from '../../components/Button.astro';
+import Icon from '../../components/roadmap/Icon.astro';
+import Crop from '../../components/roadmap/Crop.astro';
+import { links } from '../../data/site';
+import { roadmapCourses, plannedTopics, roadmapFeatures } from '../../data/roadmap';
+const stages = [
+  { id: 'now', title: 'Now', status: 'Live', line: 'R, dplyr, ggplot2 and SQL. Open a course and start learning.' },
+  { id: 'next', title: 'Next', status: 'Being built', line: 'Intro to Python and tips that help you find your way around a lesson.' },
+  { id: 'later', title: 'Later', status: 'Planned', line: 'More ways to analyse data, build models and share what you find.' },
+];
+---
+<Base title="Roadmap" description="Hands-on data courses. R, Python and SQL today; more data tools on the way. See what's live, being built and planned." showCopyrightYear={false}>
+  <section class="page-head" aria-labelledby="roadmap-h">
+    <div class="wrap">
+      <div class="top-band" data-sheet="1">
+        <div>
+          <p class="eyebrow">Roadmap</p>
+          <h1 id="roadmap-h" class="t-h1">Where we’re going</h1>
+          <p class="t-lead">Hands-on data courses. R, Python and SQL today; more data tools on the way.</p>
+        </div>
+        <Button href={links.feedback}>Suggest a topic or feature <Icon name="arrow" /></Button>
+      </div>
+      <ol class="roadmap-track" aria-label="Roadmap stages" data-sheet="2">
+        {stages.map((stage, i) => (
+          <li class={`track-stop ${stage.id}`}>
+            <div class="track-line"><span class="track-dot" aria-hidden="true">{i === 0 ? <Icon name="check" /> : i + 1}</span>{i < 2 && <span class="track-arrow" aria-hidden="true">→</span>}</div>
+            <a href={`#curriculum-${stage.id}`}><strong>{stage.title}</strong><span class={`status ${stage.id}`}>{stage.status}</span></a>
+            <p class="t-muted">{stage.line}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+  <section class="curriculum sec" aria-labelledby="curriculum-h">
+    <div class="wrap">
+      <div class="section-heading"><p class="eyebrow">The courses</p><h2 id="curriculum-h" class="t-h2">Curriculum</h2></div>
+      <div data-sheet="3">
+        <div class="stage-heading" id="curriculum-now"><h3 class="t-h3">Now</h3><span class="status now">Live</span><p class="t-muted">Start with a question. Finish with an answer.</p></div>
+        <ul class="course-grid">
+          {roadmapCourses.map(course => (
+            <li class="course-card">
+              <Crop name={`course-${course.id}`} alt={course.alt} class="course-picture" />
+              <h4><a href={`https://app.rsquaredacademy.com/${course.id}`}>{course.title}<span aria-hidden="true">↗</span></a></h4>
+              <p class="t-muted">{course.answer}</p>
+              <p class="course-count"><Icon name="layers" />{course.lessons} lessons live</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="future-curriculum">
+        <div id="curriculum-next" data-sheet="4">
+          <div class="stage-heading"><h3 class="t-h3">Next</h3><span class="status next">Being built</span></div>
+          <div class="python-card">
+            <Crop name="course-intro-python" alt="Python course receipt preview: order ORD-03159, 3 lines, 6 items, total to pay ₹10,994.00." />
+            <div class="python-copy">
+              <h4><a href="https://app.rsquaredacademy.com/intro-python">Intro to Python <span aria-hidden="true">↗</span></a></h4>
+              <p class="t-muted">Calculate order amounts and finish with a first sales chart.</p>
+              <div class="progress"><label for="python-progress">9 of 11 lessons live</label><progress id="python-progress" value="9" max="11">9 of 11 lessons live</progress></div>
+            </div>
+          </div>
+        </div>
+        <div id="curriculum-later" data-sheet="5">
+          <div class="stage-heading"><h3 class="t-h3">Later</h3><span class="status later">Planned</span></div>
+          <div class="topic-groups">
+            {plannedTopics.map(group => (
+              <div class="topic-group">
+                <h4 class="eyebrow">{group.title}</h4>
+                <ul>{group.items.map(item => <li class="topic-tile"><Icon name={item.icon} /><span>{item.title}{'note' in item && <small>{item.note}</small>}</span></li>)}</ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="platform sec" aria-labelledby="platform-h">
+    <div class="wrap">
+      <div class="section-heading"><p class="eyebrow">The learning experience</p><h2 id="platform-h" class="t-h2">Platform</h2></div>
+      <div data-sheet="6">
+        <div class="stage-heading"><h3 class="t-h3">Now</h3><span class="status now">Live</span><p class="t-muted">A little help at every step.</p></div>
+        <ul class="feature-grid">
+          {roadmapFeatures.map(feature => (
+            <li class="feature-card">
+              <Crop name={feature.image} alt={feature.alt} class="feature-picture" />
+              <h4><a href={`https://app.rsquaredacademy.com/${feature.href}`}>{feature.title}<span aria-hidden="true">↗</span></a></h4>
+              <p class="t-muted">{feature.line}</p>
+            </li>
+          ))}
+        </ul>
+        <p class="also-live t-muted">Also live: progress saved in this browser, a guided tour, and <a href={links.feedback}>feedback and problem reporting</a>.</p>
+      </div>
+      <div class="platform-future" data-sheet="7">
+        <div class="platform-next">
+          <div class="stage-heading"><h3 class="t-h3">Next</h3><span class="status next">Being built</span></div>
+          <ul class="future-features"><li class="future-tile"><Icon name="tip" /><div><h4>In-lesson feature tips</h4><p class="t-muted">Find the right tool as you work through a lesson.</p></div></li></ul>
+        </div>
+        <div class="platform-later">
+          <div class="stage-heading"><h3 class="t-h3">Later</h3><span class="status later">Planned</span></div>
+          <ul class="future-features later-features">
+            <li class="future-tile"><Icon name="spark" /><div><h4>An AI helper in lessons</h4><p class="t-muted">Explains errors and output, never the answer.</p></div></li>
+            <li class="future-tile"><Icon name="terminal" /><div><h4>A command-line checker</h4><p class="t-muted">Run exercises on your own machine for Git and command-line courses.</p></div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+<style>
+  .page-head { padding-block: 72px 56px; }
+  .top-band { display: flex; align-items: center; justify-content: space-between; gap: 48px; }
+  .top-band > div { max-width: 650px; }
+  .top-band .eyebrow { margin: 0 0 16px; }
+  .top-band .t-lead { margin-top: 20px; }
+  .top-band :global(.rsa-btn) { flex: none; gap: 10px; }
+  .roadmap-track { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 32px; margin: 48px 0 0; padding: 0; list-style: none; }
+  .track-line { position: relative; display: flex; align-items: center; height: 36px; margin-bottom: 14px; }
+  .track-line::after { content: ''; position: absolute; left: 44px; right: -24px; height: 1px; background: var(--line-strong); }
+  .track-stop:last-child .track-line::after { right: 0; }
+  .track-dot { display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid var(--line-strong); border-radius: 50%; font: 600 14px var(--font-mono); color: var(--ink-muted); background: var(--surface); }
+  .now .track-dot { background: var(--free-bg); color: var(--free-ink); border-color: var(--free-ink); }
+  .next .track-dot { background: var(--signal-bg); color: var(--signal-ink); border-color: var(--signal-ink); }
+  .track-arrow { margin-left: auto; position: relative; z-index: 1; background: var(--bg); padding-left: 8px; color: var(--ink-muted); }
+  .track-stop a { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; min-height: 44px; width: fit-content; text-decoration: none; color: var(--ink); }
+  .track-stop a:hover strong { text-decoration: underline; text-underline-offset: 4px; }
+  .track-stop strong { font: 700 24px/32px var(--font-display); }
+  .track-stop p { font-size: 16px; line-height: 24px; margin-top: 6px; max-width: 31ch; }
+  .status { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: var(--radius-pill); font-size: 13px; line-height: 18px; font-weight: 600; }
+  .status.now { background: var(--free-bg); color: var(--free-ink); }
+  .status.next { background: var(--signal-bg); color: var(--signal-ink); }
+  .status.later { background: var(--surface-tint); color: var(--link); }
+  .curriculum { background: var(--surface); }
+  .section-heading { margin-bottom: 32px; }
+  .section-heading .eyebrow { margin: 0 0 10px; }
+  .stage-heading { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 12px; margin-bottom: 20px; scroll-margin-top: 100px; }
+  .stage-heading p { margin-left: auto; font-size: 16px; }
+  ul { list-style: none; margin: 0; padding: 0; }
+  h4 { margin: 0; font: 700 20px/28px var(--font-display); text-wrap: balance; }
+  h4 a { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 44px; color: var(--ink); text-decoration: none; }
+  h4 a:hover { color: var(--link); text-decoration: underline; }
+  h4 a span { color: var(--link); font-family: var(--font-body); font-size: 20px; }
+  .course-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 24px; }
+  .course-card { display: grid; grid-template-rows: subgrid; grid-row: span 4; gap: 12px; min-width: 0; overflow: hidden; padding: 12px 16px 16px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg); }
+  .course-card :global(.course-picture) { align-self: center; }
+  .course-card p { font-size: 16px; line-height: 24px; }
+  .course-count { display: flex; align-items: center; gap: 8px; margin: 0; color: var(--ink-muted); border-top: 1px solid var(--line); padding-top: 12px; }
+  .course-count :global(svg) { width: 18px; height: 18px; flex: none; }
+  .future-curriculum { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,2fr); gap: 32px; margin-top: 48px; }
+  .future-curriculum > div { scroll-margin-top: 100px; }
+  .python-card { overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg); }
+  .python-card :global(picture) { max-width: 258px; margin: 12px auto 0; }
+  .python-copy { display: grid; gap: 12px; padding: 12px 20px 20px; }
+  .progress { display: grid; gap: 8px; font-size: 15px; font-weight: 600; }
+  progress { width: 100%; height: 8px; border: 0; border-radius: var(--radius-pill); overflow: hidden; appearance: none; background: var(--line); color: var(--brand); }
+  progress::-webkit-progress-bar { background: var(--line); }
+  progress::-webkit-progress-value { background: var(--brand); border-radius: var(--radius-pill); }
+  progress::-moz-progress-bar { background: var(--brand); }
+  .topic-groups { display: grid; gap: 24px; }
+  .topic-group h4 { margin-bottom: 10px; font-family: var(--font-body); }
+  .topic-group ul { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+  .topic-tile { display: flex; align-items: start; gap: 12px; background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 14px; font-size: 16px; line-height: 22px; }
+  .topic-tile :global(svg), .future-tile > :global(svg) { flex: none; color: var(--ink-muted); }
+  .topic-tile small { display: block; color: var(--ink-muted); font-size: 13px; margin-top: 4px; }
+  .feature-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 24px; }
+  .feature-card { display: grid; grid-template-rows: subgrid; grid-row: span 3; gap: 12px; min-width: 0; overflow: hidden; padding: 12px 16px 20px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+  .feature-card :global(.feature-picture) { margin: -12px -16px 0; background: var(--surface-tint); align-self: start; }
+  .feature-card p { font-size: 16px; line-height: 24px; }
+  .also-live { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 16px; }
+  .platform-future { margin-top: 48px; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,2fr); gap: 24px; }
+  .future-features { display: grid; gap: 24px; }
+  .later-features { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .future-tile { display: flex; gap: 12px; padding: 20px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); }
+  .future-tile h4 { font-size: 18px; line-height: 26px; margin-bottom: 8px; }
+  .future-tile p { font-size: 16px; line-height: 24px; }
+  @media (max-width: 1100px) {
+    .top-band { align-items: start; flex-direction: column; gap: 24px; }
+    .course-grid, .feature-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    .course-card :global(.course-picture) { max-width: 258px; width: 100%; margin-inline: auto; }
+    .future-curriculum { grid-template-columns: minmax(0,1fr) minmax(0,1.5fr); gap: 24px; }
+    .topic-group ul { grid-template-columns: minmax(0,1fr); }
+    .platform-future { grid-template-columns: minmax(0,1fr); }
+  }
+  @media (max-width: 759px) {
+    .page-head { padding-block: 48px; }
+    .top-band { gap: 24px; }
+    .top-band :global(.rsa-btn) { max-width: 100%; }
+    .roadmap-track { grid-template-columns: minmax(0,1fr); gap: 24px; margin-top: 36px; }
+    .track-stop { position: relative; padding-left: 52px; }
+    .track-line { position: absolute; inset: 4px auto 0 0; height: auto; display: block; }
+    .track-line::after { left: 16px; top: 40px; bottom: -20px; width: 1px; height: auto; }
+    .track-stop:last-child .track-line::after, .track-arrow { display: none; }
+    .track-stop p { max-width: 100%; }
+    .stage-heading p { margin-left: 0; width: 100%; }
+    .course-grid, .feature-grid, .future-curriculum, .later-features { grid-template-columns: minmax(0,1fr); }
+    .course-card, .feature-card { grid-template-rows: auto; grid-row: auto; }
+    .course-card { gap: 8px; }
+    .course-card :global(.course-picture) { max-width: 258px; }
+    .feature-card :global(.feature-picture) { margin-bottom: 4px; }
+    .future-curriculum { gap: 36px; }
+    .future-tile { padding: 18px; }
+    .platform-future, .future-curriculum { margin-top: 36px; }
+  }
+</style>

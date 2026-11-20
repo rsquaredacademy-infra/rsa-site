@@ -40,7 +40,7 @@ export const freeCoursePages = courses.map((course) => {
     },
     {
       question: 'What comes after this course?',
-      answer: `${nextCourses[course.id as keyof typeof nextCourses]} Our introductions to R, SQL and Python are free forever. Intro to SQL is open now (lessons 0–8, with more each week); Intro to Python is coming in December 2026. Paid courses start on 26 January 2027.`,
+      answer: `${nextCourses[course.id as keyof typeof nextCourses]} Our introductions to R, SQL and Python are free forever. Intro to SQL is open now (all 13 lessons); Intro to Python is coming in December 2026. Paid courses start on 26 January 2027.`,
     },
     {
       question: 'Can I use it on my phone?',

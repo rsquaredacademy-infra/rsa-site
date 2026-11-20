@@ -14,7 +14,7 @@ import { courses, foundationsBadges, links } from '../../data/site';
     <div class="wrap" style="display: flex; flex-direction: column; gap: 20px;">
       <span class="eyebrow">For educators</span>
       <h1 class="page-title t-h1" style="max-width: 760px;">Teach data analysis with free courses that run in the browser</h1>
-      <p class="t-lead" style="max-width: 680px;">Our Foundations courses are free to use with a class. Students write and run R in the lesson, so there is no software to install and no lab to set up.</p>
+      <p class="t-lead" style="max-width: 680px;">Use our free data analysis courses with a class. Students write and run R, Python or SQL in the lesson, with feedback as they practise. Everything runs in the browser.</p>
       <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
         <Button href="#interest">Tell us about your class</Button>
       </div>
@@ -28,7 +28,7 @@ import { courses, foundationsBadges, links } from '../../data/site';
         <li style="display: flex; flex-direction: column; gap: 8px;">
           <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="color: var(--brand);"><path d="M20 12v9H4v-9"></path><rect x="2" y="7" width="20" height="5" rx="1"></rect><path d="M12 21V7"></path><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path></svg>
           <h3 class="t-h3">Free for your students</h3>
-          <p class="t-muted">The three Foundations courses are free for everyone, including whole classes.</p>
+          <p class="t-muted">Our free courses in R, Python and SQL are available to everyone, including whole classes.</p>
         </li>
         <li style="display: flex; flex-direction: column; gap: 8px;">
           <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="color: var(--brand);"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
@@ -38,7 +38,7 @@ import { courses, foundationsBadges, links } from '../../data/site';
         <li style="display: flex; flex-direction: column; gap: 8px;">
           <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="color: var(--brand);"><rect x="3" y="4" width="18" height="12" rx="2"></rect><path d="M8 20h8"></path><path d="M12 16v4"></path><path d="M9 10l2 2 4-4"></path></svg>
           <h3 class="t-h3">No lab setup</h3>
-          <p class="t-muted">No R or RStudio installs to manage, and no package versions to keep in step.</p>
+          <p class="t-muted">The browser provides the tools and packages each lesson needs, ready for class.</p>
         </li>
       </ul>
     </div>
@@ -47,7 +47,7 @@ import { courses, foundationsBadges, links } from '../../data/site';
   <section class="sec" aria-labelledby="which-h">
     <div class="wrap" style="display: flex; flex-direction: column; gap: 32px;">
       <div style="display: flex; flex-direction: column; gap: 8px; max-width: 640px;">
-        <h2 id="which-h" class="t-h2">The courses you can use</h2>
+        <h2 id="which-h" class="t-h2">R courses you can use</h2>
         <p class="t-muted">Each course has a free eBook alongside it, which students can read before or after class.</p>
       </div>
       <div class="three rsa-card-grid">
@@ -60,6 +60,7 @@ import { courses, foundationsBadges, links } from '../../data/site';
           />
         ))}
       </div>
+      <p class="t-muted">Intro to Python and Intro to SQL are also free to use with a class. <a href="/courses/">See all courses</a>.</p>
     </div>
   </section>
 
@@ -114,7 +115,9 @@ import { courses, foundationsBadges, links } from '../../data/site';
                 <option value="intro">Introduction to R</option>
                 <option value="dplyr">Data Wrangling with dplyr</option>
                 <option value="ggplot2">Data Viz with ggplot2</option>
-                <option value="all">All three</option>
+                <option value="intro-python">Intro to Python</option>
+                <option value="intro-sql">Intro to SQL</option>
+                <option value="all">All courses</option>
                 <option value="unsure">Not sure yet</option>
               </select>
             </div>

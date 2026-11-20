@@ -1,0 +1,17 @@
+---
+interface Props { name: string }
+const { name } = Astro.props;
+const paths: Record<string, string> = {
+  table: 'M3 3h18v18H3z M3 9h18 M9 3v18 M3 15h18',
+  chart: 'M4 3v17h17 M8 15v-4 M13 15V7 M18 15V5',
+  layers: 'm12 3 10 5-10 5L2 8z M2 12l10 5 10-5 M2 16l10 5 10-5',
+  spark: 'm12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5z',
+  nodes: 'M12 8V4 M8 14l-4 4 M16 14l4 4 M15 11a3 3 0 1 1-6 0 3 3 0 0 1 6 0 M14 3a2 2 0 1 1-4 0 2 2 0 0 1 4 0 M5 20a2 2 0 1 1-4 0 2 2 0 0 1 4 0 M23 20a2 2 0 1 1-4 0 2 2 0 0 1 4 0',
+  dashboard: 'M3 3h7v7H3z M14 3h7v11h-7z M3 14h7v7H3z M14 18h7v3h-7z',
+  tip: 'M9 18h6 M10 21h4 M8 14a6 6 0 1 1 8 0l-1 4H9z',
+  terminal: 'm4 6 6 6-6 6 M13 18h7',
+  arrow: 'M4 12h16 m-6-6 6 6-6 6',
+  check: 'm5 12 4 4L19 6',
+};
+---
+<svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d={paths[name] ?? paths.layers} /></svg>
