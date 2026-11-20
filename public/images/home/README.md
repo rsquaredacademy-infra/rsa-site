@@ -19,6 +19,27 @@ each theme. The PNG masters and production derivatives are unchanged.
 
 The frame, border, padding and section bands are supplied by the home CSS.
 
+## Intro SQL query aids (2026-11-20)
+
+`lesson-sql-plan{,-dark}.webp` contains real production captures from
+https://app.rsquaredacademy.com/intro-sql/units-sold-by-category in each native
+theme. Reproduce with the existing capture script's SQL mode:
+
+```powershell
+node scripts/capture-inside-cards.mjs --sql-plan --solution-file <path-to-09d-units-sold-by-category.md>
+```
+
+The script waits for the guided tour and dismisses it with Escape, resizes the
+panes with the native divider, clicks the Plan it summary, fills the editor from
+the supplied file's `sql solution` chunk and submits it. It waits for Correct and
+the clause recap, then captures the complete open Plan it card and recap without
+changing their text or colours. Each theme is captured separately at device scale
+2 and exported as an 800 × 800 WebP at quality 90. The cards are stacked with a
+40px gap, 72px side padding and centred vertical padding on the site's theme tint,
+matching the generous square composition of `lesson-hints`. `sql-plan.json`
+records the source, capture date and dimensions. These images are used only on
+the home page; the lesson tiles are unchanged.
+
 ## Step-through and Datasets cards (2026-11-15)
 
 Aravind picked illustrations in the same style as the other cards (option C of three):

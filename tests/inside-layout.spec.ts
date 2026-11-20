@@ -34,7 +34,7 @@ for (const width of [1440, 820, 390]) for (const theme of ['light', 'dark'] as c
         objectFit: getComputedStyle(image).objectFit,
       };
     }));
-    expect(cards).toHaveLength(6);
+    expect(cards).toHaveLength(7);
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(width);
     const grid = (await page.locator('.inside-grid').boundingBox())!;
     for (const card of cards) {
@@ -75,9 +75,9 @@ for (const width of [1440, 820, 390]) for (const theme of ['light', 'dark'] as c
       rows.set(top, [...(rows.get(top) ?? []), index]);
     });
     const columns = width > 1100 ? 3 : width > 600 ? 2 : 1;
-    expect(rows.size).toBe(6 / columns);
-    for (const row of rows.values()) {
-      expect(row).toHaveLength(columns);
+    expect(rows.size).toBe(Math.ceil(cards.length / columns));
+    for (const [rowIndex, row] of [...rows.values()].entries()) {
+      expect(row).toHaveLength(Math.min(columns, cards.length - rowIndex * columns));
       const maxHeight = Math.max(...row.map(index => cards[index].height));
       for (const index of row) {
         expect(Math.abs(cards[index].height - maxHeight), `${cards[index].src}: row height`).toBeLessThanOrEqual(1);

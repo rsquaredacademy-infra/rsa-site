@@ -11,7 +11,9 @@ import { lessonTiles } from '../../data/site';
     <ul class="inside-grid">
       {inside.filter((feature) => !feature.wide).map((feature) => {
         const image = feature.image;
-        const alt = feature.image === 'lesson-stepthrough'
+        const alt = feature.image === 'lesson-sql-plan'
+          ? 'The open Plan it card with questions about the result row, columns, tables, included rows, unmatched rows and order; below, What did I just do? explains SELECT, FROM, JOIN, GROUP BY and ORDER BY clause by clause.'
+          : feature.image === 'lesson-stepthrough'
           ? 'A step-through in three steps: a small table of products and sizes, the two Large rows highlighted by filter(size == "Large"), then only those two rows kept.'
           : feature.image === 'lesson-datasets-panel'
             ? 'The Datasets panel: sales.csv (160 rows, 7 columns) expanded to its first rows, with stores.csv (9 rows, 6 columns) below.'

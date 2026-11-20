@@ -1,0 +1,26 @@
+{
+  "lesson": "https://app.rsquaredacademy.com/intro-sql/units-sold-by-category",
+  "capturedAt": "2026-11-20T08:20:46.416Z",
+  "captures": [
+    {
+      "theme": "light",
+      "width": 800,
+      "height": 800,
+      "paddingX": 72,
+      "paddingY": 97,
+      "gap": 40,
+      "planQuestions": 6,
+      "recapClauses": 5
+    },
+    {
+      "theme": "dark",
+      "width": 800,
+      "height": 800,
+      "paddingX": 72,
+      "paddingY": 97,
+      "gap": 40,
+      "planQuestions": 6,
+      "recapClauses": 5
+    }
+  ]
+}
