@@ -1,4 +1,5 @@
 // Native production crops for /roadmap/. Run: node scripts/capture-roadmap.mjs
+// Refresh only the Python receipt: node scripts/capture-roadmap.mjs --python-only
 // Uses only course navigation, tour dismissal, hints, Run and Submit.
 // The SQL exercise is run in a fresh anonymous browser; no account is used.
 import { chromium } from '@playwright/test';
@@ -9,6 +10,9 @@ import { fileURLToPath } from 'node:url';
 const output = new URL('../public/images/roadmap/', import.meta.url);
 await mkdir(output, { recursive: true });
 const captures = [];
+const pythonOnly = process.argv.includes('--python-only');
+const command = `node scripts/capture-roadmap.mjs${pythonOnly ? ' --python-only' : ''}`;
+const capturedAt = new Date().toISOString();
 const browser = await chromium.launch();
 const tokens = await readFile(new URL('../src/styles/tokens.css', import.meta.url), 'utf8');
 const [light, dark] = [...tokens.matchAll(/--surface-tint:\s*(#[0-9a-f]{6})/g)].map(m => m[1]);
@@ -74,11 +78,15 @@ try {
   for (const theme of ['light', 'dark']) {
     const page = await browser.newPage({ viewport: { width: 332, height: 1800 }, deviceScaleFactor: 2, colorScheme: theme, reducedMotion: 'reduce' });
     // Tight crops of the production course-home results, without date headers.
-    for (const id of ['intro-r', 'dplyr', 'ggplot2', 'intro-sql', 'intro-python']) {
+    for (const id of (pythonOnly ? ['intro-python'] : ['intro-r', 'dplyr', 'ggplot2', 'intro-sql', 'intro-python'])) {
       await page.goto(`https://app.rsquaredacademy.com/${id}`, { waitUntil: 'domcontentloaded', timeout: 90000 });
-      const visual = id === 'intro-r' ? page.locator('[data-report-section="average-best"] .sql-report-card-visual') : page.locator('.sql-report-card-visual').first();
-      await capture(page, visual, `course-${id}`, theme);
+      const selector = id === 'intro-python' ? '[data-report-section="receipt"] .report-receipt-ticket'
+        : id === 'intro-r' ? '[data-report-section="average-best"] .sql-report-card-visual' : '.sql-report-card-visual';
+      // The receipt ticket excludes the surrounding 11px explanatory footnote.
+      await capture(page, page.locator(selector).first(), `course-${id}`, theme,
+        id === 'intro-python' ? { selector, panel: 'Receipt messages: order, item count and total to pay; footnote excluded', capturedAt, command } : {});
     }
+    if (pythonOnly) { await page.close(); continue; }
     await page.goto('https://app.rsquaredacademy.com/intro-sql/first-visits', { waitUntil: 'domcontentloaded' });
     await page.locator('.cm-content').waitFor({ state: 'attached' });
     await dismissTour(page);
@@ -127,4 +135,9 @@ try {
     await page.close();
   }
 } finally { await browser.close(); }
-await writeFile(new URL('captures.json', output), JSON.stringify({ capturedAt: new Date().toISOString(), command: 'node scripts/capture-roadmap.mjs', captures }, null, 2) + '\n');
+const manifest = pythonOnly ? JSON.parse(await readFile(new URL('captures.json', output), 'utf8')) : { capturedAt, command };
+if (pythonOnly) {
+  manifest.updatedAt = new Date().toISOString();
+  manifest.captures = manifest.captures.map(capture => captures.find(updated => updated.file === capture.file) ?? capture);
+} else manifest.captures = captures;
+await writeFile(new URL('captures.json', output), JSON.stringify(manifest, null, 2) + '\n');

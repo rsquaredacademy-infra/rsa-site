@@ -47,10 +47,14 @@
       "source": "https://app.rsquaredacademy.com/intro-python",
       "theme": "light",
       "width": 516,
-      "height": 490,
+      "height": 230,
       "deviceScaleFactor": 2,
       "cssWidth": 258,
-      "smallestTextCssPx": 12
+      "smallestTextCssPx": 12,
+      "selector": "[data-report-section=\"receipt\"] .report-receipt-ticket",
+      "panel": "Receipt messages: order, item count and total to pay; footnote excluded",
+      "capturedAt": "2026-11-20T12:54:16.837Z",
+      "command": "node scripts/capture-roadmap.mjs --python-only"
     },
     {
       "file": "plan.webp",
@@ -161,10 +165,14 @@
       "source": "https://app.rsquaredacademy.com/intro-python",
       "theme": "dark",
       "width": 516,
-      "height": 490,
+      "height": 230,
       "deviceScaleFactor": 2,
       "cssWidth": 258,
-      "smallestTextCssPx": 12
+      "smallestTextCssPx": 12,
+      "selector": "[data-report-section=\"receipt\"] .report-receipt-ticket",
+      "panel": "Receipt messages: order, item count and total to pay; footnote excluded",
+      "capturedAt": "2026-11-20T12:54:16.837Z",
+      "command": "node scripts/capture-roadmap.mjs --python-only"
     },
     {
       "file": "plan-dark.webp",
@@ -230,5 +238,6 @@
       "composition": "2 native crops on a shared canvas; no resampling",
       "cropHeightPx": 290
     }
-  ]
+  ],
+  "updatedAt": "2026-11-20T12:54:37.215Z"
 }
