@@ -1,0 +1,108 @@
+---
+import Base from '../../layouts/Base.astro';
+import { courses, links } from '../../data/site';
+
+interface Item {
+  title: string;
+  href?: string;
+}
+
+const stages = [
+  { id: 'now', title: 'Now', description: 'Live' },
+  { id: 'next', title: 'Next', description: 'Being built' },
+  { id: 'later', title: 'Later', description: 'Planned' },
+] as const;
+
+const sections: { id: string; title: string; items: Record<typeof stages[number]['id'], Item[]> }[] = [
+  {
+    id: 'curriculum',
+    title: 'Curriculum',
+    items: {
+      now: [
+        ...courses.map(({ title, href }) => ({ title, href })),
+        { title: 'Intro to SQL', href: 'https://app.rsquaredacademy.com/intro-sql?utm_source=www&utm_medium=courses&utm_campaign=sql-open&utm_content=courses-page' },
+      ],
+      next: [{ title: 'Intro to Python' }],
+      later: [
+        { title: 'Excel' },
+        { title: 'Statistics for Analysts' },
+        { title: 'AI for Data Analysts' },
+        { title: 'Data Science & Machine Learning (exploring)' },
+        { title: 'BI dashboards' },
+        { title: 'Domain tracks' },
+      ],
+    },
+  },
+  {
+    id: 'platform',
+    title: 'Platform',
+    items: {
+      now: [
+        { title: 'In-browser coding with nothing to install', href: 'https://app.rsquaredacademy.com/dplyr/filter-fill' },
+        { title: 'Step-through examples', href: 'https://app.rsquaredacademy.com/dplyr/filter-predict' },
+        { title: 'Hints and feedback on every exercise', href: 'https://app.rsquaredacademy.com/dplyr/filter-fill' },
+        { title: 'Progress saved in this browser', href: 'https://app.rsquaredacademy.com/intro-r' },
+        { title: 'Guided tour', href: 'https://app.rsquaredacademy.com/dplyr/filter-fill' },
+        { title: 'Report a problem / feedback', href: 'https://app.rsquaredacademy.com/dplyr/filter-fill' },
+      ],
+      next: [{ title: 'In-lesson tips for SQL: “Plan it” and “What did I just do?”' }],
+      later: [
+        { title: 'AI helper in lessons (explains errors and output, never the answer)' },
+        { title: 'Run exercises on your own machine with a small command-line checker, for courses like Git and the command line' },
+      ],
+    },
+  },
+];
+---
+
+<Base
+  title="Roadmap"
+  description="What's live, being built and planned for the Rsquared Academy curriculum and learning platform."
+  showCopyrightYear={false}
+>
+  <section class="sec page-head" aria-labelledby="roadmap-h">
+    <div class="wrap flex flex-col gap-5">
+      <span class="eyebrow">Roadmap</span>
+      <h1 id="roadmap-h" class="t-h1">Curriculum and platform roadmap</h1>
+      <p class="t-lead max-w-[680px]">What's live, what we're building and what we're planning.</p>
+      <p class="t-muted"><a href={links.feedback}>Suggest a topic or feature</a></p>
+    </div>
+  </section>
+
+  {sections.map((section) => (
+    <section class="sec roadmap-section" aria-labelledby={`${section.id}-h`}>
+      <div class="wrap flex flex-col gap-8">
+        <h2 id={`${section.id}-h`} class="t-h2">{section.title}</h2>
+        <div class="roadmap-grid">
+          {stages.map((stage) => (
+            <div class="rsa-card" aria-labelledby={`${section.id}-${stage.id}-h`}>
+              <div class="flex flex-col gap-1">
+                <h3 id={`${section.id}-${stage.id}-h`} class="rsa-card-title">{stage.title}</h3>
+                <p class="t-small t-muted">{stage.description}</p>
+              </div>
+              <ul class="roadmap-items">
+                {section.items[stage.id].map((item) => (
+                  <li>{item.href ? <a href={item.href}>{item.title}</a> : item.title}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+</Base>
+
+<style>
+  .page-head { padding-top: 96px; padding-bottom: 64px; }
+  .roadmap-section { padding-top: 0; }
+  .roadmap-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); align-items: start; }
+  .roadmap-items { margin: 0; padding-left: var(--space-4); list-style: disc; }
+  .roadmap-items li + li { margin-top: var(--space-3); }
+  .roadmap-items a { display: block; min-height: 44px; padding-block: var(--space-2); }
+  a:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+  @media (max-width: 860px) {
+    .page-head { padding-block: var(--space-12); }
+    .roadmap-grid { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>
