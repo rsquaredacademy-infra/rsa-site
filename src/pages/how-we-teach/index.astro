@@ -3,26 +3,37 @@
 import Base from '../../layouts/Base.astro';
 import Button from '../../components/Button.astro';
 import LearningLadder from '../../components/LearningLadder.astro';
+import DataExample from '../../components/DataExample.astro';
 ---
 
 <Base
   title="How we teach"
-  description="Every lesson runs R in your browser and climbs four steps: see it worked, fill in the blanks, fix the bug, write it yourself."
+  description="Learn data analysis with R, Python and SQL in your browser: see it worked, fill in the blanks, fix the bug, write it yourself."
 >
   <section class="sec page-sec">
     <div class="wrap flex flex-col gap-5">
       <span class="eyebrow">How we teach</span>
-      <h1 class="t-h1 max-w-[760px]">Learn by doing, one small step at a time</h1>
-      <p class="t-lead max-w-[680px]">Every lesson is built the same way, so you always know what to expect: one idea, four steps, and feedback that helps you work out the answer yourself.</p>
+      <h1 class="t-h1 max-w-[760px]">How we teach data</h1>
+      <p class="t-lead max-w-[680px]">Start with a data question, work through one idea at a time, and get feedback as you go. Today you can learn data analysis with R, Python and SQL in your browser. More data tools are on the way.</p>
     </div>
   </section>
 
   <section class="sec flush" aria-labelledby="browser-h">
     <div class="wrap story">
-      <h2 id="browser-h" class="t-h2">R in your browser</h2>
+      <h2 id="browser-h" class="t-h2">Work with data in your browser</h2>
       <div class="prose">
-        <p>You write R in the lesson and press Run. The code runs in your browser, so there is nothing to install and nothing to set up. It runs in any modern browser and works best on a tablet, laptop or desktop.</p>
+        <p>You start with a question about a small, realistic dataset. Write code in the lesson and press Run to see the result. R, Python and SQL run in your browser, with nothing to install. It works best on a tablet, laptop or desktop with a modern browser.</p>
       </div>
+    </div>
+  </section>
+
+  <section class="sec flush" aria-labelledby="example-h">
+    <div class="wrap flex flex-col gap-6">
+      <div class="flex flex-col gap-2 max-w-[680px]">
+        <h2 id="example-h" class="t-h2">See the data, then the code</h2>
+        <p class="t-muted">Which price is highest? Read the values, then reduce them to one answer. The idea comes first; each tool gives you a way to express it.</p>
+      </div>
+      <DataExample />
     </div>
   </section>
 
@@ -40,7 +51,7 @@ import LearningLadder from '../../components/LearningLadder.astro';
     <div class="wrap story">
       <h2 id="feedback-h" class="t-h2">Feedback that teaches</h2>
       <div class="prose">
-        <p>When you press Run, the lesson checks your code and tells you what it found. It points to the mistake and the idea behind it, and it does not hand you the answer. For example:</p>
+        <p>When you press Run, the lesson checks your code and tells you what it found. It points to the mistake and the idea behind it, and it does not hand you the answer. For example, in an R chart lesson:</p>
         <blockquote>Your code stopped with an error: R read <code>customers</code> as a variable name, not a column. Where do the two columns become positions on the chart?</blockquote>
         <p>If you are still stuck, ask for a hint. Hints appear one at a time. The first names the idea, the next asks a pointed question, and the last narrows down where to look without writing the finished line for you. In quizzes, a wrong answer shows a hint, and the explanation comes once you get it right.</p>
       </div>
@@ -49,9 +60,9 @@ import LearningLadder from '../../components/LearningLadder.astro';
 
   <section class="sec flush" aria-labelledby="data-h">
     <div class="wrap story">
-      <h2 id="data-h" class="t-h2">One realistic dataset</h2>
+      <h2 id="data-h" class="t-h2">Realistic data throughout a course</h2>
       <div class="prose">
-        <p>The three Foundations courses use the same dataset: daily figures for Bean &amp; Barrel, a coffee chain with nine stores in five countries. It is built for the courses to look and behave like business data, so you meet the same kind of columns and questions an analyst does, and by the third course you already know the data.</p>
+        <p>The R Foundations courses follow Bean &amp; Barrel, a coffee chain with nine stores in five countries. Intro to Python and Intro to SQL use ShopVibe, a fictional online shop. These datasets are built for the courses to look and behave like business data, so you can focus on each new idea with data you already know.</p>
         <p>The paid tracks follow the same idea with one online-shop dataset, ShopVibe, across every course.</p>
       </div>
     </div>

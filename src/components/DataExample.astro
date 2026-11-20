@@ -1,0 +1,132 @@
+---
+// Lesson excerpts: intro-r/vectors-basics, intro-python/lists-indexing,
+// intro-sql/fitness-price-summary. Keep the course data and results together.
+const examples = [
+  {
+    id: 'r', label: 'R', context: "Bean & Barrel: find the largest daily customer count in Lisbon's first four days.",
+    code: 'customers <- c(79, 85, 76, 69)\nmax(customers)',
+    output: '[1] 85',
+    href: 'https://app.rsquaredacademy.com/intro-r/vectors-basics', lesson: 'See the R lesson',
+  },
+  {
+    id: 'python', label: 'Python', context: 'ShopVibe: find the highest of five Mobile Accessories prices, in rupees.',
+    code: 'prices = [699, 299, 449, 1099, 2299]\nmax(prices)',
+    output: '2299',
+    href: 'https://app.rsquaredacademy.com/intro-python/lists-indexing', lesson: 'See the Python lesson',
+  },
+  {
+    id: 'sql', label: 'SQL', context: 'ShopVibe: find the highest price alongside the count, lowest price and average for Fitness & Wearables products, in rupees.',
+    code: "SELECT COUNT(*) AS products,\n  MIN(unit_price) AS cheapest,\n  MAX(unit_price) AS dearest,\n  ROUND(AVG(unit_price), 2) AS avg_price\nFROM products\nWHERE category = 'Fitness & Wearables';",
+    output: 'products: 10\ncheapest: 299.0\ndearest: 2799.0\navg_price: 962.0',
+    href: 'https://app.rsquaredacademy.com/intro-sql/fitness-price-summary', lesson: 'See the SQL lesson',
+  },
+];
+---
+
+<div class="data-example">
+  <figure aria-labelledby="prices-caption">
+    <ol class="data-steps">
+      <li>
+        <h3 class="t-h3">1. Read the prices</h3>
+        <table>
+          <caption class="sr-only">Five ShopVibe prices in rupees</caption>
+          <thead><tr><th scope="col">Price (₹)</th></tr></thead>
+          <tbody>{[699, 299, 449, 1099, 2299].map((price) => <tr><td>{price}</td></tr>)}</tbody>
+        </table>
+      </li>
+      <li>
+        <h3 class="t-h3">2. Find the highest</h3>
+        <table>
+          <caption class="sr-only">The highest of the five prices</caption>
+          <thead><tr><th scope="col">Highest price (₹)</th></tr></thead>
+          <tbody><tr><td class="result">2299</td></tr></tbody>
+        </table>
+        <p class="t-muted">Five values become one summary. The original prices stay the same.</p>
+      </li>
+    </ol>
+    <figcaption id="prices-caption" class="t-small t-muted">From the Intro to Python lists lesson. ShopVibe is a fictional online shop.</figcaption>
+  </figure>
+
+  <div data-course-examples>
+    <p id="code-examples-label" class="t-muted">The same idea in our courses, each with its own data and result.</p>
+    <div class="example-tabs" aria-labelledby="code-examples-label" hidden>
+      {examples.map((example) => <button type="button" id={`example-tab-${example.id}`} aria-controls={`example-panel-${example.id}`}>{example.label}</button>)}
+    </div>
+    {examples.map((example) => (
+      <section id={`example-panel-${example.id}`} class="example-panel" aria-labelledby={`example-heading-${example.id}`}>
+        <h3 id={`example-heading-${example.id}`} class="t-h3">{example.label}</h3>
+        <p>{example.context}</p>
+        <pre aria-label={`${example.label} code`}><code>{example.code}</code></pre>
+        <p class="t-small t-muted">Output</p>
+        <pre class="example-output" aria-label={`${example.label} output`}><samp>{example.output}</samp></pre>
+        <a href={example.href}>{example.lesson}</a>
+      </section>
+    ))}
+  </div>
+</div>
+
+<script>
+  const examples = document.querySelector<HTMLElement>('[data-course-examples]');
+  if (examples) {
+    const tablist = examples.querySelector<HTMLElement>('.example-tabs')!;
+    const tabs = Array.from(tablist.querySelectorAll<HTMLButtonElement>('button'));
+    const panels = Array.from(examples.querySelectorAll<HTMLElement>('.example-panel'));
+    function select(index: number) {
+      tabs.forEach((tab, i) => {
+        tab.setAttribute('aria-selected', String(i === index));
+        tab.tabIndex = i === index ? 0 : -1;
+        panels[i].hidden = i !== index;
+      });
+    }
+    tablist.setAttribute('role', 'tablist');
+    tabs.forEach((tab, index) => {
+      tab.setAttribute('role', 'tab');
+      panels[index].setAttribute('role', 'tabpanel');
+      panels[index].setAttribute('aria-labelledby', tab.id);
+      panels[index].tabIndex = 0;
+      tab.addEventListener('click', () => select(index));
+      tab.addEventListener('keydown', (event) => {
+        let next: number;
+        switch (event.key) {
+          case 'ArrowRight': next = (index + 1) % tabs.length; break;
+          case 'ArrowLeft': next = (index + tabs.length - 1) % tabs.length; break;
+          case 'Home': next = 0; break;
+          case 'End': next = tabs.length - 1; break;
+          default: return;
+        }
+        event.preventDefault();
+        select(next);
+        tabs[next].focus();
+      });
+    });
+    select(0);
+    tablist.hidden = false;
+  }
+</script>
+
+<style>
+  .data-example { max-width: 760px; }
+  figure { margin: 0 0 var(--space-8); }
+  .data-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); }
+  .data-steps li { min-width: 0; padding: var(--space-6); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); }
+  table { width: 100%; border-collapse: collapse; margin-block: var(--space-4); text-align: left; }
+  th, td { padding: var(--space-2); border-bottom: 1px solid var(--line); }
+  td { font-variant-numeric: tabular-nums; }
+  .result { font-weight: 700; color: var(--link); }
+  figcaption { margin-top: var(--space-3); }
+  .example-tabs { display: flex; gap: var(--space-2); margin-top: var(--space-4); }
+  .example-tabs[hidden], .example-panel[hidden] { display: none; }
+  button { min-height: 44px; padding: var(--space-2) var(--space-6); border: 1px solid var(--line-strong); border-radius: var(--radius-sm); background: var(--bg); color: var(--ink); font: inherit; cursor: pointer; }
+  button[aria-selected="true"] { background: var(--brand); color: var(--on-brand); border-color: var(--brand); }
+  button:focus-visible, .example-panel:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+  .example-panel { margin-top: var(--space-4); padding: var(--space-6); border: 1px solid var(--line); border-radius: var(--radius-lg); display: flex; flex-direction: column; gap: var(--space-3); }
+  pre { margin: 0; padding: var(--space-4); background: var(--code-bg); color: var(--code-ink); border-radius: var(--radius-sm); font: 14px/1.6 var(--font-mono); white-space: pre-wrap; overflow-wrap: anywhere; }
+  code, samp { font: inherit; }
+  .example-output { background: var(--surface); color: var(--ink); }
+  a { align-self: start; min-height: 44px; display: inline-flex; align-items: center; }
+  @media (max-width: 600px) {
+    .data-steps { grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
+    .data-steps li, .example-panel { padding: var(--space-4); }
+    button { padding-inline: var(--space-4); }
+  }
+</style>
