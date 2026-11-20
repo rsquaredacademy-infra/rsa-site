@@ -22,23 +22,34 @@ The frame, border, padding and section bands are supplied by the home CSS.
 ## Intro SQL query aids (2026-11-20)
 
 `lesson-sql-plan{,-dark}.webp` contains real production captures from
-https://app.rsquaredacademy.com/intro-sql/units-sold-by-category in each native
+https://app.rsquaredacademy.com/intro-sql/first-visits in each native
 theme. Reproduce with the existing capture script's SQL mode:
 
 ```powershell
-node scripts/capture-inside-cards.mjs --sql-plan --solution-file <path-to-09d-units-sold-by-category.md>
+node scripts/capture-inside-cards.mjs --sql-plan --solution-file <path-to-01d-first-visits.md>
 ```
 
 The script waits for the guided tour and dismisses it with Escape, resizes the
 panes with the native divider, clicks the Plan it summary, fills the editor from
 the supplied file's `sql solution` chunk and submits it. It waits for Correct and
-the clause recap, then captures the complete open Plan it card and recap without
-changing their text or colours. Each theme is captured separately at device scale
-2 and exported as an 800 × 800 WebP at quality 90. The cards are stacked with a
-40px gap, 72px side padding and centred vertical padding on the site's theme tint,
-matching the generous square composition of `lesson-hints`. `sql-plan.json`
-records the source, capture date and dimensions. These images are used only on
-the home page; the lesson tiles are unchanged.
+the clause recap, then captures all five open Plan it questions and the three-clause
+recap without changing their text or colours. Each theme is captured separately at
+device scale 2 and exported at native resolution as a 1112 × 726 WebP, quality 90.
+The cards are stacked with a 32px gap (16 CSS px) on the site's theme tint. The wide
+home card supplies outer padding; the image has none. No text is resampled.
+
+`lesson-sql-plan-phone{,-dark}.webp` captures the same cards after resizing the real
+app to 332 CSS px and using its Lesson / Code tabs. These 664 × 812 images are
+selected below 600px, keeping the text readable on phones. The wide filenames
+retain the sqlline1 naming; the phone variants add `-phone` before `-dark`.
+
+`sql-plan.json` records the source, capture date, dimensions, native card widths
+and smallest visible text sizes. Effective text size is the production CSS font
+size × native capture pixels / native CSS width × rendered image width / exported
+image width. At a 1280px home viewport the wide image renders at 608px, so its
+smallest text is 12 × 2 × 608 / 1112 = 13.12 CSS px. The phone crop renders at
+332px on a 390px home viewport, retaining its native 12px minimum. These images
+are used only on the home page; the lesson tiles are unchanged.
 
 ## Step-through and Datasets cards (2026-11-15)
 

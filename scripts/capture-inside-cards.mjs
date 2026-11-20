@@ -1,6 +1,6 @@
-// Real app captures composed into square media without cropping lesson content.
+// Real app captures, preserving complete cards without changing lesson content.
 // Default mode uses only the pane divider, Next, Skip tour and Datasets.
-// SQL mode opens Plan it and submits the supplied lesson's sql solution chunk:
+// SQL mode creates a tight, native-resolution wide crop of First six visits:
 // node scripts/capture-inside-cards.mjs --sql-plan --solution-file <lesson.md>
 import { chromium } from '@playwright/test';
 import sharp from 'sharp';
@@ -12,7 +12,7 @@ const tokens = await readFile(new URL('../src/styles/tokens.css', import.meta.ur
 const tints = [...tokens.matchAll(/--surface-tint:\s*(#[0-9a-f]{6})/g)].slice(0, 2).map(match => match[1]);
 const sqlPlan = process.argv.includes('--sql-plan');
 const lesson = sqlPlan
-  ? 'https://app.rsquaredacademy.com/intro-sql/units-sold-by-category'
+  ? 'https://app.rsquaredacademy.com/intro-sql/first-visits'
   : 'https://app.rsquaredacademy.com/dplyr/filter-predict';
 let solution;
 if (sqlPlan) {
@@ -43,7 +43,7 @@ try {
       const divider = await page.getByTestId('pane-divider').boundingBox();
       await page.mouse.move(divider.x + divider.width / 2, divider.y + 50);
       await page.mouse.down();
-      await page.mouse.move(864, divider.y + 50, { steps: 12 });
+      await page.mouse.move(880, divider.y + 50, { steps: 12 });
       await page.mouse.up();
       const plan = page.getByTestId('plan-it');
       await plan.locator('summary').click();
@@ -55,19 +55,43 @@ try {
       await page.evaluate(() => document.fonts.ready);
       await page.mouse.move(0, 0);
       await page.evaluate(() => document.activeElement?.blur());
-      const frames = [];
-      for (const card of [plan, recap]) {
-        const input = await sharp(await card.screenshot({ animations: 'disabled' })).resize({ width: 656 }).png().toBuffer();
-        frames.push({ input, ...await sharp(input).metadata() });
+      for (const layout of ['wide', 'phone']) {
+        if (layout === 'phone') await page.setViewportSize({ width: 332, height: 1800 });
+        const frames = [];
+        for (const card of [plan, recap]) {
+          if (layout === 'phone') {
+            await page.getByRole('tab', { name: card === plan ? 'Lesson' : 'Code', exact: true }).click();
+            await page.evaluate(() => document.activeElement?.blur());
+          }
+          const input = await card.screenshot({ animations: 'disabled' });
+          const source = await card.evaluate(element => {
+            const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
+            const fontSizes = [];
+            while (walker.nextNode()) {
+              const node = walker.currentNode;
+              if (!node.textContent.trim()) continue;
+              const range = document.createRange();
+              range.selectNodeContents(node);
+              if ([...range.getClientRects()].some(rect => rect.width && rect.height)) {
+                fontSizes.push(parseFloat(getComputedStyle(node.parentElement).fontSize));
+              }
+            }
+            return { cssWidth: element.getBoundingClientRect().width, smallestTextCssPx: Math.min(...fontSizes) };
+          });
+          frames.push({ input, ...await sharp(input).metadata(), source });
+        }
+        // Keep the full 2x captures. The wide card supplies its own outer padding.
+        const gap = 32;
+        const width = Math.max(...frames.map(frame => frame.width));
+        const height = frames[0].height + gap + frames[1].height;
+        const suffix = `${layout === 'phone' ? '-phone' : ''}${theme === 'dark' ? '-dark' : ''}`;
+        await sharp({ create: { width, height, channels: 3, background: tints[index] } })
+          .composite(frames.map((frame, i) => ({ input: frame.input, left: Math.floor((width - frame.width) / 2), top: i ? frames[0].height + gap : 0 })))
+          .webp({ quality: 90 }).toFile(`${output}lesson-sql-plan${suffix}.webp`);
+        captures.push({ theme, layout, width, height, deviceScaleFactor: 2, paddingX: 0, paddingY: 0, gap, planQuestions: 5, recapClauses: 3,
+          cards: frames.map((frame, i) => ({ name: i ? 'query-recap' : 'plan-it', pixelWidth: frame.width, ...frame.source })) });
+        console.log(captures.at(-1));
       }
-      const gap = 40;
-      const top = Math.floor((800 - frames[0].height - frames[1].height - gap) / 2);
-      if (top < 72) throw new Error('SQL cards no longer fit with the intended padding');
-      const suffix = theme === 'dark' ? '-dark' : '';
-      await square(frames.map((frame, i) => ({ input: frame.input, left: 72, top: top + (i ? frames[0].height + gap : 0) })),
-        800, 800, tints[index], `lesson-sql-plan${suffix}.webp`, 800);
-      captures.push({ theme, width: 800, height: 800, paddingX: 72, paddingY: top, gap, planQuestions: 6, recapClauses: 5 });
-      console.log(captures.at(-1));
       await page.close();
       continue;
     }

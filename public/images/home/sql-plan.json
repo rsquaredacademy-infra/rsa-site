@@ -1,26 +1,110 @@
 {
-  "lesson": "https://app.rsquaredacademy.com/intro-sql/units-sold-by-category",
-  "capturedAt": "2026-11-20T08:20:46.416Z",
+  "lesson": "https://app.rsquaredacademy.com/intro-sql/first-visits",
+  "capturedAt": "2026-11-20T08:31:44.389Z",
   "captures": [
     {
       "theme": "light",
-      "width": 800,
-      "height": 800,
-      "paddingX": 72,
-      "paddingY": 97,
-      "gap": 40,
-      "planQuestions": 6,
-      "recapClauses": 5
+      "layout": "wide",
+      "width": 1112,
+      "height": 726,
+      "deviceScaleFactor": 2,
+      "paddingX": 0,
+      "paddingY": 0,
+      "gap": 32,
+      "planQuestions": 5,
+      "recapClauses": 3,
+      "cards": [
+        {
+          "name": "plan-it",
+          "pixelWidth": 1034,
+          "cssWidth": 516.875,
+          "smallestTextCssPx": 12
+        },
+        {
+          "name": "query-recap",
+          "pixelWidth": 1112,
+          "cssWidth": 556,
+          "smallestTextCssPx": 12
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "layout": "phone",
+      "width": 664,
+      "height": 812,
+      "deviceScaleFactor": 2,
+      "paddingX": 0,
+      "paddingY": 0,
+      "gap": 32,
+      "planQuestions": 5,
+      "recapClauses": 3,
+      "cards": [
+        {
+          "name": "plan-it",
+          "pixelWidth": 600,
+          "cssWidth": 300,
+          "smallestTextCssPx": 12
+        },
+        {
+          "name": "query-recap",
+          "pixelWidth": 664,
+          "cssWidth": 332,
+          "smallestTextCssPx": 12
+        }
+      ]
     },
     {
       "theme": "dark",
-      "width": 800,
-      "height": 800,
-      "paddingX": 72,
-      "paddingY": 97,
-      "gap": 40,
-      "planQuestions": 6,
-      "recapClauses": 5
+      "layout": "wide",
+      "width": 1112,
+      "height": 726,
+      "deviceScaleFactor": 2,
+      "paddingX": 0,
+      "paddingY": 0,
+      "gap": 32,
+      "planQuestions": 5,
+      "recapClauses": 3,
+      "cards": [
+        {
+          "name": "plan-it",
+          "pixelWidth": 1034,
+          "cssWidth": 516.875,
+          "smallestTextCssPx": 12
+        },
+        {
+          "name": "query-recap",
+          "pixelWidth": 1112,
+          "cssWidth": 556,
+          "smallestTextCssPx": 12
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "layout": "phone",
+      "width": 664,
+      "height": 812,
+      "deviceScaleFactor": 2,
+      "paddingX": 0,
+      "paddingY": 0,
+      "gap": 32,
+      "planQuestions": 5,
+      "recapClauses": 3,
+      "cards": [
+        {
+          "name": "plan-it",
+          "pixelWidth": 600,
+          "cssWidth": 300,
+          "smallestTextCssPx": 12
+        },
+        {
+          "name": "query-recap",
+          "pixelWidth": 664,
+          "cssWidth": 332,
+          "smallestTextCssPx": 12
+        }
+      ]
     }
   ]
 }
