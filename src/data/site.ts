@@ -13,6 +13,8 @@ export const nav = [
 export const cta = { label: 'Get updates', href: '/#signup' };
 
 export const contactEmail = 'support@rsquaredacademy.com';
+/** WhatsApp/phone contact (Aravind 2026-11-21; shown once the number is activated). */
+export const contactPhone = { display: '+91 63617 50386', tel: '+916361750386', wa: '916361750386' };
 
 export const links = {
   status: 'https://status.rsquaredacademy.com', // branded redirect to the UptimeRobot page

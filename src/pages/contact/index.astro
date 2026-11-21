@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { operator, support } from '../../data/payment';
+import { contactPhone } from '../../data/site';
 ---
 
 <Base
@@ -26,6 +27,9 @@ import { operator, support } from '../../data/payment';
         <li><strong>Privacy requests:</strong> <a href={`mailto:${support.email}?subject=Privacy`}>{support.email}</a>, with "Privacy" in the subject line.</li>
         <li><strong>Teaching a class:</strong> use the form on the <a href="/educators/">For educators</a> page.</li>
       </ul>
+
+      <h2 class="t-h3">Phone and WhatsApp</h2>
+      <p><a href={`https://wa.me/${contactPhone.wa}`}>{contactPhone.display} (WhatsApp)</a></p>
 
       <h2 class="t-h3">Location</h2>
       <address>

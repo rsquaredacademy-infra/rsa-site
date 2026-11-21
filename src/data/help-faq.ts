@@ -111,7 +111,7 @@ export const helpSections: HelpSection[] = [
       ),
       q(
         'How do I contact you?',
-        'support@rsquaredacademy.com. We usually reply within 2 working days.',
+        'support@rsquaredacademy.com, or +91 63617 50386 (WhatsApp). We usually reply within 2 working days.',
       ),
     ],
   },
