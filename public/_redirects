@@ -36,6 +36,10 @@ https://status.rsquaredacademy.com/*      https://stats.uptimerobot.com/gPYRybpi
 /go/post32-bs   https://blog.rsquaredacademy.com/posts/working-with-databases-using-r/?utm_source=bluesky&utm_medium=social&utm_campaign=post-32   302
 /go/post32-yt   https://blog.rsquaredacademy.com/posts/working-with-databases-using-r/?utm_source=youtube&utm_medium=social&utm_campaign=post-32   302
 /go/post32-ig   https://blog.rsquaredacademy.com/posts/working-with-databases-using-r/?utm_source=instagram&utm_medium=social&utm_campaign=post-32   302
+/go/post26-li   https://blog.rsquaredacademy.com/posts/blorr-0-3-2/?utm_source=linkedin&utm_medium=social&utm_campaign=blorr-intro   302
+/go/post26-x   https://blog.rsquaredacademy.com/posts/blorr-0-3-2/?utm_source=x&utm_medium=social&utm_campaign=blorr-intro   302
+/go/post26-bs   https://blog.rsquaredacademy.com/posts/blorr-0-3-2/?utm_source=bluesky&utm_medium=social&utm_campaign=blorr-intro   302
+/go/post26-yt   https://blog.rsquaredacademy.com/posts/blorr-0-3-2/?utm_source=youtube&utm_medium=social&utm_campaign=blorr-intro   302
 
 # Old site URLs (pre-2026 rebuild) -> new pages
 /index.html                              /             301
