@@ -48,7 +48,7 @@ for (const course of courses) {
     const answers = await page.locator('#course-faq').innerText();
     expect(answers).toContain('free forever');
     expect(answers).toContain('Not yet. We do not currently issue a certificate');
-    expect(answers).toContain('Intro to Python (9 of 11 lessons, more soon) are open now');
+    expect(answers).toContain('Intro to SQL (all 13 lessons) and Intro to Python (all 11 lessons) are open now');
     expect(answers).toContain('26 January 2027');
     expect(answers).toContain('about 3 hours, at your own pace');
     const faqWidth = await page.locator('.faq-content').evaluate((el) => el.getBoundingClientRect().width);

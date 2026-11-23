@@ -18,7 +18,10 @@ for (const width of [390, 820, 1280]) {
       });
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
       await expect(page.getByRole('link', { name: 'Suggest a topic or feature' })).toHaveAttribute('href', 'https://app.rsquaredacademy.com/intro-r#feedback-title');
-      await expect(page.getByRole('progressbar', { name: '9 of 11 lessons live' })).toHaveAttribute('value', '9');
+      const python = page.locator('.course-card').filter({ has: page.getByRole('link', { name: /Intro to Python/ }) });
+      await expect(python.getByRole('link', { name: /Intro to Python/ })).toHaveAttribute('href', 'https://app.rsquaredacademy.com/intro-python');
+      await expect(python.locator('.course-count')).toHaveText('11 lessons live');
+      await expect(page.getByRole('progressbar')).toHaveCount(0);
 
       const stops = await page.locator('.track-stop').evaluateAll(elements => elements.map(element => {
         const rect = element.getBoundingClientRect(); return { x: rect.x, y: rect.y };
