@@ -2,7 +2,6 @@
 
 export const nav = [
   { label: 'Courses', href: '/courses/' },
-  { label: 'Pricing', href: '/pricing/' },
   { label: 'Free resources', href: '/resources/' },
   { label: 'Open source', href: '/open-source/' },
   { label: 'For educators', href: '/educators/' },
