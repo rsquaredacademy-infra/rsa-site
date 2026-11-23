@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import Badge from '../components/Badge.astro';
 import Button from '../components/Button.astro';
 import { paidTracks } from '../data/site';
-import { passes, passChoiceNote, passLengthNote, stackingNote, priceRiseNote, reminderNote, morTermsNote, pricingPublished } from '../data/payment';
+import { passes, internationalPrice, passChoiceNote, passLengthNote, stackingNote, priceRiseNote, reminderNote, morTermsNote, pricingPublished } from '../data/payment';
 import { refundQuestionId } from '../data/help-faq';
 ---
 
@@ -28,13 +28,14 @@ import { refundQuestionId } from '../data/help-faq';
         {Object.values(passes).map((pass) => (
           <article class="plan flex flex-col gap-4 min-w-0">
             <h3 class="t-h3">{pass.name}</h3>
-            <p class="price">₹{pass.priceINR.toLocaleString('en-IN')}</p>
+            <p class="price"><span class="t-small t-muted block">India</span>₹{pass.priceINR.toLocaleString('en-IN')}</p>
+            <p><span class="t-muted">Outside India:</span> <strong>{internationalPrice(pass)}</strong></p>
             <p>{pass.days} days of access.</p>
             <p class="t-muted">Prepaid. No automatic renewal.</p>
           </article>
         ))}
       </div>
-      <p class="t-small t-muted mt-6">Founding prices in Indian rupees, from 26 January 2027.</p>
+      <p class="t-small t-muted mt-6">Founding prices from 26 January 2027: in Indian rupees in India, and one US dollar price in every country outside India.</p>
       <p class="mt-6 font-semibold">Available from 26 January 2027.</p>
     </div>
   </section>

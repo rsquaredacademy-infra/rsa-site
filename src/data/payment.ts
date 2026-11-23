@@ -38,7 +38,7 @@ export const reminderNote = 'We email before your pass ends: 5 and 1 days before
 export const morTermsNote = 'Outside India, payments are processed by our merchant of record, whose terms also apply.';
 
 // International prices: one USD price for every country outside India. Single source: priceUSD above.
-export const internationalPrice = (pass: { priceUSD: number }) => `US$${pass.priceUSD}`;
+export const internationalPrice = (pass: { priceUSD: number }) => `$${pass.priceUSD}`;
 
 // Controls the pricing route, sitemap inclusion and footer link.
 export const pricingPublished = true;

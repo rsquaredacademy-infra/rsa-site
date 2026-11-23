@@ -292,14 +292,13 @@ test.describe('Extra tests', () => {
       await expect(page.locator('footer a[href="/pricing/"]')).toHaveCount(1);
     }
 
-    // Launch pricing is public and indexed, INR only for now (no purchase button yet).
+    // Launch pricing is public and indexed: India (INR) and Outside India (USD) prices, labelled; no purchase button yet.
     const pricing = await page.request.get('/pricing/');
     expect(pricing.status()).toBe(200);
     const html = await pricing.text();
-    for (const text of ['₹299', '₹629', '₹1,299', '30 days', '90 days', '365 days', 'Passes from 26 January 2027', 'Available from 26 January 2027', 'less than 20% of the paid lessons', 'Prices go up when the full paid track is live']) {
+    for (const text of ['₹299', '₹629', '₹1,299', '30 days', '90 days', '365 days', 'Passes from 26 January 2027', 'Available from 26 January 2027', 'Outside India:', '$12', '$29', '$79', 'less than 20% of the paid lessons', 'Prices go up when the full paid track is live']) {
       expect(html).toContain(text);
     }
-    expect(html).not.toContain('US$');
     expect(html).not.toContain('[TBD]');
     expect(html).not.toContain('noindex');
     const sitemap = await page.request.get('/sitemap-0.xml');
