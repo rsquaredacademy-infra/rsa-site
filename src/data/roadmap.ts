@@ -4,6 +4,7 @@ export const roadmapCourses = [
   { id: 'dplyr', title: 'dplyr', lessons: 15, answer: 'Turn sales and store data into four tables for a Monday board report.', alt: 'Production dplyr report preview: country revenue totals with bars for comparison.' },
   { id: 'ggplot2', title: 'ggplot2', lessons: 13, answer: 'Build a board page with revenue bars, wait boxplots and daily sales lines.', alt: 'Production ggplot2 report preview: country revenue compared with bars on a shared scale.' },
   { id: 'intro-sql', title: 'Intro to SQL', lessons: 13, answer: 'Ask a shop’s database a question and get a table back as the answer.', alt: 'Production SQL report preview: completed orders, revenue and average order value.' },
+  { id: 'intro-python', title: 'Intro to Python', lessons: 11, answer: 'Calculate order amounts, then draw a first sales chart with pandas.', alt: 'Python course receipt preview: order ORD-03159, 3 lines, 6 items, total to pay ₹10,994.00.' },
 ];
 export const plannedTopics = [
   { title: 'Analysis', items: [

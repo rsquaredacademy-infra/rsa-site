@@ -6,8 +6,8 @@ import Crop from '../../components/roadmap/Crop.astro';
 import { links } from '../../data/site';
 import { roadmapCourses, plannedTopics, roadmapFeatures } from '../../data/roadmap';
 const stages = [
-  { id: 'now', title: 'Now', status: 'Live', line: 'R, dplyr, ggplot2 and SQL. Open a course and start learning.' },
-  { id: 'next', title: 'Next', status: 'Being built', line: 'The last two Intro to Python lessons.' },
+  { id: 'now', title: 'Now', status: 'Live', line: 'R, dplyr, ggplot2, SQL and Python. Open a course and start learning.' },
+  { id: 'next', title: 'Next', status: 'Being built', line: 'The first paid courses, from 26 January 2027.' },
   { id: 'later', title: 'Later', status: 'Planned', line: 'More ways to analyse data, build models and share what you find.' },
 ];
 ---
@@ -52,14 +52,7 @@ const stages = [
       <div class="future-curriculum">
         <div id="curriculum-next" data-sheet="4">
           <div class="stage-heading"><h3 class="t-h3">Next</h3><span class="status next">Being built</span></div>
-          <div class="python-card">
-            <Crop name="course-intro-python" alt="Python course receipt preview: order ORD-03159, 3 lines, 6 items, total to pay ₹10,994.00." />
-            <div class="python-copy">
-              <h4><a href="https://app.rsquaredacademy.com/intro-python">Intro to Python <span aria-hidden="true">↗</span></a></h4>
-              <p class="t-muted">Calculate order amounts and finish with a first sales chart.</p>
-              <div class="progress"><label for="python-progress">9 of 11 lessons live</label><progress id="python-progress" value="9" max="11">9 of 11 lessons live</progress></div>
-            </div>
-          </div>
+          <p class="t-muted">The first paid courses open on 26 January 2027.</p>
         </div>
         <div id="curriculum-later" data-sheet="5">
           <div class="stage-heading"><h3 class="t-h3">Later</h3><span class="status later">Planned</span></div>
