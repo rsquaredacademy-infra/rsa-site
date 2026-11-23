@@ -45,9 +45,10 @@ test.describe('production build', () => {
     test.skip(testInfo.project.name !== 'desktop', 'Desktop project only');
     expect(existsSync(join(OUT_DIR, 'pricing', 'index.html'))).toBe(true);
     const pricing = readFileSync(join(OUT_DIR, 'pricing', 'index.html'), 'utf8');
-    for (const price of ['₹299', '₹629', '₹1,299', 'US$12', 'US$29', 'US$79']) {
+    for (const price of ['₹299', '₹629', '₹1,299']) {
       expect(pricing).toContain(price);
     }
+    expect(pricing).not.toContain('US$');
     expect(pricing).not.toContain('noindex');
     for (const file of files(OUT_DIR).filter((f) => f.endsWith('.html'))) {
       expect(readFileSync(file, 'utf8'), file).not.toContain('[TBD]');
