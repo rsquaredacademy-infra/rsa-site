@@ -1,6 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { support, passes, passChoiceNote, passLengthNote, stackingNote, launchPricingNote, reminderNote, morTermsNote } from '../../data/payment';
+import { operator, support, passes, passChoiceNote, passLengthNote, stackingNote, launchPricingNote, reminderNote, morTermsNote } from '../../data/payment';
 ---
 
 <Base
@@ -11,7 +11,8 @@ import { support, passes, passChoiceNote, passLengthNote, stackingNote, launchPr
     <div class="wrap legal">
       <span class="eyebrow">Legal</span>
       <h1 id="delivery-h" class="t-h1">Delivery and access policy</h1>
-      <p class="t-small t-muted">Last updated: 13 November 2026</p>
+      <p class="t-small t-muted">Last updated: 24 November 2026</p>
+      <p>{operator.line}</p>
     </div>
   </section>
 

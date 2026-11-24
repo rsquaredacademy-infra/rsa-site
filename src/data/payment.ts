@@ -8,8 +8,11 @@ export const operator = {
   knownAs: 'Aravind Hebbali',
   city: 'Bengaluru',
   country: 'India',
-  // One sentence reused on About, Contact, Privacy and Terms.
-  line: 'Rsquared Academy is run by Aravind S H (Aravind Hebbali), an individual based in Bengaluru, India.',
+  // Udyam-registered sole proprietorship since 2026-11-23 (payment applications).
+  businessType: 'sole proprietorship',
+  udyam: 'UDYAM-KR-03-0794160',
+  // One sentence reused on About, Contact, Privacy, Refund and Delivery.
+  line: 'Rsquared Academy is a sole proprietorship of Aravind S H (Aravind Hebbali), registered under Udyam (UDYAM-KR-03-0794160), based in Bengaluru, Karnataka, India.',
   // City-level only: no street address on the public site (Aravind 2026-11-11).
   // If a payment gateway needs a full business address, use a business/virtual
   // office address, never the home address.
