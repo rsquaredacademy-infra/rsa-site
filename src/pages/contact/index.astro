@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { operator, support } from '../../data/payment';
-import { contactPhone } from '../../data/site';
+import { contactPhone, contactWhatsAppUrl } from '../../data/site';
 ---
 
 <Base
@@ -29,7 +29,7 @@ import { contactPhone } from '../../data/site';
       </ul>
 
       <h2 class="t-h3">Phone and WhatsApp</h2>
-      <p><a href={`https://wa.me/${contactPhone.wa}`}>{contactPhone.display} (WhatsApp)</a></p>
+      <p><a href={contactWhatsAppUrl}>{contactPhone.display} (WhatsApp)</a></p>
 
       <h2 class="t-h3">Location</h2>
       <address>

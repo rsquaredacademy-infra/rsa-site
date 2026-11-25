@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { helpSections } from '../../data/help-faq';
+import { contactPhone, contactWhatsAppUrl } from '../../data/site';
 
 const email = 'support@rsquaredacademy.com';
 
@@ -12,6 +13,10 @@ const withLinks = (text: string) =>
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replaceAll(email, `<a href="mailto:${email}">${email}</a>`)
+    .replaceAll(
+      `${contactPhone.display} (WhatsApp)`,
+      `<a href="${contactWhatsAppUrl}">${contactPhone.display} (WhatsApp)</a>`,
+    )
     .replaceAll(
       'status.rsquaredacademy.com',
       '<a href="https://status.rsquaredacademy.com">status.rsquaredacademy.com</a>',
