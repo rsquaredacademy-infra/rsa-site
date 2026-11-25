@@ -15,12 +15,16 @@ export const contactEmail = 'support@rsquaredacademy.com';
 /** WhatsApp/phone contact (Aravind 2026-11-21; shown once the number is activated). */
 export const contactPhone = { display: '+91 63617 50386', tel: '+916361750386', wa: '916361750386' };
 
+/** The one WhatsApp URL (pre-filled message). Every wa.me link on the site uses it. */
+export const contactWhatsAppUrl = `https://wa.me/${contactPhone.wa}?text=${encodeURIComponent('Hi, I have a question about Rsquared Academy courses')}`;
+
 export const links = {
   status: 'https://status.rsquaredacademy.com', // branded redirect to the UptimeRobot page
   github: 'https://github.com/rsquaredacademy',
   youtube: 'https://www.youtube.com/user/rsquaredin',
   linkedin: 'https://in.linkedin.com/company/rsquared-academy',
   x: 'https://x.com/rsquaredacademy',
+  whatsappChannel: 'https://whatsapp.com/channel/0029Vb9cKd7ISTkRY5ThKX0u',
   ebooks: 'https://ebooks.rsquaredacademy.com',
   openCourses: 'https://courses.rsquaredacademy.com/',
   openCoursesRepo: 'https://github.com/rsquaredacademy-infra/open-courses',
@@ -51,6 +55,7 @@ export const footerColumns = [
     { label: 'YouTube', href: links.youtube },
     { label: 'LinkedIn', href: links.linkedin },
     { label: 'X @rsquaredacademy', href: links.x },
+    { label: 'WhatsApp channel', href: links.whatsappChannel },
   ] },
 ];
 
