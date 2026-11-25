@@ -13,7 +13,7 @@ const stages = [
 ];
 ---
 <Base title="Roadmap" description="Hands-on data courses. R, Python and SQL today; more data tools on the way. See what's live, being built and planned." showCopyrightYear={false}>
-  <section class="page-head" aria-labelledby="roadmap-h">
+  <section class="sec page-head" aria-labelledby="roadmap-h">
     <div class="wrap">
       <div class="top-band" data-sheet="1">
         <div>
@@ -34,7 +34,7 @@ const stages = [
       </ol>
     </div>
   </section>
-  <section class="curriculum sec" aria-labelledby="curriculum-h">
+  <section class="curriculum sec bg-surface" aria-labelledby="curriculum-h">
     <div class="wrap">
       <div class="section-heading"><p class="eyebrow">The courses</p><h2 id="curriculum-h" class="t-h2">Curriculum</h2></div>
       <div data-sheet="3">
@@ -104,7 +104,6 @@ const stages = [
   <CoursePoll placement="roadmap" />
 </Base>
 <style>
-  .page-head { padding-block: 72px 56px; }
   .top-band { display: flex; align-items: center; justify-content: space-between; gap: 48px; }
   .top-band > div { max-width: 650px; }
   .top-band .eyebrow { margin: 0 0 16px; }
@@ -126,7 +125,6 @@ const stages = [
   .status.now { background: var(--free-bg); color: var(--free-ink); }
   .status.next { background: var(--signal-bg); color: var(--signal-ink); }
   .status.later { background: var(--surface-tint); color: var(--link); }
-  .curriculum { background: var(--surface); }
   .section-heading { margin-bottom: 32px; }
   .section-heading .eyebrow { margin: 0 0 10px; }
   .stage-heading { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 12px; margin-bottom: 20px; scroll-margin-top: 100px; }
@@ -178,7 +176,6 @@ const stages = [
     .platform-future { grid-template-columns: minmax(0,1fr); }
   }
   @media (max-width: 759px) {
-    .page-head { padding-block: 48px; }
     .top-band { gap: 24px; }
     .top-band :global(.rsa-btn) { max-width: 100%; }
     .roadmap-track { grid-template-columns: minmax(0,1fr); gap: 24px; margin-top: 36px; }

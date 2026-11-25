@@ -44,7 +44,7 @@ const schema = {
     </div>
   </section>
 
-  <section class="sec flush index-sec" aria-labelledby="index-h">
+  <section class="sec index-sec" aria-labelledby="index-h">
     <div class="wrap help">
       <nav class="help-index" aria-labelledby="index-h">
         <h2 id="index-h" class="t-small">On this page</h2>
@@ -58,7 +58,7 @@ const schema = {
   </section>
 
   {helpSections.map((section) => (
-    <section class="help-section" id={section.id} aria-labelledby={`${section.id}-h`}>
+    <section class="sec help-section" id={section.id} aria-labelledby={`${section.id}-h`}>
       <div class="wrap help">
         <h2 id={`${section.id}-h`} class="t-h2">{section.title}</h2>
         <div class="qa">
@@ -76,10 +76,6 @@ const schema = {
 </Base>
 
 <style>
-  .page-head {
-    padding-top: 96px;
-    padding-bottom: 64px;
-  }
   .help {
     max-width: 760px;
     display: flex;
@@ -88,10 +84,6 @@ const schema = {
   }
   .help p {
     margin: 0;
-  }
-  .index-sec {
-    padding-top: 0;
-    padding-bottom: 0;
   }
   .help-index {
     display: flex;
@@ -127,11 +119,7 @@ const schema = {
     border-color: var(--line-strong);
   }
   .help-section {
-    padding-block: var(--space-12);
     scroll-margin-top: var(--space-6);
-  }
-  .help-section:last-of-type {
-    padding-bottom: var(--space-20);
   }
   .qa {
     display: flex;
@@ -154,18 +142,5 @@ const schema = {
     color: var(--ink-muted);
   }
   @media (max-width: 860px) {
-    .page-head {
-      padding-block: var(--space-12);
-    }
-    .index-sec {
-      padding-top: 0;
-      padding-bottom: 0;
-    }
-    .help-section {
-      padding-block: var(--space-8);
-    }
-    .help-section:last-of-type {
-      padding-bottom: var(--space-12);
-    }
   }
 </style>
