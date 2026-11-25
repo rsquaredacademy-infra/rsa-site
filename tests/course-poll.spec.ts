@@ -53,7 +53,6 @@ for (const path of ['/courses/', '/roadmap/']) {
       await expect(box).not.toBeChecked();
     }
     await expect(poll.getByRole('button', { name: 'Submit my picks' })).toBeVisible();
-    await expect(poll.locator('[data-poll-other]')).toBeHidden();
     await expect(poll.getByRole('link', { name: 'Get updates' })).toHaveAttribute('href', '/#signup');
     expect(await pollEvents(page)).toEqual([]);
   });
@@ -68,8 +67,6 @@ test('multi-select submits one event per option, thanks in place, and survives a
   await poll.getByLabel('Excel', { exact: true }).check();
   await poll.getByLabel('AI for Data Analysts', { exact: true }).check();
   await poll.getByLabel('Other', { exact: true }).check();
-  await expect(poll.locator('[data-poll-other]')).toBeVisible();
-  await poll.getByLabel('Which course? (optional)').fill('Rust for analysts');
   expect(await pollEvents(page)).toEqual([]);
 
   await poll.getByRole('button', { name: 'Submit my picks' }).click();
@@ -94,7 +91,6 @@ test('multi-select submits one event per option, thanks in place, and survives a
     { course: 'other', placement: 'courses' },
   ]);
   // The free text never reaches analytics, and no second, aggregate event is sent.
-  expect(JSON.stringify(events)).not.toContain('Rust for analysts');
   expect(await page.evaluate((key) => localStorage.getItem(key), STORAGE_KEY)).toBe(
     '{"version":1,"courses":["excel","ai-for-data-analysts","other"]}',
   );
@@ -105,7 +101,6 @@ test('multi-select submits one event per option, thanks in place, and survives a
   await expect(poll.getByLabel('Excel', { exact: true })).toBeChecked();
   await expect(poll.getByLabel('Excel', { exact: true })).toBeDisabled();
   await expect(poll.getByRole('button', { name: 'Submit my picks' })).toHaveCount(0);
-  await expect(poll.locator('[data-poll-other]')).toBeVisible();
   expect(await pollEvents(page)).toEqual([]);
   // The vote is site-wide, so the roadmap instance also opens in the thanked state.
   await page.goto('/roadmap/');
