@@ -87,6 +87,18 @@ export const courses = [
     long: 'Build clear charts layer by layer with ggplot2, from a first scatter plot to a finished figure.' },
 ];
 
+// "Which course next?" poll. `slug` is the value sent to GA4, never the label.
+export const coursePollOptions = [
+  { slug: 'excel', label: 'Excel' },
+  { slug: 'ai-for-data-analysts', label: 'AI for Data Analysts' },
+  { slug: 'statistics', label: 'Statistics' },
+  { slug: 'data-science-ml', label: 'Data Science & ML' },
+  { slug: 'power-bi', label: 'Power BI' },
+  { slug: 'tableau', label: 'Tableau' },
+  { slug: 'data-engineering', label: 'Data Engineering' },
+  { slug: 'other', label: 'Other' },
+] as const;
+
 export const startLessonLabel = 'Start lesson 1 now — no sign-up';
 
 export function startLessonHref(

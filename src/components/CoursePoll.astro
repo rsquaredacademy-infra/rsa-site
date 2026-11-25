@@ -1,0 +1,338 @@
+---
+// "Which course should we build next?" poll, shared by /courses/ and /roadmap/.
+//
+// One anonymous GA4 event per chosen option (`course_poll_vote`), sent through
+// the site-kit consent gate in lib/analytics: no event while the EEA/UK/CH banner
+// is unanswered or after a decline.
+//
+// The vote is remembered in localStorage so a reload keeps the thank-you state
+// and does not invite a second vote. No cookie of our own.
+import Button from './Button.astro';
+import { coursePollOptions } from '../data/site';
+
+interface Props {
+  /** Page label for the event and for unique element ids. */
+  placement: 'courses' | 'roadmap';
+  /** Alternate band colour (the page alternates bg and surface). */
+  surface?: boolean;
+}
+
+const { placement, surface = true } = Astro.props;
+const uid = `course-poll-${placement}`;
+const headingId = `${uid}-h`;
+const statusId = `${uid}-status`;
+---
+
+<section
+  id={uid}
+  class:list={['sec', 'course-poll', surface && 'bg-surface']}
+  aria-labelledby={headingId}
+  data-course-poll
+  data-placement={placement}
+>
+  <div class="wrap course-poll-wrap">
+    <div class="course-poll-copy">
+      <h2 id={headingId} class="t-h2">Which course should we build next?</h2>
+      <p class="t-muted">Pick the ones you'd take. We read every vote.</p>
+    </div>
+
+    {/* The thanked state sits above the choices: in view after submit and on return. */}
+    <div class="course-poll-done" data-poll-done hidden tabindex="-1">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21.801 10A10 10 0 1 1 17 3.335"></path>
+        <path d="m9 11 3 3L22 4"></path>
+      </svg>
+      <p>Thanks. Your picks are in.</p>
+    </div>
+
+    {/* Hidden until the script runs: a vote cannot be counted without it. */}
+    <form
+      class="course-poll-form"
+      data-poll-form
+      method="post"
+      action={`#${uid}`}
+      hidden
+      novalidate
+    >
+      <fieldset class="course-poll-fieldset" data-poll-fieldset aria-describedby={statusId}>
+        <legend class="course-poll-legend">Courses you'd take</legend>
+        <div class="course-poll-grid">
+          {coursePollOptions.map((option) => (
+            <label class="course-poll-option">
+              <input type="checkbox" name="course" value={option.slug} />
+              <span class="course-poll-box" aria-hidden="true"></span>
+              <span>{option.label}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
+      <div class="course-poll-actions">
+        <Button type="submit">Submit my picks</Button>
+        <p id={statusId} class="rsa-help course-poll-status" data-poll-status role="status" aria-live="polite"></p>
+      </div>
+    </form>
+
+    <p class="course-poll-notify t-small t-muted">
+      Want a launch email? <a href="/#signup">Get updates</a>.
+    </p>
+
+    <noscript>
+      <p class="rsa-help">Voting needs JavaScript. Turn it on and reload.</p>
+    </noscript>
+  </div>
+</section>
+
+<style>
+  .course-poll-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+  .course-poll-copy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    max-width: var(--text-max);
+  }
+  .course-poll-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    max-width: 820px;
+  }
+  .course-poll-form[hidden],
+  .course-poll-done[hidden] {
+    display: none;
+  }
+  .course-poll-fieldset {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+  .course-poll-legend {
+    padding: 0;
+    margin-bottom: var(--space-3);
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 22px;
+  }
+  .course-poll-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+  .course-poll-option {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: 48px;
+    min-width: 0;
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--bg);
+    color: var(--ink);
+    cursor: pointer;
+    transition: border-color 150ms;
+  }
+  .course-poll-option:hover {
+    border-color: var(--line-strong);
+  }
+  .course-poll-option:has(input:checked) {
+    border-color: var(--brand);
+  }
+  .course-poll-option:has(input:focus-visible) {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+  }
+  /* The native checkbox keeps its 44px hit area but is invisible; the box
+     beside the label is the visible control, so tiles stay compact. */
+  .course-poll-option input {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 44px;
+    height: 44px;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+  .course-poll-box {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--line-strong);
+    border-radius: 4px;
+    background: var(--bg);
+  }
+  .course-poll-option input:checked + .course-poll-box {
+    background: var(--brand);
+    border-color: var(--brand);
+  }
+  .course-poll-option input:checked + .course-poll-box::after {
+    content: '';
+    width: 5px;
+    height: 10px;
+    border: solid var(--on-brand);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg) translateY(-1px);
+  }
+  .course-poll-fieldset:disabled .course-poll-option {
+    cursor: default;
+    border-color: var(--line);
+  }
+  .course-poll-fieldset:disabled .course-poll-option:has(input:checked) {
+    border-color: var(--brand);
+  }
+  .course-poll-fieldset:disabled .course-poll-option input {
+    cursor: default;
+  }
+  .course-poll-fieldset:disabled .course-poll-box {
+    border-color: var(--line);
+  }
+  .course-poll-fieldset:disabled .course-poll-option:has(input:checked) .course-poll-box {
+    border-color: var(--brand);
+  }
+  .course-poll-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+  .course-poll-status:empty {
+    display: none;
+  }
+  .course-poll-status[data-kind="error"] {
+    color: var(--danger);
+    font-weight: 600;
+  }
+  .course-poll-done {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    max-width: 820px;
+    padding: var(--space-6);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--bg);
+  }
+  .course-poll-done svg {
+    flex: none;
+    color: var(--brand);
+  }
+  .course-poll-done p {
+    margin: 0;
+    font-weight: 600;
+  }
+  .course-poll-notify {
+    margin: 0;
+  }
+  @media (max-width: 600px) {
+    .course-poll-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .course-poll-option {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  import { trackEvent } from '../lib/analytics';
+  import { coursePollOptions } from '../data/site';
+
+  const STORAGE_KEY = 'rsa-course-poll-v1';
+  const VALID_SLUGS = new Set<string>(coursePollOptions.map((option) => option.slug));
+
+  interface StoredVote {
+    version: 1;
+    courses: string[];
+  }
+
+  function readStored(): string[] {
+    try {
+      const raw = window.localStorage.getItem(STORAGE_KEY);
+      if (!raw) return [];
+      const parsed = JSON.parse(raw) as Partial<StoredVote> | null;
+      if (!parsed || !Array.isArray(parsed.courses)) return [];
+      return parsed.courses.filter((slug): slug is string => typeof slug === 'string' && VALID_SLUGS.has(slug));
+    } catch {
+      return [];
+    }
+  }
+
+  function writeStored(courses: string[]): void {
+    try {
+      const vote: StoredVote = { version: 1, courses };
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(vote));
+    } catch {
+      // Storage can be blocked; the page still shows the thank-you state.
+    }
+  }
+
+  for (const section of document.querySelectorAll<HTMLElement>('[data-course-poll]')) {
+    const form = section.querySelector<HTMLFormElement>('[data-poll-form]');
+    const fieldset = section.querySelector<HTMLFieldSetElement>('[data-poll-fieldset]');
+    const status = section.querySelector<HTMLElement>('[data-poll-status]');
+    const done = section.querySelector<HTMLElement>('[data-poll-done]');
+    const submit = form?.querySelector<HTMLButtonElement>('button[type="submit"]');
+    const options = [...section.querySelectorAll<HTMLInputElement>('input[name="course"]')];
+    if (!form || !fieldset || !status || !done || !submit || options.length === 0) continue;
+
+    const placement = section.dataset.placement || 'unknown';
+    let locked = false;
+
+    const setStatus = (message: string, kind: 'idle' | 'error') => {
+      status.textContent = message;
+      status.dataset.kind = kind;
+    };
+
+    const lock = (courses: string[], announce: boolean) => {
+      locked = true;
+      for (const option of options) {
+        option.checked = courses.includes(option.value);
+        option.disabled = true;
+      }
+      fieldset.disabled = true;
+      form.hidden = false;
+      submit.hidden = true;
+      status.textContent = '';
+      done.hidden = false;
+      if (announce) done.focus();
+    };
+
+    form.hidden = false;
+
+    const stored = readStored();
+    if (stored.length > 0) {
+      lock(stored, false);
+      continue;
+    }
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (locked) return;
+
+      const courses = options.filter((option) => option.checked).map((option) => option.value);
+      if (courses.length === 0) {
+        setStatus('Pick at least one course.', 'error');
+        options[0]?.focus();
+        return;
+      }
+
+      setStatus('', 'idle');
+      writeStored(courses);
+      lock(courses, true);
+      for (const course of courses) {
+        trackEvent('course_poll_vote', { course, placement });
+      }
+    });
+  }
+</script>
