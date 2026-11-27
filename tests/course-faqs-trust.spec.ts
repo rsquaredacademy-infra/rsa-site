@@ -47,7 +47,8 @@ for (const course of courses) {
     }
     const answers = await page.locator('#course-faq').innerText();
     expect(answers).toContain('free forever');
-    expect(answers).toContain('Not yet. We do not currently issue a certificate');
+    expect(answers).toContain('This free course does not include a certificate. Certificates come with our paid courses.');
+    expect(answers).not.toContain('Not yet');
     expect(answers).toContain('Intro to SQL (all 13 lessons) and Intro to Python (all 11 lessons) are open now');
     expect(answers).toContain('26 January 2027');
     expect(answers).toContain('about 3 hours, at your own pace');
