@@ -134,6 +134,7 @@ const statusId = `${id}-status`;
   const COPY = {
     success: 'Check your inbox to confirm.',
     invalid: "That email doesn't look right.",
+    rejected: "We couldn't add this address. Please try another one.",
     error: "Couldn't sign you up just now. Try again in a minute.",
     timeout: 'That took too long. Check your connection and try again.',
     pending: 'Signing you up…',
@@ -419,8 +420,16 @@ const statusId = `${id}-status`;
           });
 
           if (response.status === 400) {
+            // The mailing service can refuse an address that is well formed
+            // (error "email_rejected"); every other 400 is a bad address.
+            let reason: unknown = null;
+            try {
+              reason = ((await response.json()) as { error?: unknown } | null)?.error;
+            } catch {
+              // A non-JSON 400 is treated as a bad address.
+            }
             input.setAttribute('aria-invalid', 'true');
-            setStatus(COPY.invalid, 'error');
+            setStatus(reason === 'email_rejected' ? COPY.rejected : COPY.invalid, 'error');
             input.focus();
             return;
           }

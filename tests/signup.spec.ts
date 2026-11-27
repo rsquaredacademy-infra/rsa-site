@@ -168,6 +168,30 @@ test.describe('native sign-up band', () => {
     expect(api.calls()).toBe(0);
   });
 
+  for (const [label, error, copy] of [
+    ['a refused address (email_rejected) asks for another one', 'email_rejected', "We couldn't add this address. Please try another one."],
+    ['any other 400 keeps the invalid-address message', 'email', "That email doesn't look right."],
+  ] as const) {
+    test(label, async ({ page }, testInfo) => {
+      test.skip(testInfo.project.name !== 'desktop', 'Desktop project only');
+      await mockTurnstile(page);
+      const api = await mockSubscribe(page, 400, { ok: false, error });
+
+      await page.goto('/');
+      const email = page.locator('#home-email');
+      const status = page.locator('#home-email-status');
+
+      await email.focus();
+      await page.keyboard.type('learner+tag@example.com');
+      await page.keyboard.press('Enter');
+
+      await expect(status).toHaveText(copy, { timeout: 15_000 });
+      await expect(email).toHaveAttribute('aria-invalid', 'true');
+      await expect(email).toBeFocused();
+      expect(api.calls()).toBe(1);
+    });
+  }
+
   test('a Turnstile load failure shows the fallback and never posts', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'desktop', 'Desktop project only');
     await page.route('https://challenges.cloudflare.com/**', (route) =>
