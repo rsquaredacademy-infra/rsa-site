@@ -30,7 +30,7 @@ export const freeCoursePages = courses.map((course) => {
     },
     {
       question: 'Do I get a certificate?',
-      answer: 'Not yet. We do not currently issue a certificate for this course.',
+      answer: 'This free course does not include a certificate. Certificates come with our paid courses.',
     },
     {
       question: 'Is it for complete beginners?',
