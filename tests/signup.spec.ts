@@ -169,7 +169,7 @@ test.describe('native sign-up band', () => {
   });
 
   for (const [label, error, copy] of [
-    ['a refused address (email_rejected) asks for another one', 'email_rejected', "We couldn't add this address. Please try another one."],
+    ['a refused address (email_rejected) names the + tag case', 'email_rejected', "This address can't be added to our list. If it has a + tag (like name+news@…), please use it without the tag."],
     ['any other 400 keeps the invalid-address message', 'email', "That email doesn't look right."],
   ] as const) {
     test(label, async ({ page }, testInfo) => {
