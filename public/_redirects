@@ -160,3 +160,12 @@ https://status.rsquaredacademy.com/*      https://stats.uptimerobot.com/gPYRybpi
 /go/standby-022-x   https://blog.rsquaredacademy.com/posts/standby-0-2-2/?utm_source=x&utm_medium=social&utm_campaign=standby-022   302
 /go/standby-022-bs   https://blog.rsquaredacademy.com/posts/standby-0-2-2/?utm_source=bluesky&utm_medium=social&utm_campaign=standby-022   302
 /go/standby-022-yt   https://blog.rsquaredacademy.com/posts/standby-0-2-2/?utm_source=youtube&utm_medium=social&utm_campaign=standby-022   302
+# Package release posts: descriptr 0.6.1 (blog#19) and yahoofinancer 0.6.2 (blog#20)
+/go/post-descriptr-li   https://blog.rsquaredacademy.com/posts/descriptr-0-6-1/?utm_source=linkedin&utm_medium=social&utm_campaign=descriptr-061   302
+/go/post-descriptr-x   https://blog.rsquaredacademy.com/posts/descriptr-0-6-1/?utm_source=x&utm_medium=social&utm_campaign=descriptr-061   302
+/go/post-descriptr-bs   https://blog.rsquaredacademy.com/posts/descriptr-0-6-1/?utm_source=bluesky&utm_medium=social&utm_campaign=descriptr-061   302
+/go/post-descriptr-yt   https://blog.rsquaredacademy.com/posts/descriptr-0-6-1/?utm_source=youtube&utm_medium=social&utm_campaign=descriptr-061   302
+/go/yahoofinancer-062-li   https://blog.rsquaredacademy.com/posts/yahoofinancer-0-6-2/?utm_source=linkedin&utm_medium=social&utm_campaign=yahoofinancer-062   302
+/go/yahoofinancer-062-x   https://blog.rsquaredacademy.com/posts/yahoofinancer-0-6-2/?utm_source=x&utm_medium=social&utm_campaign=yahoofinancer-062   302
+/go/yahoofinancer-062-bs   https://blog.rsquaredacademy.com/posts/yahoofinancer-0-6-2/?utm_source=bluesky&utm_medium=social&utm_campaign=yahoofinancer-062   302
+/go/yahoofinancer-062-yt   https://blog.rsquaredacademy.com/posts/yahoofinancer-0-6-2/?utm_source=youtube&utm_medium=social&utm_campaign=yahoofinancer-062   302
