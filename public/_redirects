@@ -150,3 +150,13 @@ https://status.rsquaredacademy.com/*      https://stats.uptimerobot.com/gPYRybpi
 /go/dplyrgroups-li   https://www.rsquaredacademy.com/courses/?utm_source=linkedin&utm_medium=social&utm_campaign=b0-dplyr-group-by   302
 /go/dplyrgroups-bs   https://www.rsquaredacademy.com/courses/?utm_source=bluesky&utm_medium=social&utm_campaign=b0-dplyr-group-by   302
 /go/dplyrgroups-ig   https://www.rsquaredacademy.com/courses/?utm_source=instagram&utm_medium=social&utm_campaign=b0-dplyr-group-by   302
+
+# Package release posts: rbin 0.3.0 (blog#17) and standby 0.2.2 (blog#18)
+/go/post-rbin-li   https://blog.rsquaredacademy.com/posts/rbin-0-3-0/?utm_source=linkedin&utm_medium=social&utm_campaign=rbin-030   302
+/go/post-rbin-x   https://blog.rsquaredacademy.com/posts/rbin-0-3-0/?utm_source=x&utm_medium=social&utm_campaign=rbin-030   302
+/go/post-rbin-bs   https://blog.rsquaredacademy.com/posts/rbin-0-3-0/?utm_source=bluesky&utm_medium=social&utm_campaign=rbin-030   302
+/go/post-rbin-yt   https://blog.rsquaredacademy.com/posts/rbin-0-3-0/?utm_source=youtube&utm_medium=social&utm_campaign=rbin-030   302
+/go/standby-022-li   https://blog.rsquaredacademy.com/posts/standby-0-2-2/?utm_source=linkedin&utm_medium=social&utm_campaign=standby-022   302
+/go/standby-022-x   https://blog.rsquaredacademy.com/posts/standby-0-2-2/?utm_source=x&utm_medium=social&utm_campaign=standby-022   302
+/go/standby-022-bs   https://blog.rsquaredacademy.com/posts/standby-0-2-2/?utm_source=bluesky&utm_medium=social&utm_campaign=standby-022   302
+/go/standby-022-yt   https://blog.rsquaredacademy.com/posts/standby-0-2-2/?utm_source=youtube&utm_medium=social&utm_campaign=standby-022   302
